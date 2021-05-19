@@ -35,58 +35,213 @@ metaData.date_acc  = [2015 08 28];
 %% set data
 % zero-variate data
 
-data.ah = 2;  units.ah = 'd'; label.ah = 'age at hatch'; bibkey.ah = 'Dinis&Reis1995';  
-  temp.ah = C2K(17);  units.temp.ah = 'K'; label.temp.ah = 'temperature';
+% data.ah = 2;  units.ah = 'd'; label.ah = 'age at hatch'; bibkey.ah = 'Dinis&Reis1995';  
+%   temp.ah = C2K(17);  units.temp.ah = 'K'; label.temp.ah = 'temperature';
+data.ah = 1.58; units.ah = 'd'; label.ah = 'age at hatching'; bibkey.ah = 'YufeParr1999'; 
+ temp.ah = C2K(19.5) ; units.temp.ah = 'K'; label.temp.ah = 'temperature';
+ comment.ah = '~38h from fecundation to hatching rounded to 2';
 data.ab = 2+2;      units.ab = 'd';    label.ab = 'age at birth';            bibkey.ab = 'Ribeiro1999'; 
   temp.ab = C2K(17.25); units.temp.ab = 'K'; label.temp.ab = 'temperature';
-data.aj = 13.81+2;     units.aj = 'd';    label.aj = 'age at metamorphosis';    bibkey.aj = 'Fernandez-Diaz2001';
-  temp.aj = C2K(20); units.temp.aj = 'K'; label.temp.aj = 'temperature';
-  comment.aj = 'end of metam for 50% of sample population at f=1 (high live prey density food regime)';
-data.ap = 110;     units.ap = 'd';    label.ap = 'age at puberty';    bibkey.ap = 'Blanco-Vives2011';
-  temp.ap = C2K(20.7); units.temp.ap = 'K'; label.temp.ap = 'temperature';
-  comment.ap = 'constant T, 80% of population mature'; 
-data.am = 26 * 365; units.am = 'd';   label.am = 'life span';                 bibkey.am = 'Deni1990';   
-  temp.am = C2K(10);  units.temp.am = 'K'; label.temp.am = 'temperature'; 
-  comment.am = 'Northsea estimate of Solea solea'; 
+data.aj = 19;      units.aj = 'd';    label.aj = 'time since fertilization at end of metamorphosis'; bibkey.aj = 'YufeParr1999'; 
+   temp.aj = C2K(19.5);  units.temp.aj = 'K'; label.temp.aj = 'temperature';
+% data.aj = 13.81+2;     units.aj = 'd';    label.aj = 'age at metamorphosis';    bibkey.aj = 'Fernandez-Diaz2001';
+%   temp.aj = C2K(20); units.temp.aj = 'K'; label.temp.aj = 'temperature';
+%   comment.aj = 'end of metam for 50% of sample population at f=1 (high live prey density food regime)';
+data.ap = 4 * 365;    units.ap = 'd';    label.ap = 'age at puberty'; bibkey.ap = 'Vina2007';
+  temp.ap = C2K(17.5);  units.temp.ap = 'K'; label.temp.ap = 'temperature';
+  comment.ap = 'ctemp is the average between 15 and 20 which is the temperature range for the spawning period i.e. the birthday temperature';
+  % data.ap = 110;     units.ap = 'd';    label.ap = 'age at puberty';    bibkey.ap = 'Blanco-Vives2011';
+%   temp.ap = C2K(20.7); units.temp.ap = 'K'; label.temp.ap = 'temperature';
+%   comment.ap = 'constant T, 80% of population mature'; 
+data.am = 11 * 365;    units.am = 'd';    label.am = 'life span'; bibkey.am = 'TeixCabr2010';   %-->they cite a thesis by Andrade 1990 
+  temp.am = C2K(17.5);  units.temp.am = 'K'; label.temp.am = 'temperature'; 
+  comment.am ='temp bibkey.temp.am=Vina2007 page 21 = average yearly temperature of tagus estuary';
+% data.am = 26 * 365; units.am = 'd';   label.am = 'life span';                 bibkey.am = 'Deni1990';   
+%   temp.am = C2K(10);  units.temp.am = 'K'; label.temp.am = 'temperature'; 
+%   comment.am = 'Northsea estimate of Solea solea'; 
 
-data.Lh  = 0.266;  units.Lh  = 'cm';  label.Lh  = 'total length at hatch';  bibkey.Lh  = 'Dinis&Ribeiro1995'; 
+% data.Lh  = 0.266;  units.Lh  = 'cm';  label.Lh  = 'total length at hatch';  bibkey.Lh  = 'Dinis&Ribeiro1995'; 
+data.Lh = 0.1382;   units.Lh  = 'cm';  label.Lh  = 'total length at hatching';          bibkey.Lh  = 'YufeParr1999'; 
 data.Lb  = 0.28;   units.Lb  = 'cm';  label.Lb  = 'total length at birth';  bibkey.Lb  = 'Ribeiro1999';
-data.Lj  = 0.59;   units.Lj  = 'cm';  label.Lj  = 'total length at metam';  bibkey.Lj  = 'Fernandez-Diaz2001';
-  comment.Lj = 'start of metam for 50% of sample population at f=1 (high live prey density food regime)';
+data.Lj = 0.9176 ; units.Lj = 'cm'; label.Lj = 'total length at end of metamorphosis'; bibkey.Lj  = 'YufeParr1999';  
+    comment.Lj = 'length at day 20 post hatching when metamorphosis ends';
+% data.Lj  = 0.867;   units.Lj  = 'cm';  label.Lj  = 'total length at metam';  bibkey.Lj  = 'Fernandez-Diaz2001';
+%   comment.Lj = 'end of metam for 50% of sample population at f=1 (high live prey density food regime)';
 data.Lp  = 30;     units.Lp  = 'cm';  label.Lp  = 'total length at puberty';  bibkey.Lp  = 'fishbase';
-data.Li  = 60;    units.Li  = 'cm';  label.Li  = 'ultimate total length';  bibkey.Li  = 'fishbase';
+data.Li  = 52;   units.Li  = 'cm';  label.Li  = 'ultimate total length';          bibkey.Li  = 'TeixCabr2010';   %-->they cite a thesis by Andrade 1990 
+    comment.Li = 'average size between 40 cm';
+    %maximal lenght ever recorded is 70 cm, ref FAO
+    %maximal lenght ever recorded is 60 (male) cm, ref Fishbase
+% data.Li  = 60;    units.Li  = 'cm';  label.Li  = 'ultimate total length';  bibkey.Li  = 'fishbase';
 
-data.Wdj = 9.3e-07;  units.Wdj = 'g';  label.Wdj = 'dry weight at metam';  bibkey.Wdj = 'Fernandez-Diaz2001';
-  comment.Wdj = 'end of metam for 50% of sample population at f=1 (high live prey density food regime)';
+data.Wdh = 33.19e-6;   units.Wdh = 'g';   label.Wdh = 'dry weight at hatching';   bibkey.Wdh = 'YufeParr1999';
+data.Wdb = 35.4e-6;   units.Wdb = 'g';   label.Wdb = 'dry weight at birth';   bibkey.Wdb = 'YufeParr1999';
+    comment.Wdb = 'mean dry weigth at day 3 ph';
+data.Wdj = 1.281e-3 ; units.Wdj = 'ug'; label.Wdj = 'dry weight at END of metamorphosis'; bibkey.Wdj = 'YufeParr1999'; 
+    comment.Wdj = 'mean dry weigth at day 17 ph';
+% data.Wdj = 9.3e-07;  units.Wdj = 'g';  label.Wdj = 'dry weight at metam';  bibkey.Wdj = 'Fernandez-Diaz2001';
+%   comment.Wdj = 'end of metam for 50% of sample population at f=1 (high live prey density food regime)';
 data.Wwi = 3000*(60^3/70^3);  units.Wwi = 'g';    label.Wwi = 'ultimate wet weight';      bibkey.Wwi = 'guess';
   comment.Wwi = 'based on ultimate total length difference with S. solea on fishbase';
 
-data.R45  = 1.1e6/365; units.R45  = '#/d'; label.R45  = 'reprod rate at 45 cm'; bibkey.R45  = 'WittGree1995';   
-temp.R45 = C2K(10); units.temp.R45 = 'K'; label.temp.R45 = 'temperature';
-  comment.R45 = 'estimate for Solea solea';
+
+data.Ri  = 4160;   units.Ri  = '#/d'; label.Ri  = 'maximum reprod rate per day';     bibkey.Ri_35  = 'DiniRibe1999';   
+temp.Ri = C2K(18.5);    units.temp.Ri = 'K'; label.temp.Ri = 'temperature';
+    comment.Ri = 'Total weight of eggs daily collection of S. senegalensis during the spawning seasons of 1996 and 1997 divided by Wd of egg and 365';
+% data.R45  = 1.1e6/365; units.R45  = '#/d'; label.R45  = 'reprod rate at 45 cm'; bibkey.R45  = 'WittGree1995';   
+% temp.R45 = C2K(10); units.temp.R45 = 'K'; label.temp.R45 = 'temperature';
+%   comment.R45 = 'estimate for Solea solea';
  
 % uni-variate data
 % t-L data from otolith back-calculation data for SOLEA SOLEA females!(IMARES data)
-data.tLTeal = [ ... % time since birth (a), length (cm)
-1	8.909404598
-2	19.91239656
-3	26.95918876
-4	31.44085313
-5	34.39816096
-6	36.2481578
-7	37.61539273
-8	38.32918647
-9	39.16698018
-10	39.22343839
-11	39.87342987
-12	40.96987132
-13	42.20480305
-14	42.43587572
-15	44.03172643];
-data.tLTeal(:,1) = 365 * data.tLTeal(:,1); % covert a to d
-units.tLTeal   = {'d', 'cm'};  label.tLTeal = {'time since birth', 'total length'};  
-temp.tLTeal    = C2K(10);  units.temp.tLTeal = 'K'; label.temp.tLTeal = 'temperature';
-bibkey.tLTeal = 'Teal2011';
+% data.tLTeal = [ ... % time since birth (a), length (cm)
+% 1	8.909404598
+% 2	19.91239656
+% 3	26.95918876
+% 4	31.44085313
+% 5	34.39816096
+% 6	36.2481578
+% 7	37.61539273
+% 8	38.32918647
+% 9	39.16698018
+% 10	39.22343839
+% 11	39.87342987
+% 12	40.96987132
+% 13	42.20480305
+% 14	42.43587572
+% 15	44.03172643];
+% data.tLTeal(:,1) = 365 * data.tLTeal(:,1); % covert a to d
+% units.tLTeal   = {'d', 'cm'};  label.tLTeal = {'time since birth', 'total length'};  
+% temp.tLTeal    = C2K(10);  units.temp.tLTeal = 'K'; label.temp.tLTeal = 'temperature';
+% bibkey.tLTeal = 'Teal2011';
+
+%t-L adult females age from otolith back-calculation data from the field
+data.tL3 = [ ... % years, lenght mm
+2	215.57
+2	220.996
+2	224.403
+2	255.512
+2	259.594
+2	228.052
+3	223.352
+3	231.236
+3	277.781
+3	303.12
+3	275.47
+3	309.202
+3	234.961
+3	294.027
+3	305.247
+3	298.191
+3	244.469
+4	291.186
+4	307.807
+4	295.963
+4	325.32
+4	302.172
+4	286.569
+4	330.727
+4	318.952
+4	266.529
+4	282.57
+4	243.043
+4	271.146
+4	342.132
+4	247.978
+4	313.061
+4	353.99
+4	252.882
+4	349.385
+4	275.903
+5	332.045
+5	337.139
+5	376.298
+5	365.682
+5	384.099
+5	412.1
+5	389.671
+5	233.299
+5	403.203
+5	283.958
+5	296.529
+5	303.388
+6	339.126
+6	332.21
+6	410.157
+6	400.166
+6	343.38
+6	350.831
+6	300.783
+6	359.963
+6	305.515
+6	405.05
+6	354.735
+7	406.292
+7	471.795
+7	370.432
+7	401.834
+7	445.896
+7	303.286
+7	320.773
+7	348.921
+7	354.595
+7	310.743
+7	433.318
+7	315.201
+8	450.207
+8	454.824
+8	362.205
+8	400.809
+8	418.111];
+data.tL3(:,1) = data.tL3(:,1)*365 - data.ab;    %convert to days
+data.tL3(:,2) = data.tL3(:,2)/10;               %convert to cm 
+units.tL3   = {'d', 'cm'}; label.tL3 = {'time since birth', 'total length'};  % label.tL2 = {'time since hatching', 'total length'};  
+temp.tL3    = C2K(17.5);  units.temp.tL3 = 'K'; label.temp.tL3 = 'temperature';
+comment.tL3 = 'Animals sampled from Portuguese coast, temperature is a yearly guesstimate'; 
+bibkey.tL3 = 'TeixCabr2010';
+
+%tL adults males
+data.tL4 = [ ... % age from otolith back-calculation data years, mm data from the field
+2	233.962
+2	251.589
+2	245.539
+2	247.991
+2	279.577
+2	263.969
+3	207.986
+3	199.777
+4	233.497
+4	259.505
+5	325.365
+5	350.513
+5	285.742
+5	412.068
+5	298.682
+5	290.193
+5	295.453
+5	301.484
+5	341.795
+5	308.151
+6	239.235
+6	383.742
+6	300.083
+6	370.292
+6	303.687
+6	391.944
+6	308.482
+7	315.825
+7	319.964
+7	349.01
+7	354.582
+7	303.662
+7	312.227
+8	400.656];
+data.tL4(:,1) = data.tL4(:,1)*365 - data.ab;    %convert to days and start at birth
+data.tL4(:,2) = data.tL4(:,2)/10;               %convert to cm 
+units.tL4   = {'d', 'cm'}; label.tL4 = {'time since birth', 'total length'};  % label.tL2 = {'time since hatching', 'total length'};  
+temp.tL4 = C2K(17.5);  units.temp.tL4 = 'K'; label.temp.tL4 = 'temperature';
+comment.tL4 = 'Animals sampled from Portuguese coast, temperature is a yearly guesstimate'; 
+bibkey.tL4 = 'TeixCabr2010';
 
 data.tLA = [ ... % time (d), total length (cm)
 0	13.3
@@ -116,10 +271,10 @@ data.tLA = [ ... % time (d), total length (cm)
 75	17.2
 75	16.5];
 units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};  
-temp.tLA    = C2K(23);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature';
+temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature';
 length0.tLA = mean(data.tLA((data.tLA(:,1)==0),2)); units.length0.tLA = 'cm'; label.length0.tLA = 'initial length';
 bibkey.tLA = 'expA';
-comment.tLA = 'pH 7.7';
+comment.tLA = 'pH 8.0';
 
 data.tLB = [ ... % time (d), total length (cm)
 0	14.7
@@ -148,7 +303,7 @@ data.tLB = [ ... % time (d), total length (cm)
 75	16.1
 75	18.4];
 units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};  
-temp.tLB    = C2K(23);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
+temp.tLB    = C2K(19);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
 length0.tLB = mean(data.tLB((data.tLB(:,1)==0),2)); units.length0.tLB = 'cm'; label.length0.tLB = 'initial length';
 bibkey.tLB = 'expB';
 comment.tLB = 'pH 7.7';
@@ -185,7 +340,7 @@ units.tLC   = {'d', 'cm'};  label.tLC = {'time', 'total length'};
 temp.tLC    = C2K(23);  units.temp.tLC = 'K'; label.temp.tLC = 'temperature';
 length0.tLC = mean(data.tLC((data.tLC(:,1)==0),2)); units.length0.tLC = 'cm'; label.length0.tLC = 'initial length';
 bibkey.tLC = 'expC';
-comment.tLC = 'pH 7.7';
+comment.tLC = 'pH 8.0';
 
 data.tLD = [ ... % time (d), total length (cm)
 0	12.3
@@ -396,7 +551,7 @@ data.tWwB = [ ... % time (d), wet weight (g)
 75	58.33
 75	74.44];
 units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};   
-temp.tWwB    = C2K(23);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
+temp.tWwB    = C2K(19);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
 length0.tWwB = mean(data.tLB((data.tLB(:,1)==0),2)); units.length0.tLB = 'cm'; label.length0.tLB = 'initial length';
 bibkey.tWwB = 'expB';
 comment.tWwB = 'pH 7.7';
@@ -445,7 +600,7 @@ data.tWwC = [ ... % time (d), wet weight (g)
 75	45.67
 75	105.41];
 units.tWwC   = {'d', 'g'};  label.tWwC = {'time', 'wet weight'};  
-temp.tWwC    = C2K(19);  units.temp.tWwC = 'K'; label.temp.tWwC = 'temperature';
+temp.tWwC    = C2K(23);  units.temp.tWwC = 'K'; label.temp.tWwC = 'temperature';
 length0.tWwC = mean(data.tLC((data.tLC(:,1)==0),2)); units.length0.tLC = 'cm'; label.length0.tLC = 'initial length';
 bibkey.tWwC = 'expC';
 comment.tWwC = 'pH 8.0';
@@ -752,6 +907,8 @@ weights.tLB = weights.tLB / 9;
 weights.tLC = weights.tLC / 9;
 weights.tLD = weights.tLD / 9;
 weights.tLE = weights.tLE / 3;
+weights.tL3 = weights.tL3 / 2;
+weights.tL4 = weights.tL4 / 2;
 weights.tWwA = weights.tWwA / 9;
 weights.tWwB = weights.tWwB / 9;
 weights.tWwC = weights.tWwC / 9;
@@ -759,6 +916,19 @@ weights.tWwD = weights.tWwD / 9;
 weights.tWwE = weights.tWwE / 3;
 weights.LWw = weights.LWw / 9;
 weights.LWwE = weights.LWwE / 3;
+
+%Adriana Sardi Weights
+% %weights.ah = 5 * weights.ah; 
+% %weights.ab = 5 * weights.ab; 
+% %weights.Wwj0 = 0 * weights.Wwj0; 
+% weights.tWd = 10 * weights.tWd;
+% %weights.LWw = 10 * weights.LWw;
+% % weights.tL2 = 10 * weights.tL2;
+% weights.Ri = 20 * weights.Ri;
+% weights.Lh = 5 * weights.Lh;
+% weights.Li = 10 * weights.Li;
+% weights.Lp_f = 5 * weights.Lp_f;
+% weights.Lp_m = 5 * weights.Lp_m;
 
 %% set pseudodata and respective weights
 [data, units, label, weights] = addpseudodata(data, units, label, weights);
@@ -829,6 +999,39 @@ bibkey = 'CasteloBranco2003'; type = 'Thesis'; bib = [ ...
 'title  = {Estudo da producao de linguado (Solea senegalensis Kaup,1858) em tanques de terra}, ' ...
 'publisher = {IPIMAR, Instituto Nacional de Investigacao Agraria e das Pescas}, ' ...
 'pages = {Table 2.3. (page 26)}, '];
+metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
+%
+bibkey = 'TeixCabr2010'; type = 'Article'; bib = [ ... 
+'author = {﻿Teixeira, Célia M.; Cabral, Henrique N.}, ' ... 
+'year   = {2010}, ' ...
+'title  = {Comparative analysis of the diet, growth and reproduction of the soles, \textit{Solea solea} and \textit{Solea senegalensis}, occurring in sympatry along the Portuguese coast}, ' ...
+'journal= {Journal of the Marine Biological Association of the United Kingdom}, ' ...
+'volume = {90}, ' ...
+'number = {5}, '...
+'doi    = {﻿10.1017/S0025315410000238}, '...
+'pages  = {995-1003}'];
+metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
+%
+bibkey = 'Vina2007'; type = 'Thesis'; bib = [ ... 
+'author = {Catarina Vinagre}, ' ... 
+'year   = {2007}, ' ...
+'title  = {Ecology of the juveniles of the soles \textit{Solea solea} ({L}innaeus, 1758) and \textit{Solea senegalensis} ({K}aup, 1858), in the {T}agus estuary}, ' ...
+'journal= {University of Lisbon}, ' ...
+'volume = {}, ' ...
+'number = {}, '...
+'doi    = {}, '...
+'pages  = {1-200}'];
+metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
+%
+bibkey = 'YufeParr1999'; type = 'Article'; bib = [ ... 
+'author = {Yufera, M. Parra, G. Santiago, R. Carrascosa, M.}, ' ... 
+'year   = {1999}, ' ...
+'title  = {Growth, carbon, nitrogen and caloric content of \textit{Solea senegalensis} (Pisces: Soleidae) from egg fertilization to metamorphosis}, ' ...
+'journal= {Marine Biology}, ' ...
+'volume = {134}, ' ...
+'number = {1}, '...
+'doi    = {10.1007/s002270050523}, '...
+'pages  = {43-49}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 %still lacks zero-variate references

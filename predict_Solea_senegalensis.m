@@ -20,6 +20,10 @@ if f_E > 1
     prdData = []; info = 0; return
 end
 
+if f_34 > 1
+    prdData = []; info = 0; return
+end
+
 if s_pH < 0
     prdData = []; info = 0; return
 end
@@ -34,14 +38,16 @@ end
   TC_aj = tempcorr(temp.aj, T_ref, T_A);
   TC_ap = tempcorr(temp.ap, T_ref, T_A);
   TC_am = tempcorr(temp.am, T_ref, T_A);
-  TC_R45 = tempcorr(temp.R45, T_ref, T_A);
-  TC_Teal = tempcorr(temp.tLTeal, T_ref, T_A);
+  TC_Ri = tempcorr(temp.Ri, T_ref, T_A);
+  %TC_Teal = tempcorr(temp.tLTeal, T_ref, T_A);
   TC_CB = tempcorr(temp.tWwCB, T_ref, T_A);
   TC_A = tempcorr(temp.tWwA, T_ref, T_A);
   TC_B = tempcorr(temp.tWwB, T_ref, T_A);
   TC_C = tempcorr(temp.tWwC, T_ref, T_A);
   TC_D = tempcorr(temp.tWwD, T_ref, T_A);
   TC_E = tempcorr(temp.tWwE, T_ref, T_A);
+  TC_3 = tempcorr(temp.tL3, T_ref, T_A);
+  TC_4 = tempcorr(temp.tL4, T_ref, T_A);
   
 
   % zero-variate data
@@ -60,11 +66,14 @@ end
   M_Eh = J_E_Am * aUL(2,2);        % mol, reserve at hatch at f
   L_h = aUL(2,3);                  % cm, structural length at f
   Lw_h = L_h/ del_M;               % cm, S-V length at hatch at f
+  Ww_h = L_h^3 * (1 + f * w);
+  Wd_h = Ww_h * d_V;
   
   % birth
   L_b = L_m * l_b;                  % cm, structural length at birth at f
   Lw_b = L_b/ del_M;                % cm, total length at birth at f
   Ww_b = L_b^3 * (1 + f * w);       % g, wet weight at birth at f 
+  Wd_b = Ww_b * d_V;
   a_b = t_b/ k_M; aT_b = a_b/ TC_ab; % d, age at birth at f and T
 
   % metam
@@ -87,8 +96,8 @@ end
   Ww_i = L_i^3 * (1 + f * w);       % g, ultimate wet weight 
  
   % reproduction
-  pars_R = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose parameter vector at T
-  RT_45 = TC_R45 * reprod_rate_j(45 * del_M, f, pars_R);  % #/d, reproduction rate for 45 cm
+  pars_R = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose parameter vector
+  RT_i = TC_Ri * reprod_rate_j(L_i, f, pars_R);          % #/d, max reproduction rate 
 
   % life span
   pars_tm = [g; l_T; h_a/ k_M^2; s_G];  % compose parameter vector at T_ref
@@ -106,21 +115,39 @@ end
   prdData.Lj = Lw_j;
   prdData.Lp = Lw_p;
   prdData.Li = Lw_i;
+  prdData.Wdh = Wd_h;
+  prdData.Wdb = Wd_b;
   prdData.Wdj = Wd_j;
   prdData.Wwi = Ww_i;
-  prdData.R45 = RT_45;
+  prdData.Ri = RT_i;
   
   % uni-variate data
   
   % time-length for late juveniles and adults at f of 0-var data
   % time-length Teal
-  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_Teal);
-  kT_M = k_M * TC_Teal; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M;        
-  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
-  L_bj = L_b * exp(tLTeal((tLTeal(:,1) <= tT_j),1) * rT_j/ 3); % cm, struc length
-  L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tLTeal((tLTeal(:,1) > tT_j),1) - tT_j)); % cm, struct length
-  ELw = [L_bj; L_jm]/ del_M;  % cm, total length
+%   [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_Teal);
+%   kT_M = k_M * TC_Teal; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M;        
+%   L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
+%   L_bj = L_b * exp(tLTeal((tLTeal(:,1) <= tT_j),1) * rT_j/ 3); % cm, struc length
+%   L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tLTeal((tLTeal(:,1) > tT_j),1) - tT_j)); % cm, struct length
+%   ELw = [L_bj; L_jm]/ del_M;  % cm, total length
   
+    %time-length 3
+  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_34);
+  kT_M = k_M * TC_3; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M;        
+  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
+  L_bj = L_b * exp(tL3((tL3(:,1) <= tT_j),1) * rT_j/ 3); % cm, struc length
+  L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tL3((tL3(:,1) > tT_j),1) - tT_j)); % cm, struct length
+  ELw3 = [L_bj; L_jm]/ del_M;  % cm, total length
+  
+      %time-length 4
+  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_34);
+  kT_M = k_M * TC_4; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M;        
+  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
+  L_bj = L_b * exp(tL4((tL4(:,1) <= tT_j),1) * rT_j/ 3); % cm, struc length
+  L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tL4((tL4(:,1) > tT_j),1) - tT_j)); % cm, struct length
+  ELw4 = [L_bj; L_jm]/ del_M;  % cm, total length
+
       % time-length A
   [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp); %before experiment (no stress factor)
         %before experiment
@@ -256,12 +283,14 @@ end
   ELWwE = (LWwE(:,1)*del_M).^3 * (1 + f_E * w); % g, wet weight
   
   % pack to output
-  prdData.tLTeal = ELw;
+  %prdData.tLTeal = ELw;
   prdData.tLA = ELwA;
   prdData.tLB = ELwB;
   prdData.tLC = ELwC;
   prdData.tLD = ELwD;
   prdData.tLE = ELwE;
+  prdData.tL3 = ELw3;
+  prdData.tL4 = ELw4;
   prdData.tWwA = EWwA;
   prdData.tWwB = EWwB;
   prdData.tWwC = EWwC;

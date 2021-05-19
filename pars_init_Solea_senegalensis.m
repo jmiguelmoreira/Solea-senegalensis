@@ -31,6 +31,7 @@ par.f_Teal = 0.67492;   free.f_Teal  = 1;   units.f_Teal = '-';         label.f_
 par.f_CB = 1;            free.f_CB     = 1;   units.f_CB = '-';            label.f_CB = 'scaled functional response for Castelo Branco data'; 
 par.f_exp = 1;            free.f_exp     = 1;   units.f_exp = '-';            label.f_exp = 'scaled functional response for PA exp data'; 
 par.f_E = 1;            free.f_E     = 1;   units.f_E = '-';            label.f_E = 'scaled functional response for AM data'; 
+par.f_34 = 1;           free.f_34 = 1;  units.f_34 = '-';          label.f_34 = 'scaled functional response for 3&4 data';
 par.s_pH = 0.1; free.s_pH = 1; units.s_pH = '-'; label.s_pH = 'stress factor due to pH level';
 
 %% set chemical parameters from Kooy2010 
