@@ -898,9 +898,9 @@ comment.LWwE = 'SsEPPO1.20140323 and Ss3EPPO20120422';
 %% set weights for all real data
 weights = setweights(data, []);
 
-weights.ap = weights.ap * 0;
-weights.am = weights.am * 0;
-weights.Wdj = weights.Wdj * 0;
+% weights.ap = weights.ap * 0;
+% weights.am = weights.am * 0;
+% weights.Wdj = weights.Wdj * 0;
 
 weights.tLA = weights.tLA / 9;
 weights.tLB = weights.tLB / 9;
