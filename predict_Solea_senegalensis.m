@@ -4,9 +4,9 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   cPar = parscomp_st(par); vars_pull(par); 
   vars_pull(cPar);  vars_pull(data);  vars_pull(auxData);
   
-if f_Teal > 1
-    prdData = []; info = 0; return
-end
+% if f_Teal > 1
+%     prdData = []; info = 0; return
+% end
 
 if f_CB > 1
     prdData = []; info = 0; return
@@ -24,9 +24,9 @@ if f_34 > 1
     prdData = []; info = 0; return
 end
 
-if s_pH < 0
-    prdData = []; info = 0; return
-end
+% if s_pH < 0
+%     prdData = []; info = 0; return
+% end
 
 if E_Hh >= E_Hb
     prdData = []; info = 0; return
