@@ -1,6 +1,5 @@
 function [data, auxData, metaData, txtData, weights] = mydata_Solea_senegalensis 
 % Created the 20/06/2019
-%modified the 10 february by A. Sardi
 % http://www.debtheory.org/wiki/index.php?title=Mydata_file#Metadata)
 
 %% set metaData 
@@ -12,7 +11,7 @@ metaData.species    = 'Solea_senegalensis';
 metaData.species_en = 'Senegalense sole'; 
 metaData.T_typical  = C2K(20); % K, body temp
 metaData.data_0     = {'ah';'ab';'tj';'aj';'ap';'am';'Lh';'Lb';'Lp';'Li';'Wwh';'Wwb';'Wdh';'Wdb';'Ri'}; % zero-variate data labels: http://www.debtheory.org/wiki/index.php?title=Zero-variate_data
-metaData.data_1     = {'t-L';'t-L';'L-W';'t-Wd'}; % uni-variate data labels:  http://www.debtheory.org/wiki/index.php?title=Univariate_data 
+metaData.data_1     = {'t-L';'t-L';'L-Ww';'L-Wd';'t-Wd';'t-Ww'}; % uni-variate data labels:  http://www.debtheory.org/wiki/index.php?title=Univariate_data 
 
 metaData.COMPLETE = 3.5; % using criteria of LikaKear2011 http://www.debtheory.org/wiki/index.php?title=Completeness
 metaData.author   = {'Adriana Sardi'; 'Nina Marn'};    
@@ -29,7 +28,7 @@ metaData.address  = {'University of Bordeaux'};
 data.ah = 1.58; units.ah = 'd'; label.ah = 'age at hatching'; bibkey.ah = 'YufeParr1999'; 
  temp.ah = C2K(19.5) ; units.temp.ah = 'K'; label.temp.ah = 'temperature';
  comment.ah = '~38h from fecundation to hatching rounded to 2';
-% %  
+
 data.ab = 4;    units.ab = 'd';    label.ab = 'age at birth'; bibkey.ab = 'YufeParr1999';   
   temp.ab = C2K(19.5);  units.temp.ab = 'K'; label.temp.ab = 'temperature';
   
@@ -67,10 +66,10 @@ data.Lb  = 0.2484;   units.Lb  = 'cm';  label.Lb  = 'total length at birth';    
     comment.Lb = 'length at day 2 post hatching when mouth opening occurs';
 
 data.Lj  = 0.6857;   units.Lj  = 'cm';  label.Lj  = 'total length at start of metamorphosis';  bibkey.Lj  = 'YufeParr1999';  
-    comment.Lb = 'length at day 14 post hatching when metamorphosis starts'; 
+    comment.Lj = 'length at day 14 post hatching when metamorphosis starts'; 
 
 data.Lj2 = 0.9176 ; units.Lj2 = 'cm'; label.Lj2 = 'total length at end of metamorphosis'; bibkey.Lj2  = 'YufeParr1999';  
-    comment.Lb2 = 'length at day 20 post hatching when metamorphosis ends'; 
+    comment.Lj2 = 'length at day 20 post hatching when metamorphosis ends'; 
 
 %data.Lp  = 32;   units.Lp  = 'cm';  label.Lp  = 'total length at puberty in females';        bibkey.Lp  = 'FAO2019'; 
 
@@ -192,7 +191,6 @@ bibkey.tL2 = 'RibeEngr2017';
 
 %t-L adult females age from otolith back-calculation data from the field
 data.tL3 = [ ... % years, lenght mm
-    
 2	215.57
 2	220.996
 2	224.403
@@ -269,7 +267,6 @@ data.tL3 = [ ... % years, lenght mm
 8	362.205
 8	400.809
 8	418.111];
-
 data.tL3(:,1) = data.tL3(:,1)*365 - data.ab;    %convert to days
 data.tL3(:,2) = data.tL3(:,2)/10;               %convert to cm 
 units.tL3   = {'d', 'cm'}; label.tL3 = {'time since birth', 'total length'};  % label.tL2 = {'time since hatching', 'total length'};  
@@ -279,7 +276,6 @@ bibkey.tL3 = 'TeixCabr2010';
 
 %tL adults males
 data.tL4 = [ ... % age from otolith back-calculation data years, mm data from the field
-    
 2	233.962
 2	251.589
 2	245.539
@@ -314,7 +310,6 @@ data.tL4 = [ ... % age from otolith back-calculation data years, mm data from th
 7	303.662
 7	312.227
 8	400.656];
-
 data.tL4(:,1) = data.tL4(:,1)*365 - data.ab;    %convert to days and start at birth
 data.tL4(:,2) = data.tL4(:,2)/10;               %convert to cm 
 units.tL4   = {'d', 'cm'}; label.tL4 = {'time since birth', 'total length'};  % label.tL2 = {'time since hatching', 'total length'};  
@@ -2854,10 +2849,7 @@ data.LWw = [... %total length (mm) wet weigth (g)
 475	 2163  
 465	 1457  
 440	 1161  
-470	 1672
-
-];
-
+470	 1672];
 data.LWw(:,1) = data.LWw(:,1)/10; % to cm
 units.LWw = { 'cm' , 'g'}; label.LWw = {'total length', 'wet weigth'}; 
 bibkey.LWw = 'ManchadoPersCommunication';
@@ -2969,7 +2961,7 @@ data.LWd2 = [ ... %total length (cm) dry weigth (ug)
 1.7	7700
 1.7	7400
 1.9	9900
-2.2	17900 ];
+2.2	17900];
 units.LWd2 = {'cm', 'ug'}; label.LWd2 = {'total length', 'dry weigth'}; 
 bibkey.LWd2 = 'RibeEngr2017';
 
@@ -2987,8 +2979,6 @@ data.LWd3 = [... %total length (cm) dry weigth (ug)
 0.637	464.7
 0.686	553.4
 0.918	1281.2]; 
-
-
 units.LWd3 = {'cm', 'ug'}; label.LWd3 = {'total length', 'dry weigth'}; 
 bibkey.LWd3 = 'YufeParr1999';
 
@@ -3073,7 +3063,6 @@ data.tWd_f1 = [... % days, mg/ind, 100% live prey L100
 57	22.279
 63	28.501
 70	34.058]; 
-
 data.tWd_f1(:,2) = data.tWd_f1(:,2)*1e3; % to ug
 units.tWd_f1 = {'d','ug'}; label.tWd_f1 = {'time since hatching','Dry weigth of larvae along development'};
 bibkey.tWd_f1 = 'CañaFern1999'; 
@@ -3087,7 +3076,6 @@ data.tWd_f2 =[ ... %days post hatching, mg/ind, 50% live prey L50
 23	1.075
 33	4.184
 43	5.453];
-
 data.tWd_f2(:,2) = data.tWd_f2(:,2)*1e3; % to ug
 units.tWd_f2 = {'d','ug'}; label.tWd_f2 = {'time since hatching','Dry weigth of larvae along development'};
 bibkey.tWd_f2 = 'CañaFern1999'; 
@@ -3101,7 +3089,6 @@ data.tWd_f3 = [ ... % days, mg/ind, 100% live prey and 50% inert food L100I50
 23	1.748
 33	6.748
 43	8.691];
-
 data.tWd_f3(:,2) = data.tWd_f3(:,2)*1e3; % to ug
 units.tWd_f3 = {'d','ug'}; label.tWd_f3 = {'time since hatching','Dry weigth of larvae along development'};
 bibkey.tWd_f3 = 'CañaFern1999'; 
@@ -3115,7 +3102,6 @@ data.tWd_f4 = [ ... %days,mg/ind,50% live prey and 50% inert food L50I50
 23	1.313
 33	4.626
 43	6.878];
-
 data.tWd_f4(:,2) = data.tWd_f4(:,2)*1e3; % to ug
 units.tWd_f4 = {'d','ug'}; label.tWd_f4 = {'time since hatching','Dry weigth of larvae along development'};
 bibkey.tWd_f4 = 'CañaFern1999'; 
@@ -3201,8 +3187,8 @@ data.tLA = [ ... % time (d), total length (cm)
 units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};  
 temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature';
 length0.tLA = mean(data.tLA((data.tLA(:,1)==0),2)); units.length0.tLA = 'cm'; label.length0.tLA = 'initial length';
-bibkey.tLA = 'expA 19 C pH 8';
-comment.tLA = 'pH 8.0';
+bibkey.tLA = 'MARE2019';
+comment.tLA = 'T 19ºC pH 8.0';
 
 data.tLB = [ ... % time (d), total length (cm)
 0	14.7
@@ -3233,8 +3219,8 @@ data.tLB = [ ... % time (d), total length (cm)
 units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};  
 temp.tLB    = C2K(19);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
 length0.tLB = mean(data.tLB((data.tLB(:,1)==0),2)); units.length0.tLB = 'cm'; label.length0.tLB = 'initial length';
-bibkey.tLB = 'expB 19 C pH 7.7';
-comment.tLB = 'pH 7.7';
+bibkey.tLB = 'MARE2019';
+comment.tLB = 'T 19ºC pH 7.7';
 % 
 data.tLC = [ ... % time (d), total length (cm)
 0	12
@@ -3267,8 +3253,8 @@ data.tLC = [ ... % time (d), total length (cm)
 units.tLC   = {'d', 'cm'};  label.tLC = {'time', 'total length'};  
 temp.tLC    = C2K(23);  units.temp.tLC = 'K'; label.temp.tLC = 'temperature';
 length0.tLC = mean(data.tLC((data.tLC(:,1)==0),2)); units.length0.tLC = 'cm'; label.length0.tLC = 'initial length';
-bibkey.tLC = 'expC 23 C pH 8';
-comment.tLC = 'pH 8.0';
+bibkey.tLC = 'MARE2019';
+comment.tLC = 'T 23ºC pH 8.0';
 % 
 data.tLD = [ ... % time (d), total length (cm)
 0	12.3
@@ -3300,8 +3286,8 @@ data.tLD = [ ... % time (d), total length (cm)
 units.tLD   = {'d', 'cm'};  label.tLD = {'time', 'total length'};  
 temp.tLD    = C2K(23);  units.temp.tLD = 'K'; label.temp.tLD = 'temperature';
 length0.tLD = mean(data.tLD((data.tLD(:,1)==0),2)); units.length0.tLD = 'cm'; label.length0.tLD = 'initial length';
-bibkey.tLD = 'expD 23 C pH 7.7';
-comment.tLD = 'pH 7.7';
+bibkey.tLD = 'MARE2019';
+comment.tLD = 'T 23ºC pH 7.7';
 
 %% time wet weight Jose
 % 
@@ -3351,8 +3337,8 @@ data.tWwA = [ ... % time (d), wet weight (g)
 units.tWwA   = {'d', 'g'};  label.tWwA = {'time', 'wet weight'};   
 temp.tWwA    = C2K(19);  units.temp.tWwA = 'K'; label.temp.tWwA = 'temperature';
 length0.tWwA = mean(data.tLA((data.tLA(:,1)==0),2)); units.length0.tLA = 'cm'; label.length0.tLA = 'initial length';
-bibkey.tWwA = 'expA 19 C pH 8';
-comment.tWwA = 'pH 8.0';
+bibkey.tWwA = 'MARE2019';
+comment.tWwA = 'T 19ºC pH 8.0';
 
 data.tWwB = [ ... % time (d), wet weight (g)
 0	33.86
@@ -3400,8 +3386,8 @@ data.tWwB = [ ... % time (d), wet weight (g)
 units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};   
 temp.tWwB    = C2K(19);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
 length0.tWwB = mean(data.tLB((data.tLB(:,1)==0),2)); units.length0.tLB = 'cm'; label.length0.tLB = 'initial length';
-bibkey.tWwB = 'expB 19 C pH7.7';
-comment.tWwB = 'pH 7.7';
+bibkey.tWwB = 'MARE2019';
+comment.tWwB = 'T 19ºC pH 7.7';
 % 
 data.tWwC = [ ... % time (d), wet weight (g)
 0	30.69
@@ -3449,8 +3435,8 @@ data.tWwC = [ ... % time (d), wet weight (g)
 units.tWwC   = {'d', 'g'};  label.tWwC = {'time', 'wet weight'};  
 temp.tWwC    = C2K(23);  units.temp.tWwC = 'K'; label.temp.tWwC = 'temperature';
 length0.tWwC = mean(data.tLC((data.tLC(:,1)==0),2)); units.length0.tLC = 'cm'; label.length0.tLC = 'initial length';
-bibkey.tWwC = 'expC 23 C pH 8';
-comment.tWwC = 'pH 8.0';
+bibkey.tWwC = 'MARE2019';
+comment.tWwC = 'T 23ºC pH 8.0';
 % 
 data.tWwD = [ ... % time (d), wet weight (g)
 0	24.9
@@ -3498,8 +3484,8 @@ data.tWwD = [ ... % time (d), wet weight (g)
 units.tWwD   = {'d', 'g'};  label.tWwD = {'time', 'wet weight'};  
 temp.tWwD    = C2K(23);  units.temp.tWwD = 'K'; label.temp.tWwD = 'temperature';
 length0.tWwD = mean(data.tLD((data.tLD(:,1)==0),2)); units.length0.tLD = 'cm'; label.length0.tLD = 'initial length';
-bibkey.tWwD = 'expD 23 C pH .7';
-comment.tWwD = 'pH 7.7';
+bibkey.tWwD = 'MARE2019';
+comment.tWwD = 'T 23ºC pH 7.7';
 
 
 
@@ -3517,16 +3503,6 @@ weights.Li = 10 * weights.Li;
 weights.Lp_f = 5 * weights.Lp_f;
 weights.Lp_m = 5 * weights.Lp_m;
 %
-%weights José Moreira
-% weights.tLA = weights.tLA / 9;
-% % weights.tLB = weights.tLB / 9;
-% % weights.tLC = weights.tLC / 9;
-% % weights.tLD = weights.tLD / 9;
-% weights.tWwA = weights.tWwA / 9;
-% % weights.tWwB = weights.tWwB / 9;
-% weights.tWwC = weights.tWwC / 9;
-% % weights.tWwD = weights.tWwD / 9;
-
 
 %% set pseudodata and respective weights
 [data, units, label, weights] = addpseudodata(data, units, label, weights);
@@ -3545,10 +3521,10 @@ set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, RibeEngr2017 and YufeParr
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
 set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CañaFern1999'};
 set5 = {'tL3','tL4'}; comment5 = { 'females (red), males (blue)'};
-set6 = {'tLB','tLD'}; comment6 = {'B (red, 19C) and D (blue, 23 C), pH 7.7'}; % same temperature (19), different of pH
-set7 = {'tLA','tLC'}; comment7 = { 'A (red, 19C) and C (blue, 23C), pH 8'}; %same pH (8) different temp
+set6 = {'tLB','tLD'}; comment6 = {'B (red, 19C) and D (blue, 23C), pH 7.7'}; 
+set7 = {'tLA','tLC'}; comment7 = { 'A (red, 19C) and C (blue, 23C), pH 8'}; 
 set8 = {'tWwA','tWwC'}; comment8 = {'A (red, 19C) and C (blue, 23C), pH 8'};
-set9 = {'tWwB','tWwD'}; comment9 = {'B (red, 19C) and D (blue, 23 C), pH 7.7'}; % same temperature (19), different of pH
+set9 = {'tWwB','tWwD'}; comment9 = {'B (red, 19C) and D (blue, 23C), pH 7.7'}; 
 metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7,set8,set9};
 metaData.grp.comment = {comment1, comment2,comment3,comment4,comment5,comment6,comment7,comment8,comment9};
 
@@ -3591,7 +3567,6 @@ bibkey = 'CanaFern1999'; type = 'Article'; bib = [ ...
 'pages  = {255-263}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];  
 %
-
 bibkey = 'CarbFirm2018'; type = 'Article'; bib = [ ... 
 'author = {﻿Carballo, Carlos; Firmino, Joana; Anjos, Liliana; Santos, Soraia; Power, Deborah M.; Santos, Soraia; Manchado, Manuel}, ' ... 
 'year   = {2018}, ' ...
@@ -3602,7 +3577,6 @@ bibkey = 'CarbFirm2018'; type = 'Article'; bib = [ ...
 'doi    = {10.1016/j.aquaculture.2018.05.043}, '...
 'pages  = {222-231}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
-
 %
 bibkey = 'DiniRibe1999'; type = 'Article'; bib = [ ... 
 'author = {Dinis, Maria Teresa; Ribeiro, Laura; Soares, Florbela; Sarasquete, Carmen}, ' ... 
@@ -3613,6 +3587,12 @@ bibkey = 'DiniRibe1999'; type = 'Article'; bib = [ ...
 'number = {1-2}, '...
 'doi    = {10.1016/S0044-8486(99)00047-2}, '...
 'pages  = {27-38}'];
+metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
+%
+bibkey = 'MARE2019'; type = 'Misc'; bib = [ ... 
+'author = {Maulvault, Ana Luísa; Marques, António; Rosa, Rui; Mendes, Ana; Pousão-Ferreira, Pedro; Anacleto, Patrícia}, ' ... 
+'year  = {2019}, ' ...
+'note = {Experimental data from MARE (University of Lisbon). SOON TO BE PUBLISHED. For using this data outside of the script before publication please contact José Moreira (j.miguel.moreira@tecnico.ulisboa.pt) or Patrícia Anacleto (panacleto@ipma.pt)}, '];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 % bibkey = 'FAO2019'; type = 'Misc'; bib = ... 
