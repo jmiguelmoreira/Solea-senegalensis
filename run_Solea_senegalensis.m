@@ -12,10 +12,10 @@ estim_options('default');
 estim_options('max_step_number',5e3); 
 estim_options('max_fun_evals',5e3);  
 
-estim_options('pars_init_method', 1); %1 to continue 2 read from pars_init
-estim_options('results_output', 3); % -1 in the command window 
-estim_options('method', 'nm');
-estim_options('loss_function', 'sb');
+estim_options('pars_init_method', 2); %1 to continue 2 read from pars_init
+estim_options('results_output', 2); % -1 in the command window 
+estim_options('method', 'no');
+% estim_options('loss_function', 'sb');
 estim_pars; 
 
 

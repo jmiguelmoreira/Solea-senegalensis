@@ -51,8 +51,8 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   %TC_Tah = tempcorr(temp.Tah, T_ref, T_pars);
   TC_tL = tempcorr(temp.tL, T_ref, T_pars);
   TC_tL2 = tempcorr(temp.tL2, T_ref, T_pars);
-  TC_tL3 = tempcorr(temp.tL3, T_ref, T_pars);
-  TC_tL4 = tempcorr(temp.tL4, T_ref, T_pars);
+  TC_tL_f = tempcorr(temp.tL_f, T_ref, T_pars);
+  TC_tL_m = tempcorr(temp.tL_m, T_ref, T_pars);
   TC_tWd = tempcorr(temp.tWd(1), T_ref, T_pars);
   TC_tWd2 = tempcorr(temp.tWd2(1), T_ref, T_pars);
   TC_tWd_f1 = tempcorr(temp.tWd_f1(1), T_ref, T_pars);
@@ -76,7 +76,7 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
 
   % life cycle
   pars_tj = [g; k; l_T; v_Hb; v_Hj; v_Hp];
-  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
+  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_field);
   
   if info ~= 1 % numerical procedure failed
      fprintf('warning: invalid parameter value combination for get_tj \n')
@@ -110,9 +110,9 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   aT_b = tau_b/ k_M/ TC_ab;           % d, age at birth at f and T
 % 
   
-  Wd_b = d_V *L_b^3 * (1 + f * w) *1e6; % ug, dry weight at birth at f 
+  Wd_b = d_V *L_b^3 * (1 + f * ome) *1e6; % ug, dry weight at birth at f 
 
-  %Ww_b = L_b^3 * (1 + f * w) * 1e6;       % ug, wet weight at birth at f 
+  %Ww_b = L_b^3 * (1 + f * ome) * 1e6;       % ug, wet weight at birth at f 
   
 
   % metamorphosis decide if using start or end of metam (change del_M accordingly)
@@ -122,8 +122,8 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   tT_j = (tau_j - tau_b) / k_M/ TC_tj;  % d, time since birth at metam
   aT_j = tau_j/TC_aj/k_M;           % d, age at metamorphosis 
   
-  %Ww_j = L_j^3 * (1 + f * w) * 1e6;     % ug, wet weight at metam 
-  Wd_j = L_j^3 * d_V * (1 + f * w) * 1e6; % ug, dry weight at metam 
+  %Ww_j = L_j^3 * (1 + f * ome) * 1e6;     % ug, wet weight at metam 
+  Wd_j = L_j^3 * d_V * (1 + f * ome) * 1e6; % ug, dry weight at metam 
   
   
   [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_field);
@@ -132,13 +132,13 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   L_p = L_m * l_p;                  % cm, structural length at puberty at f
   aT_p = tau_p / k_M/ TC_ap;        %d, age at puberty at f and T
   Lw_p = L_p/ del_M;                % cm, physical length at puberty at f
-  Ww_p = L_p^3 *(1 + f * w);        % g, wet weight at puberty 
+  Ww_p = L_p^3 *(1 + f * ome);        % g, wet weight at puberty 
  
 
   % ultimate
   L_i = L_m * l_i;                  % cm, ultimate structural length at f
   Lw_i = L_i/ del_M;                % cm, ultimate physical length at f
-  Ww_i = L_i^3 * (1 + f_field * w);       % g, ultimate wet weight 
+  Ww_i = L_i^3 * (1 + f_field * ome);       % g, ultimate wet weight 
  
   % reproduction
   pars_R = [kap, kap_R, g, k_J, k_M, L_T, v, U_Hb, U_Hj, U_Hp];
@@ -151,19 +151,34 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   %approachs actual value
   %RT_i3 = TC_Ri * reprod_rate_j(Lw_i, f, pars_R); %--> prediction = 94.7
   
- % L_b^3 = Ww_b / (1 + f * w) * 1e6  ; if i dont find the lenght but have
+ % L_b^3 = Ww_b / (1 + f * ome) * 1e6  ; if i dont find the lenght but have
  % the weight for the Ri data, use this equation
-  
-  
+    
   RT_i = TC_Ri * reprod_rate_j(Lw_i * del_M, f, pars_R); %--> prediction is 0
 
-%   
-   % life span
+% life span
   pars_tm = [g; l_T; h_a/ k_M^2; s_G];  % compose parameter vector at T_ref
   t_m = get_tm_s(pars_tm, f_field, l_b);      % -, scaled mean life span at T_ref
   aT_m = t_m/ k_M/ TC_am;               % d, mean life span at T
   
-  %pack to output
+  
+% males  
+  p_Amm = z_m * p_M/ kap;
+  E_mm     = p_Amm/v;             % J/cm^3, [E_m], reserve capacity 
+  m_Emm    = y_E_V * E_mm / E_G;   % mol/mol, reserve capacity
+  omem     = m_Emm * w_E * d_V/ d_E/ w_V; % -, \omega, contribution of ash free dry mass of reserve to total ash free dry biomass
+  gm       = E_G/ kap/ E_mm ;      % -, energy investment ratio
+  L_mm     = v/ k_M/ gm;           % cm, maximum length
+% L_mm = L_m; % assume males and females have same L_m (and L_i)because no data on ultimate length or weight for males vs females
+%   pars_tjm = [g k l_T v_Hb v_Hj v_Hpm];
+pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
+  [tau_jm, tau_pm, tau_bm, l_jm, l_pm, l_bm, l_im, rho_jm, rho_Bm] = get_tj(pars_tjm, f_field);
+%   tT_p_m = (tau_pm - tau_bm)/ k_M/ TC_ap; % d, time since birth at puberty
+  Lw_p_m = (L_mm * l_pm)/ del_M;                % cm, total length at puberty at f
+   Ww_p_m = (L_mm * l_pm)^3 *(1 + f * omem);        % g, wet weight at puberty 
+ 
+  
+%pack to output
   prdData.ah = aT_h;
   prdData.ab = aT_b;
   prdData.aj = aT_j; prdData.aj2 = aT_j; % age at START and END of metam. 
@@ -176,14 +191,16 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   prdData.Lh = Lw_h;
   prdData.Lb = Lw_b;
   prdData.Lj = Lw_j;prdData.Lj2 = Lw_j;
-  prdData.Lp_f = Lw_p; prdData.Lp_m = Lw_p; %lenght at puberty for females and males
+  prdData.Lp_f = Lw_p; 
+  prdData.Lp_m = Lw_p_m; %lenght at puberty for females and males
   prdData.Li = Lw_i;
   prdData.Wd0 = Wd_0;
   %prdData.Wwb = Ww_b;
   %prdData.Wwj0 = Ww_j; prdData.Wwj = Ww_j; % wet weight at START and END of metam. 
   % Because metamorphosis is modeled as a 'discrete event' rather than something lasting more days, 
   % the predicted value should fall between these two observed values
-  prdData.Wwp_f = Ww_p;prdData.Wwp_m = Ww_p; %wet weight at puberty for females and males
+  prdData.Wwp_f = Ww_p;
+  prdData.Wwp_m = Ww_p_m; %wet weight at puberty for females and males
   prdData.Wwi = Ww_i;
   prdData.Wdh = Wd_h;
   prdData.Wdb = Wd_b;
@@ -242,59 +259,59 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   EL_ji2 = L_i - (L_i - L_j) * exp( - rT_B * (tL2((tL2(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
   ELw2 = [EL_bj2; EL_ji2]/del_M; %TL2 is for juveniles all already metamorphosed
   
-   %t-L3 TeixCabr2010 females
+   %tL_f (t-L3) TeixCabr2010 females
   [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_TeixCabr);
-  kT_M2 = TC_tL3 * k_M;
+  kT_M2 = TC_tL_f * k_M;
   rT_B =  rho_B * kT_M2;  % 1/d, von Bert growth rate   
   rT_j =  rho_j * kT_M2;  % 1/d, exponential growth rate
   tT_j = (tau_j - tau_b)/ kT_M2; % time since birth at metamorphosis
 
   L_j = l_j * L_m; 
   L_i = l_i * L_m;
-  EL_bj3 = Lw_b * exp(tL3((tL3(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
-  EL_ji3 = L_i - (L_i - L_j) * exp( - rT_B * (tL3((tL3(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
-  ELw3 = [EL_bj3; EL_ji3]/del_M; 
+  EL_bj_f = Lw_b * exp(tL_f((tL_f(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
+  EL_ji_f = L_i - (L_i - L_j) * exp( - rT_B * (tL_f((tL_f(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
+  ELw_f = [EL_bj_f; EL_ji_f]/del_M; 
   
-   %t-L4 TeixCabr2010 males
-  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_TeixCabr2);
-  kT_M2 = TC_tL4 * k_M;
+   %tL_m (t-L4) TeixCabr2010 males
+  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tjm, f_TeixCabr2);
+  kT_M2 = TC_tL_m * k_M;
   rT_B =  rho_B * kT_M2;  % 1/d, von Bert growth rate   
   rT_j =  rho_j * kT_M2;  % 1/d, exponential growth rate
   tT_j = (tau_j - tau_b)/ kT_M2; % time since birth at metamorphosis
 
-  L_j = l_j * L_m; 
-  L_i = l_i * L_m;
-  EL_bj4 = Lw_b * exp(tL4((tL4(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
-  EL_ji4 = L_i - (L_i - L_j) * exp( - rT_B * (tL4((tL4(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
-  ELw4 = [EL_bj4; EL_ji4]/del_M; %
+  L_j = l_j * L_mm; 
+  L_i = l_i * L_mm;
+  EL_bj_m = Lw_b * exp(tL_m((tL_m(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
+  EL_ji_m = L_i - (L_i - L_j) * exp( - rT_B * (tL_m((tL_m(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
+  ELw_m = [EL_bj_m; EL_ji_m]/del_M; %
   
   
     
  %% % length-weight
  %lenght wet weight fish at 190, 398 and 790 days of age (manchado data)
-ELWw = (LWw(:,1) * del_M).^3 * (1 + f_field * w); 
+ELWw = (LWw(:,1) * del_M).^3 * (1 + f_field * ome); 
 
-% ELWw2 = (LWw2(:,1) * del_M).^3 * (1 + f_Man * w); %for females
-% ELWw3 = (LWw3(:,1) * del_M).^3 * (1 + f_Man * w); %for males
+ELWw_f = (LWw_f(:,1) * del_M).^3 * (1 + f_field * ome); %for females
+ELWw_m = (LWw_m(:,1) * del_M).^3 * (1 + f_field * omem); %for males
  
  
 %Length dry weight --> laboratory conditions assume ab libitum use f=1
 %LWd (OrtiFune2019)
 L1 = LWd(LWd(:,1)<data.Lj,1) * del_Me; % for data before metamorphosis
 L2 = LWd(LWd(:,1)>=data.Lj,1) * del_Me; % for data after metamorphosis
-ELWd1 = [L1; L2].^3 * d_V*(1 + f * w)*1e6; % ug, wet weight 
+ELWd1 = [L1; L2].^3 * d_V*(1 + f * ome)*1e6; % ug, wet weight 
 
 % here we assume that wga is the same before and after metamorphosis 
 
 %LWd2 (RibeEngr2017) --> they are all metamorphosed 
 %L3 = LWd2(LWd2(:,1)<data.Lj,1) * del_Me; %before metamorphosis
 L4 = LWd2(LWd2(:,1)>data.Lj,1) * del_Me; %after metamorphosis
-ELWd2 = L4.^3 * d_V* (1 + f * w)*1e6; % ug, dry weight 
+ELWd2 = L4.^3 * d_V* (1 + f * ome)*1e6; % ug, dry weight 
 
 %LWd3 (YufeParr1999)
 L5 = LWd3(LWd3(:,1)<data.Lj,1) * del_Me; %before metamorphosis
 L6 = LWd3(LWd3(:,1)>data.Lj,1) * del_M; %after metamorphosis
-ELWd3 = [L5; L6].^3 * d_V* (1 + f * w)*1e6; % ug, dry weight 
+ELWd3 = [L5; L6].^3 * d_V* (1 + f * ome)*1e6; % ug, dry weight 
 
 %% % time-dry weight
 % tWd (YufeParr1999)-->laboratory conditions assume ab libitum use f=1
@@ -309,7 +326,7 @@ ELWd3 = [L5; L6].^3 * d_V* (1 + f * w)*1e6; % ug, dry weight
   rT_B = rho_B * (k_M * TC_tWd);  
   L_bj = L_b * exp(tWd((tWd(:,1) <= tT_j1),1) * rT_j/ 3);
   L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd((tWd(:,1) > tT_j1),1) - tT_j1)); % cm, expected length at time
-  EWd = [L_bj; L_jm].^3 * d_V * (1 + f * w) * 1e6 ;
+  EWd = [L_bj; L_jm].^3 * d_V * (1 + f * ome) * 1e6 ;
   
  % tWd2 (ParrYufe2001) --> laboratory conditions assume ab libitum use f=1
   tT_j1 = (tau_j - tau_b)/(k_M * TC_tWd2);    % d, time since birth at metamorphosis corrected at 19 degrees for dry weight data
@@ -317,7 +334,7 @@ ELWd3 = [L5; L6].^3 * d_V* (1 + f * w)*1e6; % ug, dry weight
   rT_B = rho_B * (k_M * TC_tWd2);  
   L_bj = L_b * exp(tWd2((tWd2(:,1) <= tT_j1),1) * rT_j/ 3);
   L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd2((tWd2(:,1) > tT_j1),1) - tT_j1)); % cm, expected length at time
-  EWd2 = [L_bj; L_jm].^3 * d_V * (1 + f * w) * 1e6 ;
+  EWd2 = [L_bj; L_jm].^3 * d_V * (1 + f * ome) * 1e6 ;
   
  %tWd_Feeding regimes (CañaFern1999)
  %1 L100
@@ -327,7 +344,7 @@ rT_B = rho_B * (k_M * TC_tWd_f1);
 tT_j = (tau_j - tau_b)/ (k_M * TC_tWd_f1); 
 L_bj = L_b * exp(tWd_f1(tWd_f1(:,1) < tT_j,1) * rT_j/ 3); % cm length and weight during V1-morph period
 L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd_f1(tWd_f1(:,1) >= tT_j,1) - tT_j));   % cm, length after V1-morph period
-EWd_1 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern1 * w); % ug, dry weight
+EWd_1 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern1 * ome); % ug, dry weight
 
 % %2 L50
 [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_CanaFern2);
@@ -336,7 +353,7 @@ rT_B = rho_B * (k_M * TC_tWd_f2);
 tT_j = (tau_j - tau_b)/ (k_M * TC_tWd_f2); 
 L_bj = L_b * exp(tWd_f2(tWd_f2(:,1) < tT_j,1) * rT_j/ 3); % cm length and weight during V1-morph period
 L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd_f2(tWd_f2(:,1) >= tT_j,1) - tT_j));   % cm, length after V1-morph period
-EWd_2 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern2 * w); % ug, dry weight
+EWd_2 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern2 * ome); % ug, dry weight
   
 %   
 % %3 L100I50
@@ -346,7 +363,7 @@ rT_B = rho_B * (k_M * TC_tWd_f3);
 tT_j = (tau_j - tau_b)/ (k_M * TC_tWd_f3); 
 L_bj = L_b * exp(tWd_f3(tWd_f3(:,1) < tT_j,1) * rT_j/ 3); % cm length and weight during V1-morph period
 L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd_f3(tWd_f3(:,1) >= tT_j,1) - tT_j));   % cm, length after V1-morph period
-EWd_3 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern3 * w); % ug, dry weight
+EWd_3 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern3 * ome); % ug, dry weight
   
 %4 L50I50
 [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_CanaFern4);
@@ -355,7 +372,7 @@ rT_B = rho_B * (k_M * TC_tWd_f4);
 tT_j = (tau_j - tau_b)/ (k_M * TC_tWd_f4); 
 L_bj = L_b * exp(tWd_f4(tWd_f4(:,1) < tT_j,1) * rT_j/ 3); % cm length and weight during V1-morph period
 L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd_f4(tWd_f4(:,1) >= tT_j,1) - tT_j));   % cm, length after V1-morph period
-EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * w); % ug, dry weight
+EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * ome); % ug, dry weight
   
 %% data from Jose Moreira 
 % 
@@ -418,7 +435,7 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * w); % ug, dry weight
   L_0_p = length0.tWwA; L_0 = L_0_p * del_M;
   t_0 = - log((L_i-L_0)/(L_i-L_j)) / rT_B - tWwA(1,1);
   L = L_i - (L_i - L_j) * exp( - rT_B * (tWwA(:,1) + t_0)); % cm, struct length
-  Ww = L.^3 * (1 + f_exp * w);
+  Ww = L.^3 * (1 + f_exp * ome);
   EWwA = Ww; %g, wet weight
 %   
 %     %time wet weight B
@@ -432,7 +449,7 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * w); % ug, dry weight
   L_0_p = length0.tWwB; L_0 = L_0_p * del_M;
   t_0 = - log((L_i_s-L_0)/(L_i_s-L_j)) / rT_B_s - tWwB(1,1);
   L = L_i_s - (L_i_s - L_j) * exp( - rT_B_s * (tWwB(:,1) + t_0)); % cm, struct length
-  Ww = L.^3 * (1 + f_exp * w);
+  Ww = L.^3 * (1 + f_exp * ome);
   EWwB = Ww; %g, wet weight
 %   
     %time wet weight C
@@ -445,7 +462,7 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * w); % ug, dry weight
   L_0_p = length0.tWwC; L_0 = L_0_p * del_M;
   t_0 = - log((L_i-L_0)/(L_i-L_j)) / rT_B - tWwC(1,1);
   L = L_i - (L_i - L_j) * exp( - rT_B * (tWwC(:,1) + t_0)); % cm, struct length
-  Ww = L.^3 * (1 + f_exp * w);
+  Ww = L.^3 * (1 + f_exp * ome);
   EWwC = Ww; %g, wet weight
 %   
 %     %time wet weight D
@@ -459,7 +476,7 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * w); % ug, dry weight
   L_0_p = length0.tWwD; L_0 = L_0_p * del_M;
   t_0 = - log((L_i_s-L_0)/(L_i_s-L_j)) / rT_B_s - tWwD(1,1);
   L = L_i_s - (L_i_s - L_j) * exp( - rT_B_s * (tWwD(:,1) + t_0)); % cm, struct length
-  Ww = L.^3 * (1 + f_exp * w);
+  Ww = L.^3 * (1 + f_exp * ome);
   EWwD = Ww; %g, wet weight
 
 %% %time energy content in larvae
@@ -487,19 +504,19 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * w); % ug, dry weight
 %  % N-data
 %   rT_B = TC_tM_N * k_M/ 3/ (1 + f/ g);
 %   L = L_i - (L_i - L_b) * exp( - rT_B * tM_N(:,1));
-%  % EM_N = 1e6 * L.^3 * d_V * Y_N_W * (1 + f * w); %   ug N from
+%  % EM_N = 1e6 * L.^3 * d_V * Y_N_W * (1 + f * ome); %   ug N from
 %  % Moniliformis dubius --> what is Y_N_W?
-%    EM_N = 1e6 * L.^3 * d_V * (1 + f * w); %   ug N
+%    EM_N = 1e6 * L.^3 * d_V * (1 + f * ome); %   ug N
 
   % pack to output
 %   prdData.Tah = Eah;
   prdData.tL = ELw;
   prdData.tL2 =ELw2;
-  prdData.tL3 =ELw3;
-  prdData.tL4 =ELw4; 
+  prdData.tL_f =ELw_f;
+  prdData.tL_m =ELw_m; 
   prdData.LWw = ELWw;
-%   prdData.LWw2 = ELWw2;
-%   prdData.LWw3 = ELWw3;
+  prdData.LWw_f = ELWw_f;
+  prdData.LWw_m = ELWw_m;
 
 % prdData.T_dw = EWd_j; 
 % prdData.Ttbj = Etbj;
