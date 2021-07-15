@@ -465,7 +465,8 @@ units.temp.tWd_f4 = 'K'; label.temp.tWd_f4 = 'temperature';
 
 %%
 %Data time lenght from Jose 
-data.tLA = [ ... % time (d), total length (cm)
+data.tLA = [ ... % time since start of experiment (d), total length (cm)
+%pH 8.0:
 0	13.3
 0	12
 0	12.5
@@ -491,14 +492,8 @@ data.tLA = [ ... % time (d), total length (cm)
 61	14.5
 61	15.0
 75	17.2
-75	16.5];
-units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};  
-temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature';
-length0.tLA = mean(data.tLA((data.tLA(:,1)==0),2)); units.length0.tLA = 'cm'; label.length0.tLA = 'initial length';
-bibkey.tLA = 'MARE2019';
-comment.tLA = 'T 19ºC pH 8.0';
-
-data.tLB = [ ... % time (d), total length (cm)
+75	16.5
+%pH 7.7:
 0	14.7
 0	16.5
 0	13.5
@@ -524,13 +519,15 @@ data.tLB = [ ... % time (d), total length (cm)
 61	16.4
 75	16.1
 75	18.4];
-units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};  
-temp.tLB    = C2K(19);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
-length0.tLB = mean(data.tLB((data.tLB(:,1)==0),2)); units.length0.tLB = 'cm'; label.length0.tLB = 'initial length';
-bibkey.tLB = 'MARE2019';
-comment.tLB = 'T 19ºC pH 7.7';
-% 
-data.tLC = [ ... % time (d), total length (cm)
+data.tLA(:,1) = data.tLA(:,1) + 242; %time since start of experiment to time since birth
+units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};  
+temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature during experiment';
+temp2.tLA   = C2K(20);  units.temp.tLA = 'K'; label.temp.tLA = 'average temperature since birth until start of experiment';
+bibkey.tLA = 'MARE2019';
+comment.tLA = 'T 19ºC pH 8.0 and 7.7';
+
+data.tLB = [ ... % time since start of experiment (d), total length (cm)
+%pH 8.0:
 0	12
 0	13
 0	12.5
@@ -557,14 +554,8 @@ data.tLC = [ ... % time (d), total length (cm)
 61	18.8
 61	18.0
 75	17.1
-75	18.6];
-units.tLC   = {'d', 'cm'};  label.tLC = {'time', 'total length'};  
-temp.tLC    = C2K(23);  units.temp.tLC = 'K'; label.temp.tLC = 'temperature';
-length0.tLC = mean(data.tLC((data.tLC(:,1)==0),2)); units.length0.tLC = 'cm'; label.length0.tLC = 'initial length';
-bibkey.tLC = 'MARE2019';
-comment.tLC = 'T 23ºC pH 8.0';
-% 
-data.tLD = [ ... % time (d), total length (cm)
+75	18.6
+%pH 7.7:
 0	12.3
 0	13.7
 0	13.6
@@ -591,15 +582,17 @@ data.tLD = [ ... % time (d), total length (cm)
 61	20.7
 61	17.3
 75	18.9];
-units.tLD   = {'d', 'cm'};  label.tLD = {'time', 'total length'};  
-temp.tLD    = C2K(23);  units.temp.tLD = 'K'; label.temp.tLD = 'temperature';
-length0.tLD = mean(data.tLD((data.tLD(:,1)==0),2)); units.length0.tLD = 'cm'; label.length0.tLD = 'initial length';
-bibkey.tLD = 'MARE2019';
-comment.tLD = 'T 23ºC pH 7.7';
+data.tLB(:,1) = data.tLB(:,1) + 242; %time since start of experiment to time since birth
+units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};  
+temp.tLB    = C2K(23);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
+temp2.tLB   = C2K(20);  units.temp.tLB = 'K'; label.temp.tLB = 'average temperature since birth until start of experiment';
+bibkey.tLB = 'MARE2019';
+comment.tLB = 'T 23ºC pH 8.0';
 
 %% time wet weight Jose
 % 
-data.tWwA = [ ... % time (d), wet weight (g)
+data.tWwA = [ ... % time since start of experiment (d), wet weight (g)
+%pH 8.0:
 0	27.88
 0	27.2
 0	20.95
@@ -641,14 +634,8 @@ data.tWwA = [ ... % time (d), wet weight (g)
 61	65.24
 61	47.33
 75	53.58
-75	46.56];
-units.tWwA   = {'d', 'g'};  label.tWwA = {'time', 'wet weight'};   
-temp.tWwA    = C2K(19);  units.temp.tWwA = 'K'; label.temp.tWwA = 'temperature';
-length0.tWwA = mean(data.tLA((data.tLA(:,1)==0),2)); units.length0.tLA = 'cm'; label.length0.tLA = 'initial length';
-bibkey.tWwA = 'MARE2019';
-comment.tWwA = 'T 19ºC pH 8.0';
-
-data.tWwB = [ ... % time (d), wet weight (g)
+75	46.56
+%pH 7.7:
 0	33.86
 0	35.53
 0	30.66
@@ -691,13 +678,15 @@ data.tWwB = [ ... % time (d), wet weight (g)
 61	69.88
 75	58.33
 75	74.44];
-units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};   
-temp.tWwB    = C2K(19);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
-length0.tWwB = mean(data.tLB((data.tLB(:,1)==0),2)); units.length0.tWwB = 'cm'; label.length0.tWwB = 'initial length';
-bibkey.tWwB = 'MARE2019';
-comment.tWwB = 'T 19ºC pH 7.7';
-% 
-data.tWwC = [ ... % time (d), wet weight (g)
+data.tWwA(:,1) = data.tWwA(:,1) + 242; %time since start of experiment to time since birth
+units.tWwA   = {'d', 'g'};  label.tWwA = {'time', 'wet weight'};   
+temp.tWwA    = C2K(19);  units.temp.tWwA = 'K'; label.temp.tWwA = 'temperature';
+temp2.tWwA   = C2K(20);  units.temp.tWwA = 'K'; label.temp.tWwA = 'average temperature since birth until start of experiment';
+bibkey.tWwA = 'MARE2019';
+comment.tWwA = 'T 19ºC pH 8.0 and 7.7';
+
+data.tWwB = [ ... % time since start of experiment (d), wet weight (g)
+%pH 8.0:
 0	30.69
 0	29.37
 0	26.78
@@ -739,14 +728,8 @@ data.tWwC = [ ... % time (d), wet weight (g)
 61	80.48
 75	80.36
 75	45.67
-75	105.41];
-units.tWwC   = {'d', 'g'};  label.tWwC = {'time', 'wet weight'};  
-temp.tWwC    = C2K(23);  units.temp.tWwC = 'K'; label.temp.tWwC = 'temperature';
-length0.tWwC = mean(data.tLC((data.tLC(:,1)==0),2)); units.length0.tLC = 'cm'; label.length0.tLC = 'initial length';
-bibkey.tWwC = 'MARE2019';
-comment.tWwC = 'T 23ºC pH 8.0';
-% 
-data.tWwD = [ ... % time (d), wet weight (g)
+75	105.41
+%pH 7.7:
 0	24.9
 0	23.34
 0	25.23
@@ -789,11 +772,12 @@ data.tWwD = [ ... % time (d), wet weight (g)
 61	118.18
 61	117.48
 75	102.33];
-units.tWwD   = {'d', 'g'};  label.tWwD = {'time', 'wet weight'};  
-temp.tWwD    = C2K(23);  units.temp.tWwD = 'K'; label.temp.tWwD = 'temperature';
-length0.tWwD = mean(data.tLD((data.tLD(:,1)==0),2)); units.length0.tLD = 'cm'; label.length0.tLD = 'initial length';
-bibkey.tWwD = 'MARE2019';
-comment.tWwD = 'T 23ºC pH 7.7';
+data.tWwB(:,1) = data.tWwB(:,1) + 242; %time since start of experiment to time since birth
+units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};   
+temp.tWwB    = C2K(23);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
+temp2.tWwB   = C2K(20);  units.temp.tWwB = 'K'; label.temp.tWwB = 'average temperature since birth until start of experiment';
+bibkey.tWwB = 'MARE2019';
+comment.tWwB = 'T 23ºC pH 8.0 and 7.7';
 
 
 
@@ -817,7 +801,7 @@ weights.Lp_m = 5 * weights.Lp_m;
 
 %% pack auxData and txtData for output
 auxData.temp = temp;
-auxData.length0 = length0;
+auxData.temp2 = temp2;
 txtData.units = units;
 txtData.label = label;
 txtData.bibkey = bibkey;
@@ -830,12 +814,10 @@ set10 = {'LWw','LWw_f', 'LWw_m'}; comment10 = {'Manchado -persComm: all (red), f
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
 set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CañaFern1999'};
 set5 = {'tL_f','tL_m'}; comment5 = { 'females (red), males (blue)'};
-set6 = {'tLD','tLB'}; comment6 = {'D (red, 23C) and B (blue, 19C), pH 7.7'}; 
-set7 = {'tLC','tLA'}; comment7 = { 'C (red, 23C) and A (blue, 19C), pH 8'}; 
-set8 = {'tWwC','tWwA'}; comment8 = {'C (red, 19C) and A (blue, 19C), pH 8'};
-set9 = {'tWwD','tWwB'}; comment9 = {'D (red, 19C) and B (blue, 19C), pH 7.7'}; 
-metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7,set8,set9,set10};
-metaData.grp.comment = {comment1, comment2,comment3,comment4,comment5,comment6,comment7,comment8,comment9,comment10};
+set6 = {'tLA','tLB'}; comment6 = {'B (red, 19ºC) and D (blue, 23ºC)'}; 
+set7 = {'tWwA','tWwB'}; comment7 = {'A (red, 19ºC) and C (blue, 23ºC)'};
+metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7};
+metaData.grp.comment = {comment1, comment2,comment3,comment4,comment5,comment6,comment7};
 
 %% Facts
 F1 = 'Senegalese sole females grow faster and mature later than males';
