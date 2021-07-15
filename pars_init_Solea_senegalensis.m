@@ -43,7 +43,6 @@ par.f_exp = 1;        free.f_exp = 1;   units.f_exp = '-';        label.f_exp = 
 par.f_field = 0.9997;  free.f_field = 0;   units.f_field = '-';      label.f_field = 'scaled functional response for 0-var data fromthe field'; 
 par.f_tL = 0.9973;    free.f_tL  = 0;   units.f_tL = '-';         label.f_tL = 'scaled functional response for tL data'; 
 par.f_tL2 = 0.4401;   free.f_tL2 = 0;   units.f_tL2 = '-';        label.f_tL2 = 'scaled functional response for tL2 data'; 
-par.s_pH = 0;         free.s_pH  = 0;   units.s_pH = '-';         label.s_pH = 'stress factor due to pH level'; 
 par.z_m = 4.0593;       free.z_m     = 1;   units.z_m = '-';            label.z_m = 'zoom factor for males'; 
 
 %% set chemical parameters from Kooy2010 
