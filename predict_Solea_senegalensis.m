@@ -4,16 +4,17 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   cPar = parscomp_st(par); vars_pull(par); 
   vars_pull(cPar);  vars_pull(data);  vars_pull(auxData);
 
+  f_field = f ; % f for field and zero-var data
   
  % filters <-- you need the 'abj' specific filter (with s_M)
- filterChecks =   E_Hh > E_Hb || E_Hh <= 0 || f_field > 1 || f_tL > 1 || f_tL2 > 1 || ... % maturity at hatching has to be between 0 and Ehb
-     f_tL < 0.1 || f_tL2 < 0.1 || f_exp > 1 || ...
+ filterChecks =   E_Hh > E_Hb || E_Hh <= 0 || f > 1 || f_tL > 1 || f_RibeEngr > 1 || ... % maturity at hatching has to be between 0 and Ehb
+     f_tL < 0.1 || f_RibeEngr < 0.1 || f_exp > 1 || ...
      ~reach_birth(g, k, v_Hb, f_tL) || ... % constraint required for reaching birth with that f
-     ~reach_birth(g, k, v_Hb, f_tL2) ; %|| ...  % constraint required for reaching birth with that f
+     ~reach_birth(g, k, v_Hb, f_RibeEngr) ; %|| ...  % constraint required for reaching birth with that f
    
-  %~reach_birth(g, k, v_Hb, f_field) || ...
+  %~reach_birth(g, k, v_Hb, f) || ...
  
-  % k * v_Hp >= f_field^3 || ... % constraint constraint required for reaching puberty with f_field
+  % k * v_Hp >= f^3 || ... % constraint constraint required for reaching puberty with f_field
 %      ~reach_birth(g, k, v_Hb, f_TeixCabr) || ... % constraint required for reaching birth with that f
 %      k * v_Hp >= f_TeixCabr^3 || ... % constraint constraint required for reaching puberty with f_TeixCabr
 %      ~reach_birth(g, k, v_Hb, f_TeixCabr2) || ... % constraint required for reaching birth with that f
@@ -246,7 +247,7 @@ pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
   ELw = [EL_bj/del_Me; EL_ji/del_M]; % catenate lengths
   
   % tL2 RibeEngr2017 only juveniles
-  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_tL2);
+  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_RibeEngr);
   kT_M2 = TC_tL2 * k_M;
   rT_B =  rho_B * kT_M2;  % 1/d, von Bert growth rate   
   rT_j =  rho_j * kT_M2;  % 1/d, exponential growth rate
@@ -273,7 +274,7 @@ pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
   ELw_f = [EL_bj_f; EL_ji_f]/del_M; 
   
    %tL_m (t-L4) TeixCabr2010 males
-  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tjm, f_TeixCabr2);
+  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tjm, f_TeixCabr);
   kT_M2 = TC_tL_m * k_M;
   rT_B =  rho_B * kT_M2;  % 1/d, von Bert growth rate   
   rT_j =  rho_j * kT_M2;  % 1/d, exponential growth rate
@@ -298,24 +299,23 @@ ELWw_m = (LWw_m(:,1) * del_M).^3 * (1 + f_field * omem); %for males
 %Length dry weight --> laboratory conditions assume ab libitum use f=1
 %LWd (OrtiFune2019)
 L1 = LWd(LWd(:,1)<data.Lj,1) * del_Me; % for data before metamorphosis
-L2 = LWd(LWd(:,1)>=data.Lj,1) * del_Me; % for data after metamorphosis
-ELWd1 = [L1; L2].^3 * d_V*(1 + f * ome)*1e6; % ug, wet weight 
+L2 = LWd(LWd(:,1)>=data.Lj,1) * del_M; % for data after metamorphosis
+ELWd1 = [L1; L2].^3 * d_V*(1 + f_YufeParr * ome)*1e6; % ug, wet weight 
 
 % here we assume that wga is the same before and after metamorphosis 
 
-%LWd2 (RibeEngr2017) --> they are all metamorphosed 
-%L3 = LWd2(LWd2(:,1)<data.Lj,1) * del_Me; %before metamorphosis
-L4 = LWd2(LWd2(:,1)>data.Lj,1) * del_Me; %after metamorphosis
-ELWd2 = L4.^3 * d_V* (1 + f * ome)*1e6; % ug, dry weight 
+%LWd2 (YufeParr1999)
+L3 = LWd2(LWd2(:,1)<data.Lj,1) * del_Me; %before metamorphosis
+L4 = LWd2(LWd2(:,1)>data.Lj,1) * del_M; %after metamorphosis
+ELWd2 = [L3; L4].^3 * d_V* (1 + f_YufeParr * ome)*1e6; % ug, dry weight 
 
-%LWd3 (YufeParr1999)
-L5 = LWd3(LWd3(:,1)<data.Lj,1) * del_Me; %before metamorphosis
-L6 = LWd3(LWd3(:,1)>data.Lj,1) * del_M; %after metamorphosis
-ELWd3 = [L5; L6].^3 * d_V* (1 + f * ome)*1e6; % ug, dry weight 
+
+%LWd3 (RibeEngr2017) --> they are all metamorphosed 
+ELWd3 = (LWd3(:,1) * del_M).^3 * d_V* (1 + f_RibeEngr * ome)*1e6; % ug, dry weight 
 
 %% % time-dry weight
 % tWd (YufeParr1999)-->laboratory conditions assume ab libitum use f=1
-  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
+  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_YufeParr);
   L_b = l_b * L_m; 
   L_j = l_j * L_m; 
   L_i = l_i * L_m;
@@ -326,7 +326,7 @@ ELWd3 = [L5; L6].^3 * d_V* (1 + f * ome)*1e6; % ug, dry weight
   rT_B = rho_B * (k_M * TC_tWd);  
   L_bj = L_b * exp(tWd((tWd(:,1) <= tT_j1),1) * rT_j/ 3);
   L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd((tWd(:,1) > tT_j1),1) - tT_j1)); % cm, expected length at time
-  EWd = [L_bj; L_jm].^3 * d_V * (1 + f * ome) * 1e6 ;
+  EWd = [L_bj; L_jm].^3 * d_V * (1 + f_YufeParr * ome) * 1e6 ;
   
  % tWd2 (ParrYufe2001) --> laboratory conditions assume ab libitum use f=1
   tT_j1 = (tau_j - tau_b)/(k_M * TC_tWd2);    % d, time since birth at metamorphosis corrected at 19 degrees for dry weight data
@@ -334,7 +334,7 @@ ELWd3 = [L5; L6].^3 * d_V* (1 + f * ome)*1e6; % ug, dry weight
   rT_B = rho_B * (k_M * TC_tWd2);  
   L_bj = L_b * exp(tWd2((tWd2(:,1) <= tT_j1),1) * rT_j/ 3);
   L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd2((tWd2(:,1) > tT_j1),1) - tT_j1)); % cm, expected length at time
-  EWd2 = [L_bj; L_jm].^3 * d_V * (1 + f * ome) * 1e6 ;
+  EWd2 = [L_bj; L_jm].^3 * d_V * (1 + f_YufeParr * ome) * 1e6 ;
   
  %tWd_Feeding regimes (CañaFern1999)
  %1 L100
@@ -407,7 +407,7 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * ome); % ug, dry weight
   %after start of experiment:
   kT_M = k_M * TC_WA; rT_B = rho_B * kT_M;
   L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tWwA(:,1) - tWwA(1,1))); % cm, expected length at time
-  EWwA = L_starti.^3 * (1 + f_exp * w); % g, wet weight
+  EWwA = L_starti.^3 * (1 + f_exp * ome); % g, wet weight
   
   %PA wet weight B
   [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp);
@@ -418,7 +418,7 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * ome); % ug, dry weight
   %after start of experiment:
   kT_M = k_M * TC_WB; rT_B = rho_B * kT_M;
   L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tWwB(:,1) - tWwB(1,1))); % cm, expected length at time
-  EWwB = L_starti.^3 * (1 + f_exp * w); % g, wet weight
+  EWwB = L_starti.^3 * (1 + f_exp * ome); % g, wet weight
 
 %% %time energy content in larvae
 

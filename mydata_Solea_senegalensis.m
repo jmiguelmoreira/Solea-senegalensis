@@ -14,11 +14,15 @@ metaData.data_0     = {'ah';'ab';'tj';'aj';'ap';'am';'Lh';'Lb';'Lp';'Li';'Wwh';'
 metaData.data_1     = {'t-L';'t-L';'L-Ww';'L-Wd';'t-Wd';'t-Ww'}; % uni-variate data labels:  http://www.debtheory.org/wiki/index.php?title=Univariate_data 
 
 metaData.COMPLETE = 3.5; % using criteria of LikaKear2011 http://www.debtheory.org/wiki/index.php?title=Completeness
-metaData.author   = {'Adriana Sardi'; 'Nina Marn'};    
-metaData.date_subm = [2019 06 19];              
+
+metaData.author   = {'Adriana Sardi'; 'Jose Moreira'};    
+metaData.date_subm = [2021 07 19];              
 metaData.email    = {'adriana.sardi@u-bordeaux.fr'};            
 metaData.address  = {'University of Bordeaux'};   
 
+metaData.curator     = {'Nina Marn'};
+metaData.email_cur   = {'nmarn@irb.hr'}; 
+metaData.date_acc    = [2021 07 29];
 %% set data
 % zero-variate data
 
@@ -230,7 +234,7 @@ LWw4 = [500	510	390	420	420	460	450	500	460	410	460	430	450	420	500	470	460	460	
 data.LWw = [LWw1; LWw2; LWw3]; %LWw4]; % concatenate all LWw except for adults -- used below
 data.LWw(:,1) = data.LWw(:,1)/10; % to cm
 units.LWw = { 'cm' , 'g'}; label.LWw = {'total length', 'wet weigth'}; 
-bibkey.LWw = 'MancPC';
+bibkey.LWw = 'MancPC'; comment.LWw = 'non-reproducing (juveniles), up to 790 days of age';
 
 
 data.LWw_f =[... length (mm) weight (g) females
@@ -239,8 +243,8 @@ data.LWw_f =[... length (mm) weight (g) females
     ]';% end data reproductors
 %
 data.LWw_f(:,1) = data.LWw_f(:,1)/10; % to cm
-units.LWw_f = { 'cm' , 'g'}; label.LWw_f = {'total length females', 'wet weigth'};
-bibkey.LWw_f = 'MancPC';
+units.LWw_f = { 'cm' , 'g'}; label.LWw_f = {'total length', 'wet weigth'};
+bibkey.LWw_f = 'MancPC'; comment.LWw_f = 'females';
 %
 %
 data.LWw_m =[... length (mm) weight (g) machos
@@ -250,7 +254,7 @@ data.LWw_m =[... length (mm) weight (g) machos
 
 data.LWw_m(:,1) = data.LWw_m(:,1)/10; % to cm
 units.LWw_m = { 'cm' , 'g'}; label.LWw_m = {'total length', 'wet weigth'}; 
-bibkey.LWw_m = 'MancPC';
+bibkey.LWw_m = 'MancPC'; comment.LWw_m = 'males';
 
 %L-Wd
 data.LWd = [... % total length (cm) dry weigth (ug)
@@ -264,17 +268,6 @@ bibkey.LWd = 'OrtiFune2019';
 
 %L-Wd2
 data.LWd2 = [ ... %total length (cm) dry weigth (ug)
-1.3	3400
-1.5	4700
-1.7	7700
-1.7	7400
-1.9	9900
-2.2	17900];
-units.LWd2 = {'cm', 'ug'}; label.LWd2 = {'total length', 'dry weigth'}; 
-bibkey.LWd2 = 'RibeEngr2017';
-
-%L-Wd3
-data.LWd3 = [... %total length (cm) dry weigth (ug)
 0.138	32.5
 0.238	33.2
 0.248	29.9
@@ -287,8 +280,19 @@ data.LWd3 = [... %total length (cm) dry weigth (ug)
 0.637	464.7
 0.686	553.4
 0.918	1281.2]; 
+units.LWd2 = {'cm', 'ug'}; label.LWd2 = {'total length', 'dry weigth'}; 
+bibkey.LWd2 = 'YufeParr1999';
+
+%L-Wd3
+data.LWd3 = [... %total length (cm) dry weigth (ug)
+1.3	3400
+1.5	4700
+1.7	7700
+1.7	7400
+1.9	9900
+2.2	17900];
 units.LWd3 = {'cm', 'ug'}; label.LWd3 = {'total length', 'dry weigth'}; 
-bibkey.LWd3 = 'YufeParr1999';
+bibkey.LWd3 = 'RibeEngr2017';
 
 
 %t-Wd data
@@ -322,10 +326,10 @@ data.tWd = [ ... % time (days from hatching),  dry weigth of larvae in ug
 17	1683.8
 ];
 
-%data.tWd(:,1) = data.tWd(:,1) - data.ab;
+data.tWd(:,1) = data.tWd(:,1) - 3;
 %data.tWd(1:6,:) = []; data.tWd(:,1) = data.tWd(:,1) - data.tWd(1,1) ;   % remove everything before birth
 
-units.tWd = {'d','ug'}; label.tWd = {'time since hatching','Dry weigth of larvae along development'};
+units.tWd = {'d','ug'}; label.tWd = {'time since birth','Dry weigth of larvae along development'};
 bibkey.tWd = 'YufeParr1999'; 
 comment.tWd = {'mouth openning at day 3, metamorphosis at day 14 ph reared at 19.5 degrees C'}; %
 temp.tWd = C2K(19.5);
@@ -350,7 +354,7 @@ data.tWd2 = [ ... % time (days from hatching),  dry weigth of larvae in ug
 26	2003.2
 26	1379.2 ];
 
-data.tWd2(:,1) = data.tWd2(:,1) - data.ab;  
+data.tWd2(:,1) = data.tWd2(:,1) - 3; %correct to time since birth  
 units.tWd2 = {'d','ug'}; label.tWd2 = {'time since birth','Dry weigth of larvae along development'};
 bibkey.tWd2 = 'ParrYufe2001'; 
 comment.tWd2 = {'mouth openning at day 3, metamorphosis at day 14 ph reared at 19.5 degrees C'}; % <-- reared at 19.5 after metam?
@@ -809,15 +813,15 @@ txtData.comment = comment;
 
 %% Group plots
 set1 = {'tL','tL2'}; comment1 = {'RibeSara1999 and RibeEngr2017'};
-set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, RibeEngr2017 and YufeParr1999'};
-set10 = {'LWw','LWw_f', 'LWw_m'}; comment10 = {'Manchado -persComm: all (red), females (magenta), males (blue)'}; 
+set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, YufeParr1999 and RibeEngr2017'};
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
 set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CaÃ±aFern1999'};
 set5 = {'tL_f','tL_m'}; comment5 = { 'females (red), males (blue)'};
-set6 = {'tLA','tLB'}; comment6 = {'B (red, 19ÂºC) and D (blue, 23ÂºC)'}; 
-set7 = {'tWwA','tWwB'}; comment7 = {'A (red, 19ÂºC) and C (blue, 23ÂºC)'};
-metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7};
-metaData.grp.comment = {comment1, comment2,comment3,comment4,comment5,comment6,comment7};
+set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ºC) and B (blue, 19ºC)'}; 
+set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ºC) and A (blue, 19ºC)'};
+set8 = {'LWw','LWw_f', 'LWw_m'}; comment8 = {'Manchado -persComm: all (red), females (magenta), males (blue)'}; 
+metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7, set8};
+metaData.grp.comment = {comment1, comment2,comment3,comment4,comment5,comment6,comment7,comment8};
 
 %% Facts
 F1 = 'Senegalese sole females grow faster and mature later than males';
