@@ -10,15 +10,15 @@ metaData.family     = 'Soleidae';
 metaData.species    = 'Solea_senegalensis'; 
 metaData.species_en = 'Senegalense sole'; 
 metaData.T_typical  = C2K(20); % K, body temp
-metaData.data_0     = {'ah';'ab';'tj';'aj';'ap';'am';'Lh';'Lb';'Lp';'Li';'Wwh';'Wwb';'Wdh';'Wdb';'Ri'}; % zero-variate data labels: http://www.debtheory.org/wiki/index.php?title=Zero-variate_data
-metaData.data_1     = {'t-L';'t-L';'L-Ww';'L-Wd';'t-Wd';'t-Ww'}; % uni-variate data labels:  http://www.debtheory.org/wiki/index.php?title=Univariate_data 
+metaData.data_0     = {'ah';'ab';'aj';'ap';'am';'tj';'L0';'Lh';'Lb';'Lp_f';'Lp_m';'Li';'Wwp_f';'Wwp_m';'Wd0';'Wdh';'Wdb';'Wdj';'Ri';'E0'}; % zero-variate data labels: http://www.debtheory.org/wiki/index.php?title=Zero-variate_data
+metaData.data_1     = {'t-L';'t-L2';'t-L_f';'t-L_m;''L-Ww';'L-Wd';'t-Wd';'t-Ww'}; % uni-variate data labels:  http://www.debtheory.org/wiki/index.php?title=Univariate_data 
 
 metaData.COMPLETE = 3.5; % using criteria of LikaKear2011 http://www.debtheory.org/wiki/index.php?title=Completeness
 
 metaData.author   = {'Adriana Sardi'; 'Jose Moreira'};    
 metaData.date_subm = [2021 07 19];              
-metaData.email    = {'adriana.sardi@u-bordeaux.fr'};            
-metaData.address  = {'University of Bordeaux'};   
+metaData.email    = {'adrianasardi@gmail.com';'j.miguel.moreira@tecnico.ulisboa.pt'};            
+metaData.address  = {'University of Bordeaux'; 'University of Lisbon'};   
 
 metaData.curator     = {'Nina Marn'};
 metaData.email_cur   = {'nmarn@irb.hr'}; 
@@ -64,7 +64,7 @@ data.tj2 = 15;   units.tj2 = 'd';    label.tj2 = 'time since birth at END of met
 
 %___________   
 % LENGTHS
-%data.L0 = 0.1; units.L0 = 'cm'; label.L0  = 'egg diameter'; bibkey.L0  = 'YufeParr1999';  
+data.L0 = 0.1; units.L0 = 'cm'; label.L0  = 'egg diameter'; bibkey.L0  = 'YufeParr1999';  
 data.Lh = 0.1382;   units.Lh  = 'cm';  label.Lh  = 'total length at hatching';          bibkey.Lh  = 'YufeParr1999';  
 data.Lb  = 0.2484;   units.Lb  = 'cm';  label.Lb  = 'total length at birth';          bibkey.Lb  = 'YufeParr1999';
     comment.Lb = 'length at day 2 post hatching when mouth opening occurs';
@@ -75,8 +75,6 @@ data.Lj  = 0.6857;   units.Lj  = 'cm';  label.Lj  = 'total length at start of me
 data.Lj2 = 0.9176 ; units.Lj2 = 'cm'; label.Lj2 = 'total length at end of metamorphosis'; bibkey.Lj2  = 'YufeParr1999';  
     comment.Lj2 = 'length at day 20 post hatching when metamorphosis ends'; 
 
-%data.Lp  = 32;   units.Lp  = 'cm';  label.Lp  = 'total length at puberty in females';        bibkey.Lp  = 'FAO2019'; 
-
 data.Lp_f  = 38;   units.Lp_f  = 'cm';  label.Lp_f  = 'total length at puberty in females';        bibkey.Lp_f  = 'MancPC'; 
 data.Lp_m  = 33;   units.Lp_m  = 'cm';  label.Lp_m  = 'total length at puberty in males';        bibkey.Lp_m  = 'MancPC'; 
 
@@ -84,8 +82,7 @@ data.Li  = 52;   units.Li  = 'cm';  label.Li  = 'ultimate total length';        
     comment.Li = 'average size between 40 cm';
     %maximal lenght ever recorded is 70 cm, ref FAO
     %maximal lenght ever recorded is 60 (male) cm, ref Fishbase
-    
-    
+       
 %___________   
 %DRY WEIGTHS
 data.Wd0 = 46.15*1e-6; units.Wd0 = 'g'; label.Wd0 = 'egg dry weigth' ; bibkey.Wd0 = 'YufeParr1999';  
@@ -102,25 +99,12 @@ data.Wdj2 = 1281 ; units.Wdj2 = 'ug'; label.Wdj2 = 'dry weight at END of metamor
     
 %___________   
 %WET WEIGTHS
-%wet weights  --> I remove these data entries because I now hesitate if they are dry weigth.  
-% data.Wwb = 0.042*1e3;   units.Wwb = 'ug';   label.Wwb = 'wet weight at birth';    bibkey.Wwb = 'DiniRibe1999'; %check the source
-%     comment.Wwb = 'taken from a graph'; 
-% 
-% data.Wwj0 = 328;   units.Wwj0 = 'ug';   label.Wwj0 = 'wet weight at START of metamorphosis, in micrograms';    bibkey.Wwj = 'DiniRibe1999';
-%     comment.Wwj0 = 'zero weight in par estimation';
-%     
-% data.Wwj = 1600;   units.Wwj = 'ug';   label.Wwj = 'calculated wet weight at END of metamorphosis, in micrograms';    bibkey.Wwj = 'YufeParr1999';
-%     comment.Wwj = 'calculated from mean dry weight and d_V  = 0.2';
-% 
-data.Wwp_f = 850;   units.Wwp_f = 'g';   label.Wwp_f = 'wet weight at puberty';          bibkey.Wwp_f = 'Manchado_pers_communication';
-data.Wwp_m = 650;   units.Wwp_m = 'g';   label.Wwp_m = 'wet weight at puberty';          bibkey.Wwp_m = 'Manchado_pers_communication';
 
-% data.Wwi = 1425;   units.Wwi = 'g';   label.Wwi = 'ultimate wet weight';            bibkey.Wwi = 'fishbase';
-%     comment.WWi = 'Standard weight computed from Bayesian length-weight W = aLi^b with a= 0.00832 and b =3.05';
-%     
-     %a=0.00832 (0.00520 - 0.01330), b=3.05 (2.91 - 3.19)
-     
-data.Wwi = 1830;   units.Wwi = 'g';   label.Wwi = 'ultimate wet weight';            bibkey.Wwi = 'Manchado_pers_communication';
+data.Wwp_f = 850;   units.Wwp_f = 'g';   label.Wwp_f = 'wet weight at puberty';          bibkey.Wwp_f = 'MancPC';
+data.Wwp_m = 650;   units.Wwp_m = 'g';   label.Wwp_m = 'wet weight at puberty';          bibkey.Wwp_m = 'MancPC';
+
+    
+data.Wwi = 1830;   units.Wwi = 'g';   label.Wwi = 'ultimate wet weight';            bibkey.Wwi = 'MancPC';
     comment.WWi = 'average weight of females and males at reproductive stage';
       
 
@@ -128,21 +112,6 @@ data.Ri  = 4160;   units.Ri  = '#/d'; label.Ri  = 'maximum reprod rate per day';
 temp.Ri = C2K(18.5);    units.temp.Ri = 'K'; label.temp.Ri = 'temperature';
     comment.Ri = 'Total weight of eggs daily collection of S. senegalensis during the spawning seasons of 1996 and 1997 divided by Wd of egg and 365';
 %     
- %Anguis and Canavete table 1
-  
- %another source for calculating Ri, 
- % Spawning of captive Senegal sole (Solea senegalensis) under a naturally fluctuating temperature regime
-% March 2005Aquaculture 243:133-145
-% DOI: 10.1016/j.aquaculture.2004.09.026
-% V. AnguisJose Pedro CanavateJose Pedro Canavate
- 
-    
-
- % female initial weigth 1840 tank A and 2192 g tank B. Fecundity in 2002 only.
- %Tank A: 5797 eggs/day in at the maximum daily fecundity (18-19 C)using 1840 g -->    1.15*10^6 * 1.840 / 365
- %Tank B: 7506 eggs/day in at the minimum daily fecundity (18-19 C)using 2016 g -->      1.25*10^6 * 2.192 / 365
- % average: 6651 
- % 
 % energy
 data.E0 = 1;    units.E0 = 'J';   label.E0 = 'reserve energy in egg'; bibkey.E0 = 'YufeParr1999'; 
  
@@ -422,53 +391,8 @@ temp.tWd_f4 = C2K(19);
 units.temp.tWd_f4 = 'K'; label.temp.tWd_f4 = 'temperature'; 
 
 
-%t-E energy content
-
-% data.tE = [ ...%time since hatching (d), energy (J mg-1)
-% 1	20.1
-% 3	19.5
-% 6	19.1
-% 8	21.4
-% 11	23.1
-% 14	22.9 %start metamorphosis
-% 17	20.6 
-% 20	20.6 %ends metamorphosis 
-% 26	21.5 ];
-% data.tE(:,2) = data.tE(:,2)*20/3; % 3 subsamples, total of 20 mg each
-% units.tE = {'d','J'}; label.tE ={ 'time since hatching', 'Energy content'};
-% bibkey.tE = {'ParrYufe2001'};
-% comment.tE = {'Energy content was determined using a semimicro bomb calorimeter (Parr 1421) using 3 samples weighing approximately 20mg. Each sample came from a single individual'};
-% temp.tE = C2K(19.5);  units.temp.tE = 'K'; label.temp.tE = 'temperature';
-% 
-% data.tE2 = [... %time since hatching (d), energy (J mg-1) 
-% 0	24.1
-% 0	26.2
-% 1	26.9
-% 1	24.3
-% 2	25.7
-% 2	25.4
-% 5	22.3
-% 5	24.5
-% 7	22.4
-% 9	25.7
-% 9	23.4
-% 12	26.0
-% 12	24.9
-% 14	26.4
-% 14	25.1
-% 14	26.8
-% 17	24.4
-% 17	23.5];
-% 
-% data.tE2(:,2) = data.tE2(:,2)*10/3; % sample made of 3 subsamples, total 10 mg
-% units.tE2 = {'d','J'}; label.tE2 ={ 'time since hatching', 'Energy content'};
-% bibkey.tE2 = {'YufeParr1999'};
-% comment.tE2 = {'Energy content was determined using a semimicro bomb calorimeter (Parr 1421) using 3 samples weighing approximately 20mg. Each sample came from a single individual'};
-% temp.tE2 = C2K(19.5);  units.temp.tE2 = 'K'; label.temp.tE2 = 'temperature';
-% 
-
 %%
-%Data time lenght from Jose 
+%Data time lenght from José 
 data.tLA = [ ... % time since start of experiment (d), total length (cm)
 %pH 8.0:
 0	13.3
@@ -817,8 +741,8 @@ set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, YufeParr1999 and RibeEngr
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
 set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CañaFern1999'};
 set5 = {'tL_f','tL_m'}; comment5 = { 'females (red), males (blue)'};
-set6 = {'tLB','tLA'}; comment6 = {'D (red, 23�C) and B (blue, 19�C)'}; 
-set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23�C) and A (blue, 19�C)'};
+set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ºC) and B (blue, 19ºC)'}; 
+set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ºC) and A (blue, 19ºC)'};
 set8 = {'LWw','LWw_f', 'LWw_m'}; comment8 = {'Manchado -persComm: all (red), females (magenta), males (blue)'}; 
 metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7, set8};
 metaData.grp.comment = {comment1, comment2,comment3,comment4,comment5,comment6,comment7,comment8};
@@ -834,8 +758,8 @@ D2 = 'Zero-variate data are from the lab and from the field, so different f was 
 D3 = 'Parameter T_A was calculated from T_ah data outside of AmP routines';     
 metaData.discussion = struct('D1', D1, 'D2', D2, 'D3', D3);
 
-% %% Acknowledgment
-% metaData.acknowledgment = 'The creation of this entry was support by XXX';
+%% Acknowledgment
+metaData.acknowledgment = 'The authors wish to acknowledge Dr. Manuel Manchado, researcher at la Junta de Andalucia in Spain, who provided us with valuable data for the model calibration. The creation of this entry was supported by the IdEx postdoctoral fellowship from University of Bordeaux attributed to A. Sardi';
 
 %% References
 bibkey = 'Wiki'; type = 'Misc'; bib = [...
@@ -862,18 +786,7 @@ bibkey = 'CanaFern1999'; type = 'Article'; bib = [ ...
 'doi    = {﻿10.1016/S0044-8486(99)00021-6}, '...
 'pages  = {255-263}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];  
-%
-bibkey = 'CarbFirm2018'; type = 'Article'; bib = [ ... 
-'author = {﻿Carballo, Carlos; Firmino, Joana; Anjos, Liliana; Santos, Soraia; Power, Deborah M.; Santos, Soraia; Manchado, Manuel}, ' ... 
-'year   = {2018}, ' ...
-'title  = {﻿Short- and long-term effects on growth and expression patterns in response to incubation temperatures in Senegalese sole}, ' ...
-'journal= {Aquaculture}, ' ...
-'volume = {495}, ' ...
-'number = {April}, '...
-'doi    = {10.1016/j.aquaculture.2018.05.043}, '...
-'pages  = {222-231}'];
-metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
-%
+% 
 bibkey = 'DiniRibe1999'; type = 'Article'; bib = [ ... 
 'author = {Dinis, Maria Teresa; Ribeiro, Laura; Soares, Florbela; Sarasquete, Carmen}, ' ... 
 'year   = {1999}, ' ...
@@ -892,27 +805,9 @@ bibkey = 'MARE2019'; type = 'Misc'; bib = [ ...
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'MancPC'; type = 'Misc'; bib = [ ... 
-'author = {Manchado}, ' ... 
+'author = {Manchado, Manuel}, ' ... 
 'note = {Personal Communication}, '];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
-
-
-
-%
-% bibkey = 'FAO2019'; type = 'Misc'; bib = ... 
-% 'howpublished = {\url{http://www.fao.org/fishery/culturedspecies/Solea_spp/enauthor}}'; 
-% metaData.biblist.(bibkey) = ['''@', type, '{ ', bibkey, ', '  bib, '}'';'];
-% %
-% bibkey = 'MoraArag2016'; type = 'Article'; bib = [ ... 
-% 'author = {Morais, Sofia; Aragão, Cláudia; Cabrita, Elsa; Conceição, Luís E.C.; Constenla, Maria; Costas, Benjamín; Dias, Jorge; Duncan, Neil; Engrola, Sofia; Estevez, Alicia; Gisbert, Enric; Mañanós, Evaristo; Valente, Luísa M.P.; Yúfera, Manuel;Dinis, Maria Teresa}, ' ... 
-% 'year   = {2016}, ' ...
-% 'title  = {New developments and biological insights into the farming of \textit{Solea senegalensis} reinforcing its aquaculture potential}, ' ...
-% 'journal= {Reviews in Aquaculture}, ' ...
-% 'volume = {8}, ' ...
-% 'number = {3}, '...
-% 'doi    = {10.1111/raq.12091}, '...
-% 'pages  = {227-263}'];
-% metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'OrtiFune2019'; type = 'Article'; bib = [ ...
 'author = {Ortiz-Delgado, Juan B; Funes, Victoria; Sarasquete, Carmen}, '...
@@ -925,14 +820,6 @@ bibkey = 'OrtiFune2019'; type = 'Article'; bib = [ ...
 'pages = {1-21}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
-% bibkey = 'ProjSole'; type = 'Misc'; bib = [ ... 
-% 'institution   = {Faculdade de ci\^{e}ncias Universidade de Lisboa}, ' ...
-% 'year = {2006},'...
-% 'title  = {Projecto {SOLEA} - Biologia e estado de explora\{c}\~{a}o dos stocks de esp\''{e}cies de linguados e solhas com interesse comercial da costa {P}ortuguesa: Contributos para a gest\~{a}o sustent�vel dos recursos }, ' ...
-% 'howpublished = {http://www.solea.fc.ul.pt/index_ficheiros/page0004.htm}, '...
-% 'note  = {Last accessed: 20/09/2019}'];
-% metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
-% 
 bibkey = 'RibeSara1999'; type = 'Article'; bib = [ ... 
 'author = {Ribeiro, L.; Sarasquete, C.; Dinis, M. T.}, ' ... 
 'year   = {1999}, ' ...

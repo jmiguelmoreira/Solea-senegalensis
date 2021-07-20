@@ -40,29 +40,25 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
  
 % 0-var data 'ah';'ab';'tj';'aj';'tp';'am';'Lh';'Lb';'Lp';'Li';'Wwh';'Wwb';'Wdh';'Wdb';'Ri'
   % compute temperature correction factors
-  T_pars=[T_A, T_L, T_H, T_AL, T_AH];
-  TC_ah = tempcorr(temp.ah, T_ref, T_pars);
-  TC_ab = tempcorr(temp.ab, T_ref, T_pars);
-  TC_aj = tempcorr(temp.aj, T_ref, T_pars);
-  TC_ap = tempcorr(temp.ap, T_ref, T_pars);
-  TC_am = tempcorr(temp.am, T_ref, T_pars);
-  TC_tj = tempcorr(temp.tj, T_ref, T_pars);
-  TC_Ri = tempcorr(temp.Ri, T_ref, T_pars);
+  TC_ah = tempcorr(temp.ah, T_ref, T_A);
+  TC_ab = tempcorr(temp.ab, T_ref, T_A);
+  TC_aj = tempcorr(temp.aj, T_ref, T_A);
+  TC_ap = tempcorr(temp.ap, T_ref, T_A);
+  TC_am = tempcorr(temp.am, T_ref, T_A);
+  TC_tj = tempcorr(temp.tj, T_ref, T_A);
+  TC_Ri = tempcorr(temp.Ri, T_ref, T_A);
   % univariate data temp corrections
-  %TC_Tah = tempcorr(temp.Tah, T_ref, T_pars);
-  TC_tL = tempcorr(temp.tL, T_ref, T_pars);
-  TC_tL2 = tempcorr(temp.tL2, T_ref, T_pars);
-  TC_tL_f = tempcorr(temp.tL_f, T_ref, T_pars);
-  TC_tL_m = tempcorr(temp.tL_m, T_ref, T_pars);
-  TC_tWd = tempcorr(temp.tWd(1), T_ref, T_pars);
-  TC_tWd2 = tempcorr(temp.tWd2(1), T_ref, T_pars);
-  TC_tWd_f1 = tempcorr(temp.tWd_f1(1), T_ref, T_pars);
-  TC_tWd_f2 = tempcorr(temp.tWd_f2(1), T_ref, T_pars);
-  TC_tWd_f3 = tempcorr(temp.tWd_f3(1), T_ref, T_pars);
-  TC_tWd_f4 = tempcorr(temp.tWd_f4(1), T_ref, T_pars);
- % TC_tM_N = tempcorr(temp.tM_N(1), T_ref,T_A); 
-%   TC_tE = tempcorr(temp.tE(1), T_ref, T_A);
-%   TC_tE2 = tempcorr(temp.tE2(1), T_ref, T_A);  
+  TC_tL = tempcorr(temp.tL, T_ref, T_A);
+  TC_tL2 = tempcorr(temp.tL2, T_ref, T_A);
+  TC_tL_f = tempcorr(temp.tL_f, T_ref, T_A);
+  TC_tL_m = tempcorr(temp.tL_m, T_ref, T_A);
+  TC_tWd = tempcorr(temp.tWd(1), T_ref, T_A);
+  TC_tWd2 = tempcorr(temp.tWd2(1), T_ref, T_A);
+  TC_tWd_f1 = tempcorr(temp.tWd_f1(1), T_ref, T_A);
+  TC_tWd_f2 = tempcorr(temp.tWd_f2(1), T_ref, T_A);
+  TC_tWd_f3 = tempcorr(temp.tWd_f3(1), T_ref, T_A);
+  TC_tWd_f4 = tempcorr(temp.tWd_f4(1), T_ref, T_A);
+  
 %data from jose
    TC_LA = tempcorr(temp.tLA, T_ref, T_A);
    TC_WA = tempcorr(temp.tWwA, T_ref, T_A);
@@ -92,9 +88,9 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
    
   E_0 = U_E0 * p_Am ;          % J, energy in egg
   Wd_0 = E_0 * w_E/ mu_E;      % g, egg dry weight 
-%   V0 = Wd_0/ d_E;             % cm^3, egg volume 
-%   Lw_0 = (6 * V0/ pi)^(1/3);  % cm, egg diameter
-%   
+  V0 = Wd_0/ d_E;             % cm^3, egg volume 
+  Lw_0 = (6 * V0/ pi)^(1/3);  % cm, egg diameter
+  
   
   
   % HATCH  
@@ -113,7 +109,6 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   
   Wd_b = d_V *L_b^3 * (1 + f * ome) *1e6; % ug, dry weight at birth at f 
 
-  %Ww_b = L_b^3 * (1 + f * ome) * 1e6;       % ug, wet weight at birth at f 
   
 
   % metamorphosis decide if using start or end of metam (change del_M accordingly)
@@ -144,17 +139,7 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   % reproduction
   pars_R = [kap, kap_R, g, k_J, k_M, L_T, v, U_Hb, U_Hj, U_Hp];
   [R_i, UE0, Lb, Lj, Lp, info]  =  reprod_rate_j(L_i, f, pars_R);
-  %RT_i = TC_Ri * R_i;% #/d, max reprod rate
-  %RT_i = TC_Ri * reprod_rate_j(L_i, f, pars_R); --> 0
   
-  
-  %RT_i2 = TC_Ri * reprod_rate_j(Li / del_M, f, pars_R); %--> prediction
-  %approachs actual value
-  %RT_i3 = TC_Ri * reprod_rate_j(Lw_i, f, pars_R); %--> prediction = 94.7
-  
- % L_b^3 = Ww_b / (1 + f * ome) * 1e6  ; if i dont find the lenght but have
- % the weight for the Ri data, use this equation
-    
   RT_i = TC_Ri * reprod_rate_j(Lw_i * del_M, f, pars_R); %--> prediction is 0
 
 % life span
@@ -188,7 +173,7 @@ pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
   prdData.tj = tT_j;prdData.tj2 = tT_j;
   prdData.ap = aT_p;
   prdData.am = aT_m;
- % prdData.L0 = Lw_0;
+  prdData.L0 = Lw_0;
   prdData.Lh = Lw_h;
   prdData.Lb = Lw_b;
   prdData.Lj = Lw_j;prdData.Lj2 = Lw_j;
@@ -196,8 +181,7 @@ pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
   prdData.Lp_m = Lw_p_m; %lenght at puberty for females and males
   prdData.Li = Lw_i;
   prdData.Wd0 = Wd_0;
-  %prdData.Wwb = Ww_b;
-  %prdData.Wwj0 = Ww_j; prdData.Wwj = Ww_j; % wet weight at START and END of metam. 
+
   % Because metamorphosis is modeled as a 'discrete event' rather than something lasting more days, 
   % the predicted value should fall between these two observed values
   prdData.Wwp_f = Ww_p;
@@ -208,9 +192,6 @@ pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
   prdData.Wdj = Wd_j; prdData.Wdj2 = Wd_j; % dry weight at START and END of metam. 
   % Because metamorphosis is modeled as a 'discrete event' rather than something lasting more days, 
   % the predicted value should fall between these two observed values
-  %prdData.Ri = RT_i;
-  %prdData.Ri = RT_i2;
-  %prdData.Ri = RT_i3;
   prdData.Ri = RT_i;
   prdData.E0 = E_0;
 %   
@@ -420,34 +401,7 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * ome); % ug, dry weight
   L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tWwB(:,1) - tWwB(1,1))); % cm, expected length at time
   EWwB = L_starti.^3 * (1 + f_exp * ome); % g, wet weight
 
-%% %time energy content in larvae
-
-%  kT_M = k_M * TC_tE;
-%  rT_B = rho_B * kT_M;  % 1/d, von Bert growth rate   
-%  rT_j = rho_j * kT_M;  % 1/d, exponential growth rate
-%  tT_j = (tau_j - tau_b)/ kT_M; % time since *birth* at metamorphosis
-%   
-%   L_j = l_j * L_m; 
-%   L_i = l_i * L_m;
-%   
-%   EE_bj = L_b * exp(tE((tE(:,1)<= tT_j),1) * rT_j/3); % exponential growth as V1-morph
-%   EE_ji = L_i - (L_i - L_j) * exp( - rT_B * (tE((tE(:,1) >= tT_j),1) - tT_j)); % cm, expected length at time
-%   E = [EE_bj/del_Me; EE_ji/del_M]; % catenate lengths
-%   %E = [EE_bj; EE_ji]/del_M; %   
-% 
-%   EE_bj2 = L_b * exp(tE2((tE2(:,1)<= tT_j),1) * rT_j/3); % exponential growth as V1-morph
-%   EE_ji2 = L_i - (L_i - L_j) * exp( - rT_B * (tE2((tE2(:,1) >= tT_j),1) - tT_j)); % cm, expected length at time
-%   E2 = [EE_bj2/del_Me; EE_ji2/del_M]; % data are from individuals before metamorphosis
-%    
-%   EE = E.^3 * (M_V * mu_V + f_tL * E_m) * 1e-3;   %in J 
-%   EE2 = E2.^3 * (M_V * mu_V + f_tL * E_m) * 1e-3; 
-
-%  % N-data
-%   rT_B = TC_tM_N * k_M/ 3/ (1 + f/ g);
-%   L = L_i - (L_i - L_b) * exp( - rT_B * tM_N(:,1));
-%  % EM_N = 1e6 * L.^3 * d_V * Y_N_W * (1 + f * ome); %   ug N from
-%  % Moniliformis dubius --> what is Y_N_W?
-%    EM_N = 1e6 * L.^3 * d_V * (1 + f * ome); %   ug N
+%% 
 
   % pack to output
 %   prdData.Tah = Eah;
@@ -476,9 +430,6 @@ prdData.LWd = ELWd1;
   prdData.tLB = ELwB;
   prdData.tWwA = EWwA;
   prdData.tWwB = EWwB;
-%other data 
-%   %prdData.tM_N = EM_N;
-%   prdData.tE = EE;
-%   prdData.tE2 = EE2;
+
 
   
