@@ -26,10 +26,6 @@ par.s_G = 0.001;      free.s_G   = 0;   units.s_G = '-';          label.s_G = 'G
 
 %% other parameters 
 par.E_Hh = 2.555e-02; free.E_Hh  = 1;   units.E_Hh = 'J';         label.E_Hh = 'maturity at hatch'; 
-par.T_AH = 100000;    free.T_AH  = 0;   units.T_AH = 'K';         label.T_AH = 'T_AH'; 
-par.T_AL = 50000;     free.T_AL  = 0;   units.T_AL = 'K';         label.T_AL = 'T_AL'; 
-par.T_H = 303;        free.T_H   = 0;   units.T_H = 'K';          label.T_H = 'T_H'; 
-par.T_L = 285;        free.T_L   = 0;   units.T_L = 'K';          label.T_L = 'T_L'; 
 par.del_M = 0.2126;   free.del_M = 1;   units.del_M = '-';        label.del_M = 'del_M, shape coefficient'; 
 par.del_Me = 0.19769;  free.del_Me = 1;   units.del_Me = '-';       label.del_Me = 'shape coefficient for embryo'; 
 par.f = 1;            free.f     = 0;   units.f = '-';            label.f = 'scaled functional response for 0-var data from the field'; 
