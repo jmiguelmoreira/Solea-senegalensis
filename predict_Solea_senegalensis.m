@@ -267,8 +267,45 @@ pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
   EL_ji_m = L_i - (L_i - L_j) * exp( - rT_B * (tL_m((tL_m(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
   ELw_m = [EL_bj_m; EL_ji_m]/del_M; %
   
+  %t-L MARE2019 A
+  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp);
+  kT_M = k_M * TC_bLA; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M; %kT_M, rT_j and rT_B at the average temperature before the start of experiment
+  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
+  L_start = L_i - (L_i - L_j) * exp( - rT_B * (min(tLA(:,1)) - tT_j)); %length at start of experiment
+  kT_M = k_M * TC_LA; rT_B = rho_B * kT_M; %kT_M and rT_B at the temperature of the experiment
+  L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tLA(:,1) - tLA(1,1))); % cm, expected length at time
+  ELwA = L_starti/ del_M;  % cm, total length
   
-    
+  %t-L MARE2019 B
+  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp);
+  kT_M = k_M * TC_bLB; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M; %kT_M, rT_j and rT_B at the average temperature before the start of experiment    
+  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
+  L_start = L_i - (L_i - L_j) * exp( - rT_B * (min(tLB(:,1)) - tT_j)); %length at start of experiment
+  kT_M = k_M * TC_LB; rT_B = rho_B * kT_M; %kT_M and rT_B at the temperature of the experiment
+  L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tLB(:,1) - tLB(1,1))); % cm, expected length at time
+  ELwB = L_starti/ del_M;  % cm, total length
+  
+  
+  %% % time-wet weight t-Ww
+  
+  %t-Ww MARE2019 A
+  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp);
+  kT_M = k_M * TC_bWA; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M; %kT_M, rT_j and rT_B at the average temperature before the start of experiment     
+  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
+  L_start = L_i - (L_i - L_j) * exp( - rT_B * (min(tWwA(:,1)) - tT_j)); %length at start of experiment
+  kT_M = k_M * TC_WA; rT_B = rho_B * kT_M; %kT_M and rT_B at the temperature of the experiment
+  L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tWwA(:,1) - tWwA(1,1))); % cm, expected length at time
+  EWwA = L_starti.^3 * (1 + f_exp * ome); % g, wet weight
+  
+  %t-Ww MARE2019 B
+  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp);
+  kT_M = k_M * TC_bWB; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M; %kT_M, rT_j and rT_B at the average temperature before the start of experiment   
+  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
+  L_start = L_i - (L_i - L_j) * exp( - rT_B * (min(tWwB(:,1)) - tT_j)); %length at start of experiment
+  kT_M = k_M * TC_WB; rT_B = rho_B * kT_M; %kT_M and rT_B at the temperature of the experiment
+  L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tWwB(:,1) - tWwB(1,1))); % cm, expected length at time
+  EWwB = L_starti.^3 * (1 + f_exp * ome); % g, wet weight   
+ 
  %% % length-weight
  %lenght wet weight fish at 190, 398 and 790 days of age (manchado data)
 ELWw = (LWw(:,1) * del_M).^3 * (1 + f_field * ome); 
@@ -354,52 +391,6 @@ tT_j = (tau_j - tau_b)/ (k_M * TC_tWd_f4);
 L_bj = L_b * exp(tWd_f4(tWd_f4(:,1) < tT_j,1) * rT_j/ 3); % cm length and weight during V1-morph period
 L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd_f4(tWd_f4(:,1) >= tT_j,1) - tT_j));   % cm, length after V1-morph period
 EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * ome); % ug, dry weight
-  
-%% data from Jose Moreira 
-% 
-  %PA length A
-  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp);
-  %before start of experiment:
-  kT_M = k_M * TC_bLA; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M;        
-  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
-  L_start = L_i - (L_i - L_j) * exp( - rT_B * (tLA(1,1) - tT_j)); %length at start of experiment
-  %after start of experiment:
-  kT_M = k_M * TC_LA; rT_B = rho_B * kT_M;
-  L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tLA(:,1) - tLA(1,1))); % cm, expected length at time
-  ELwA = L_starti/ del_M;  % cm, total length
-  
-  %PA length B
-  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp);
-  %before start of experiment:
-  kT_M = k_M * TC_bLB; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M;        
-  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
-  L_start = L_i - (L_i - L_j) * exp( - rT_B * (tLB(1,1) - tT_j)); %length at start of experiment
-  %after start of experiment:
-  kT_M = k_M * TC_LB; rT_B = rho_B * kT_M;
-  L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tLB(:,1) - tLB(1,1))); % cm, expected length at time
-  ELwB = L_starti/ del_M;  % cm, total length
-  
-  %PA wet weight A
-  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp);
-  %before start of experiment:
-  kT_M = k_M * TC_bWA; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M;        
-  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
-  L_start = L_i - (L_i - L_j) * exp( - rT_B * (tWwA(1,1) - tT_j)); %length at start of experiment
-  %after start of experiment:
-  kT_M = k_M * TC_WA; rT_B = rho_B * kT_M;
-  L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tWwA(:,1) - tWwA(1,1))); % cm, expected length at time
-  EWwA = L_starti.^3 * (1 + f_exp * ome); % g, wet weight
-  
-  %PA wet weight B
-  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_exp);
-  %before start of experiment:
-  kT_M = k_M * TC_bWB; rT_j = rho_j * kT_M; rT_B = rho_B * kT_M;        
-  L_b = L_m * l_b;  L_j = L_m * l_j; L_i = L_m * l_i; tT_j = (t_j - t_b)/ kT_M;
-  L_start = L_i - (L_i - L_j) * exp( - rT_B * (tWwB(1,1) - tT_j)); %length at start of experiment
-  %after start of experiment:
-  kT_M = k_M * TC_WB; rT_B = rho_B * kT_M;
-  L_starti = L_i - (L_i - L_start) * exp( - rT_B * (tWwB(:,1) - tWwB(1,1))); % cm, expected length at time
-  EWwB = L_starti.^3 * (1 + f_exp * ome); % g, wet weight
 
 %% 
 
@@ -409,6 +400,10 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * ome); % ug, dry weight
   prdData.tL2 =ELw2;
   prdData.tL_f =ELw_f;
   prdData.tL_m =ELw_m; 
+  prdData.tLA = ELwA;
+  prdData.tLB = ELwB;
+  prdData.tWwA = EWwA;
+  prdData.tWwB = EWwB;
   prdData.LWw = ELWw;
   prdData.LWw_f = ELWw_f;
   prdData.LWw_m = ELWw_m;
@@ -416,7 +411,7 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * ome); % ug, dry weight
 % prdData.T_dw = EWd_j; 
 % prdData.Ttbj = Etbj;
 
-prdData.LWd = ELWd1;
+  prdData.LWd = ELWd1;
   prdData.LWd2 = ELWd2;
   prdData.LWd3 = ELWd3;
   prdData.tWd = EWd;
@@ -425,11 +420,6 @@ prdData.LWd = ELWd1;
   prdData.tWd_f2 = EWd_2;
   prdData.tWd_f3 = EWd_3;
   prdData.tWd_f4 = EWd_4;
-  %data from Jose
-  prdData.tLA = ELwA;
-  prdData.tLB = ELwB;
-  prdData.tWwA = EWwA;
-  prdData.tWwB = EWwB;
 
 
   
