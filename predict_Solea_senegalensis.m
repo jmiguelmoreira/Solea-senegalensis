@@ -59,11 +59,13 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   TC_tWd_f3 = tempcorr(temp.tWd_f3(1), T_ref, T_A);
   TC_tWd_f4 = tempcorr(temp.tWd_f4(1), T_ref, T_A);
   
-%data from jose
+   %MARE2019
+   % temperatures during the experiments:
    TC_LA = tempcorr(temp.tLA, T_ref, T_A);
    TC_WA = tempcorr(temp.tWwA, T_ref, T_A);
    TC_LB = tempcorr(temp.tLB, T_ref, T_A);
    TC_WB = tempcorr(temp.tWwB, T_ref, T_A);
+   % average temperatures between birth and start of the experiments:
    TC_bLA = tempcorr(temp2.tLA, T_ref, T_A);
    TC_bLB = tempcorr(temp2.tLB, T_ref, T_A);
    TC_bWA = tempcorr(temp2.tWwA, T_ref, T_A);
