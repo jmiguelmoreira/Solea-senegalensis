@@ -17,7 +17,7 @@ metaData.COMPLETE = 3.5; % using criteria of LikaKear2011 http://www.debtheory.o
 
 metaData.author   = {'Adriana Sardi'; 'Jose Moreira'};    
 metaData.date_subm = [2021 07 19];              
-metaData.email    = {'adrianasardi@gmail.com';'j.miguel.moreira@tecnico.ulisboa.pt'};            
+metaData.email    = {'adrianasardi@gmail.com'; 'j.miguel.moreira@tecnico.ulisboa.pt'};            
 metaData.address  = {'University of Bordeaux'; 'University of Lisbon'};   
 
 metaData.curator     = {'Nina Marn'};
@@ -758,8 +758,9 @@ D2 = 'Zero-variate data are from the lab and from the field, so different f was 
 D3 = 'Parameter T_A was calculated from T_ah data outside of AmP routines';     
 metaData.discussion = struct('D1', D1, 'D2', D2, 'D3', D3);
 
-%% Acknowledgment
-metaData.acknowledgment = 'The authors wish to acknowledge Dr. Manuel Manchado, researcher at la Junta de Andalucia in Spain, who provided us with valuable data for the model calibration. The creation of this entry was supported by the IdEx postdoctoral fellowship from University of Bordeaux attributed to A. Sardi';
+%% Acknowledgments
+metaData.acknowledgment = {'The authors wish to acknowledge Dr. Manuel Manchado, researcher at la Junta de Andalucia in Spain, who provided us with valuable data for the model calibration. The creation of this entry was supported by the IdEx postdoctoral fellowship from University of Bordeaux attributed to A. Sardi'; ...
+                           'The authors wish to acknowledge the researchers at MARE, who provided valuable data for the model calibration, and whose work was supported by the Portuguese Foundation for Science and Technology (FCT) through the project FISHBUDGET - Effects of climate change on marine fish energy budgets (PTDC/BIA-BMA/28630/2017)'};
 
 %% References
 bibkey = 'Wiki'; type = 'Misc'; bib = [...
@@ -801,7 +802,7 @@ metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 bibkey = 'MARE2019'; type = 'Misc'; bib = [ ... 
 'author = {Maulvault, Ana Luísa; Marques, António; Rosa, Rui; Mendes, Ana; Pousão-Ferreira, Pedro; Anacleto, Patrícia}, ' ... 
 'year  = {2019}, ' ...
-'note = {Experimental data from MARE (University of Lisbon). SOON TO BE PUBLISHED. For using this data outside of the script before publication please contact José Moreira (j.miguel.moreira@tecnico.ulisboa.pt) or Patrícia Anacleto (panacleto@ipma.pt)}, '];
+'note = {Experimental data from MARE, University of Lisbon. SOON TO BE PUBLISHED. For using this data outside of the script before publication please contact José Moreira (j.miguel.moreira@tecnico.ulisboa.pt) or Patrícia Anacleto (panacleto@ipma.pt)}, '];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'MancPC'; type = 'Misc'; bib = [ ... 
