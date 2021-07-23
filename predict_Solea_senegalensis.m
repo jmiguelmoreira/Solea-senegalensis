@@ -4,34 +4,22 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   cPar = parscomp_st(par); vars_pull(par); 
   vars_pull(cPar);  vars_pull(data);  vars_pull(auxData);
 
-  f_field = f ; % f for field and zero-var data
+%   f_field = f ; % f for field and zero-var data
   
- % filters <-- you need the 'abj' specific filter (with s_M)
- filterChecks =   E_Hh > E_Hb || E_Hh <= 0 || f > 1 || f_tL > 1 || f_RibeEngr > 1 || ... % maturity at hatching has to be between 0 and Ehb
+ pars_tj = [g; k; l_T; v_Hb; v_Hj; v_Hp];
+  [t_j, t_p, t_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f); 
+  if info ~= 1 % numerical procedure failed
+      fprintf('warning: invalid parameter value combination for get_tj \n')
+  end
+  s_M = l_j / l_b;
+  
+  filterChecks = k * v_Hp >= f^3 * s_M^3 || ...         % constraint required for reaching puberty with f_tL1
+                 ~reach_birth(g, k, v_Hb, f) || ...  % constraint required for reaching birth with f_tL1
+          E_Hh > E_Hb || E_Hh <= 0 || f > 1 || f_tL > 1 || f_RibeEngr > 1 || ... % maturity at hatching has to be between 0 and Ehb
      f_tL < 0.1 || f_RibeEngr < 0.1 || f_exp > 1 || ...
      ~reach_birth(g, k, v_Hb, f_tL) || ... % constraint required for reaching birth with that f
-     ~reach_birth(g, k, v_Hb, f_RibeEngr) ; %|| ...  % constraint required for reaching birth with that f
-   
-  %~reach_birth(g, k, v_Hb, f) || ...
- 
-  % k * v_Hp >= f^3 || ... % constraint constraint required for reaching puberty with f_field
-%      ~reach_birth(g, k, v_Hb, f_TeixCabr) || ... % constraint required for reaching birth with that f
-%      k * v_Hp >= f_TeixCabr^3 || ... % constraint constraint required for reaching puberty with f_TeixCabr
-%      ~reach_birth(g, k, v_Hb, f_TeixCabr2) || ... % constraint required for reaching birth with that f
-%      k * v_Hp >= f_TeixCabr2^3 || ... % constraint constraint required for reaching puberty with f_TeixCabr2
-%      ~reach_birth(g, k, v_Hb, f_CanaFern1)|| ... % constraint required for reaching birth with that f
-%      k * v_Hp >= f_CanaFern1^3 ||...  % constraint constraint required for reaching puberty with f_CanaFern1
-%      ~reach_birth(g, k, v_Hb, f_CanaFern2)|| ... % constraint required for reaching birth with that f
-%      k * v_Hp >= f_CanaFern2^3 ||...  % constraint constraint required for reaching puberty with f_CanaFern2
-%      ~reach_birth(g, k, v_Hb, f_CanaFern3)|| ... % constraint required for reaching birth with that f
-%      k * v_Hp >= f_CanaFern3^3 ||...  % constraint constraint required for reaching puberty with f_CanaFern3
-%      ~reach_birth(g, k, v_Hb, f_CanaFern4)|| ... % constraint required for reaching birth with that f
-%      k * v_Hp >= f_CanaFern4^3 ||...  % constraint constraint required for reaching puberty with f_CanaFern4
-%      k * v_Hp >= f_DiniRibe^3 ||...     % constraint constraint required for reaching puberty with f_DineRibe
-%     ~reach_birth(g, k, v_Hb, f_DiniRibe); % constraint required for reaching birth with that f
-%       
-
- 
+     ~reach_birth(g, k, v_Hb, f_RibeEngr) ; %filter for constraining shape coeficients under 1       
+  
   if filterChecks  
     info = 0;
     prdData = {};
@@ -45,9 +33,12 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   TC_aj = tempcorr(temp.aj, T_ref, T_A);
   TC_ap = tempcorr(temp.ap, T_ref, T_A);
   TC_am = tempcorr(temp.am, T_ref, T_A);
-  TC_tj = tempcorr(temp.tj, T_ref, T_A);
   TC_Ri = tempcorr(temp.Ri, T_ref, T_A);
+  
   % univariate data temp corrections
+  TC_Tah = tempcorr(C2K(data.Tah(:,1)), T_ref, T_A);
+  TC_Tab = tempcorr(C2K(data.Tab(:,1)), T_ref, T_A);
+  TC_Taj = tempcorr(C2K(data.Taj(:,1)), T_ref, T_A);
   TC_tL = tempcorr(temp.tL, T_ref, T_A);
   TC_tL2 = tempcorr(temp.tL2, T_ref, T_A);
   TC_tL_f = tempcorr(temp.tL_f, T_ref, T_A);
@@ -73,9 +64,9 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
 %   
   %% % zero-variate data
 
-  % life cycle
+  % life cycle - field data
   pars_tj = [g; k; l_T; v_Hb; v_Hj; v_Hp];
-  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_field);
+  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
   
   if info ~= 1 % numerical procedure failed
      fprintf('warning: invalid parameter value combination for get_tj \n')
@@ -86,16 +77,13 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   U_E0 = initial_scaled_reserve(f, pars_UE0); % d.cm^2, initial scaled reserve
   % ^-- U_E0 is underpredicted; this gives an E_0 of U_E0 * p_Am * TC_ah = 2.13e-04
 
-  %EGG
-   
+  %EGG   
   E_0 = U_E0 * p_Am ;          % J, energy in egg
   Wd_0 = E_0 * w_E/ mu_E;      % g, egg dry weight 
   V0 = Wd_0/ d_E;             % cm^3, egg volume 
   Lw_0 = (6 * V0/ pi)^(1/3);  % cm, egg diameter
   
-  
-  
-  % HATCH  
+ % HATCH  
  [U_H, aUL] = ode45(@dget_aul, [0; U_Hh; U_Hb], [0 U_E0 1e-10], [], kap, v, k_J, g, L_m);
   aT_h = aUL(2,1)/ TC_ah;                   % d, age at hatch at f and T
   L_h = aUL(2,3);                           % cm, strucural length at hatch
@@ -107,26 +95,13 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   L_b = L_m * l_b;                  % cm, structural length at birth at f
   Lw_b = L_b/ del_Me;                % cm, physical length at birth at f
   aT_b = tau_b/ k_M/ TC_ab;           % d, age at birth at f and T
-% 
   
   Wd_b = d_V *L_b^3 * (1 + f * ome) *1e6; % ug, dry weight at birth at f 
-
   
 
-  % metamorphosis decide if using start or end of metam (change del_M accordingly)
-  L_j = L_m * l_j;                  % cm, structural length at metam
-  Lw_j = L_j/ del_Me;                % cm, physical length at START of metam at f 
+  % metamorphosis -- in the lab! Calculated below
   
-  tT_j = (tau_j - tau_b) / k_M/ TC_tj;  % d, time since birth at metam
-  aT_j = tau_j/TC_aj/k_M;           % d, age at metamorphosis 
-  
-  %Ww_j = L_j^3 * (1 + f * ome) * 1e6;     % ug, wet weight at metam 
-  Wd_j = L_j^3 * d_V * (1 + f * ome) * 1e6; % ug, dry weight at metam 
-  
-  
-  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_field);
-  
-  % puberty 
+   % puberty 
   L_p = L_m * l_p;                  % cm, structural length at puberty at f
   aT_p = tau_p / k_M/ TC_ap;        %d, age at puberty at f and T
   Lw_p = L_p/ del_M;                % cm, physical length at puberty at f
@@ -136,7 +111,7 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   % ultimate
   L_i = L_m * l_i;                  % cm, ultimate structural length at f
   Lw_i = L_i/ del_M;                % cm, ultimate physical length at f
-  Ww_i = L_i^3 * (1 + f_field * ome);       % g, ultimate wet weight 
+  Ww_i = L_i^3 * (1 + f * ome);       % g, ultimate wet weight 
  
   % reproduction
   pars_R = [kap, kap_R, g, k_J, k_M, L_T, v, U_Hb, U_Hj, U_Hp];
@@ -146,7 +121,7 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
 
 % life span
   pars_tm = [g; l_T; h_a/ k_M^2; s_G];  % compose parameter vector at T_ref
-  t_m = get_tm_s(pars_tm, f_field, l_b);      % -, scaled mean life span at T_ref
+  t_m = get_tm_s(pars_tm, f, l_b);      % -, scaled mean life span at T_ref
   aT_m = t_m/ k_M/ TC_am;               % d, mean life span at T
   
   
@@ -160,67 +135,77 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
 % L_mm = L_m; % assume males and females have same L_m (and L_i)because no data on ultimate length or weight for males vs females
 %   pars_tjm = [g k l_T v_Hb v_Hj v_Hpm];
 pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
-  [tau_jm, tau_pm, tau_bm, l_jm, l_pm, l_bm, l_im, rho_jm, rho_Bm] = get_tj(pars_tjm, f_field);
+  [tau_jm, tau_pm, tau_bm, l_jm, l_pm, l_bm, l_im, rho_jm, rho_Bm] = get_tj(pars_tjm, f);
 %   tT_p_m = (tau_pm - tau_bm)/ k_M/ TC_ap; % d, time since birth at puberty
   Lw_p_m = (L_mm * l_pm)/ del_M;                % cm, total length at puberty at f
    Ww_p_m = (L_mm * l_pm)^3 *(1 + f * omem);        % g, wet weight at puberty 
- 
   
-%pack to output
+   
+ % metamorphosis -- in the lab! Calculated below
+  [tau_j_YP, tau_p, tau_b, l_j_YP, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_YufeParr);
+
+   L_j_YP = L_m * l_j_YP;                  % cm, structural length at metam
+  Lw_j = L_j_YP/ del_M;                % cm, physical length at END of metam at f 
+  aT_j = tau_j_YP/TC_aj/k_M;           % d, age at metamorphosis 
+  
+  %Ww_j = L_j^3 * (1 + f_YufeParr * ome) * 1e6;     % ug, wet weight at metam 
+  Wd_j = L_j_YP^3 * d_V * (1 + f_YufeParr * ome) * 1e6; % ug, dry weight at metam 
+  
+  
+% pack to output
   prdData.ah = aT_h;
   prdData.ab = aT_b;
-  prdData.aj = aT_j; prdData.aj2 = aT_j; % age at START and END of metam. 
-  % Because metamorphosis is modeled as a 'discrete event' rather than something lasting more days, 
-  % the predicted value should fall between these two observed values
-  prdData.tj = tT_j;prdData.tj2 = tT_j;
+  prdData.aj = aT_j;  % age at END of metam. 
   prdData.ap = aT_p;
   prdData.am = aT_m;
   prdData.L0 = Lw_0;
   prdData.Lh = Lw_h;
   prdData.Lb = Lw_b;
-  prdData.Lj = Lw_j;prdData.Lj2 = Lw_j;
-  prdData.Lp_f = Lw_p; 
-  prdData.Lp_m = Lw_p_m; %lenght at puberty for females and males
+  prdData.Lj = Lw_j;
+  prdData.Lp_f = Lw_p; %lenght at puberty for females 
+  prdData.Lp_m = Lw_p_m; %lenght at puberty for males
   prdData.Li = Lw_i;
   prdData.Wd0 = Wd_0;
-
-  % Because metamorphosis is modeled as a 'discrete event' rather than something lasting more days, 
-  % the predicted value should fall between these two observed values
-  prdData.Wwp_f = Ww_p;
-  prdData.Wwp_m = Ww_p_m; %wet weight at puberty for females and males
+  prdData.Wwp_f = Ww_p;%wet weight at puberty for females
+  prdData.Wwp_m = Ww_p_m; %wet weight at puberty for males
   prdData.Wwi = Ww_i;
   prdData.Wdh = Wd_h;
   prdData.Wdb = Wd_b;
-  prdData.Wdj = Wd_j; prdData.Wdj2 = Wd_j; % dry weight at START and END of metam. 
-  % Because metamorphosis is modeled as a 'discrete event' rather than something lasting more days, 
-  % the predicted value should fall between these two observed values
+  prdData.Wdj = Wd_j; % dry weight at END of metam. 
   prdData.Ri = RT_i;
   prdData.E0 = E_0;
 %   
   %% ------------- uni-variate data----------------
   % PARAMETERS for egg
-%   pars_UE0 = [V_Hb; g; k_J; k_M; v];
-%   [U_E0, L_b, info] = initial_scaled_reserve(f, pars_UE0);
-%   [U_H aUL] = ode45(@dget_aul, [0; U_Hh; U_Hb], [0 U_E0 1e-10], [], kap, v, k_J, g, L_m);
+  pars_UE0 = [V_Hb; g; k_J; k_M; v];
+  [U_E0, L_b, info] = initial_scaled_reserve(f, pars_UE0); % this is f for the field because eggs come from the field individuals (?)
+  [U_H aUL] = ode45(@dget_aul, [0; U_Hh; U_Hb], [0 U_E0 1e-10], [], kap, v, k_J, g, L_m);
 %   
-%   % Tah 
-%   a_h = aUL(2,1);                             % d, age at birth
-%   Eah = a_h*ones(length(Tah(:,1)),1) ./ TC_Tah; % d, age at birth temp corrected   
+  % Tah 
+  a_h = aUL(2,1);                             % d, age at birth
+  Eah = a_h*ones(length(Tah(:,1)),1) ./ TC_Tah; % d, age at birth temp corrected   
   
-%%
+  % Tab 
+%   a_b = aUL(3,1);                             % d, age at birth
+    a_b = tau_b/ k_M;
+Eab = a_b*ones(length(Tab(:,1)),1) ./ TC_Tab; % d, age at birth temp corrected   
+ 
+% Taj  -- in the lab, YufeParr1999 data
+  a_j = tau_j_YP/k_M;                             % d, age at birth
+  Eaj = a_j*ones(length(Taj(:,1)),1) ./ TC_Taj; % d, age at birth temp corrected   
+  
+  %%
 %
 % % time-length tL
 %   
-%   [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_tL);
-  
+ [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f_tL);
+
   %t-L RibeSara1999
   %time-length since hatching concatenated to juveniles (from day 12)
   kT_M = k_M * TC_tL;
   rT_B = rho_B * kT_M;  % 1/d, von Bert growth rate   
   rT_j = rho_j * kT_M;  % 1/d, exponential growth rate
   tT_j = (tau_j - tau_b)/ kT_M; % time since *birth* at metamorphosis
-
-
   L_j = l_j * L_m; 
   L_i = l_i * L_m;
   
@@ -310,10 +295,10 @@ pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
  
  %% % length-weight
  %lenght wet weight fish at 190, 398 and 790 days of age (manchado data)
-ELWw = (LWw(:,1) * del_M).^3 * (1 + f_field * ome); 
+ELWw = (LWw(:,1) * del_M).^3 * (1 + f * ome); 
 
-ELWw_f = (LWw_f(:,1) * del_M).^3 * (1 + f_field * ome); %for females
-ELWw_m = (LWw_m(:,1) * del_M).^3 * (1 + f_field * omem); %for males
+ELWw_f = (LWw_f(:,1) * del_M).^3 * (1 + f * ome); %for females
+ELWw_m = (LWw_m(:,1) * del_M).^3 * (1 + f * omem); %for males
  
  
 %Length dry weight --> laboratory conditions assume ab libitum use f=1
@@ -356,7 +341,7 @@ ELWd3 = (LWd3(:,1) * del_M).^3 * d_V* (1 + f_RibeEngr * ome)*1e6; % ug, dry weig
   L_jm = L_i - (L_i - L_j) * exp( - rT_B * (tWd2((tWd2(:,1) > tT_j1),1) - tT_j1)); % cm, expected length at time
   EWd2 = [L_bj; L_jm].^3 * d_V * (1 + f_YufeParr * ome) * 1e6 ;
   
- %tWd_Feeding regimes (CañaFern1999)
+ %tWd_Feeding regimes (CanaFern1999)
  %1 L100
 [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_CanaFern1);
 rT_j = rho_j * (k_M * TC_tWd_f1); 
@@ -397,7 +382,9 @@ EWd_4 = 1e6 * [L_bj; L_jm].^3  * d_V * (1 + f_CanaFern4 * ome); % ug, dry weight
 %% 
 
   % pack to output
-%   prdData.Tah = Eah;
+  prdData.Tah = Eah;
+  prdData.Tab = Eab;
+  prdData.Taj = Eaj;
   prdData.tL = ELw;
   prdData.tL2 =ELw2;
   prdData.tL_f =ELw_f;

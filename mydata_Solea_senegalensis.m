@@ -8,10 +8,20 @@ metaData.class      = 'Actinopterygii';
 metaData.order      = 'Pleuronectiformes'; 
 metaData.family     = 'Soleidae';
 metaData.species    = 'Solea_senegalensis'; 
-metaData.species_en = 'Senegalense sole'; 
+metaData.species_en = 'Senegalese sole'; 
+%% check the ecocodes!! --> for labels see : http://www.bio.vu.nl/thb/deb/deblab/add_my_pet/AmPeco.html
+metaData.ecoCode.climate = {'MC'};
+metaData.ecoCode.ecozone = {'MAE'};
+metaData.ecoCode.habitat = {'0jMp', 'jiMcd'};
+metaData.ecoCode.embryo  = {'Mp'};
+metaData.ecoCode.migrate = {'Mo'};
+metaData.ecoCode.food    = {'bjPz', 'jiCi'};
+metaData.ecoCode.gender  = {'D'};
+metaData.ecoCode.reprod  = {'O'};
+
 metaData.T_typical  = C2K(20); % K, body temp
-metaData.data_0     = {'ah';'ab';'aj';'ap';'am';'tj';'L0';'Lh';'Lb';'Lp_f';'Lp_m';'Li';'Wwp_f';'Wwp_m';'Wd0';'Wdh';'Wdb';'Wdj';'Ri';'E0'}; % zero-variate data labels: http://www.debtheory.org/wiki/index.php?title=Zero-variate_data
-metaData.data_1     = {'t-L';'t-L2';'t-L_f';'t-L_m;''L-Ww';'L-Wd';'t-Wd';'t-Ww'}; % uni-variate data labels:  http://www.debtheory.org/wiki/index.php?title=Univariate_data 
+metaData.data_0     = {'ah';'ab';'aj';'ap';'am';'L0';'Lh';'Lb';'Lp';'Li';'Wd0';'Wdh';'Wdb';'Wdj';'Wwp';'Wwi';'Ri';'E0'}; % zero-variate data labels: http://www.debtheory.org/wiki/index.php?title=Zero-variate_data
+metaData.data_1     = {'t-L_T';'L-Ww';'L-Wd';'t-Wd_f';'t-Ww'}; % uni-variate data labels:  http://www.debtheory.org/wiki/index.php?title=Univariate_data 
 
 metaData.COMPLETE = 3.5; % using criteria of LikaKear2011 http://www.debtheory.org/wiki/index.php?title=Completeness
 
@@ -31,84 +41,58 @@ metaData.date_acc    = [2021 07 29];
 
 data.ah = 1.58; units.ah = 'd'; label.ah = 'age at hatching'; bibkey.ah = 'YufeParr1999'; 
  temp.ah = C2K(19.5) ; units.temp.ah = 'K'; label.temp.ah = 'temperature';
- comment.ah = '~38h from fertilization to hatching rounded to 2';
-
+ comment.ah = 'approx 38h from fertilization to hatching rounded to 2 days';
 data.ab = 4;    units.ab = 'd';    label.ab = 'age at birth'; bibkey.ab = 'YufeParr1999';   
   temp.ab = C2K(19.5);  units.temp.ab = 'K'; label.temp.ab = 'temperature';
-  
-data.aj = 16;      units.aj = 'd';    label.aj = 'time since fertilization at START of metamorphosis'; bibkey.aj = 'YufeParr1999'; 
-   temp.aj = C2K(19.5);  units.temp.aj = 'K'; label.temp.aj = 'temperature'; 
-  
-data.aj2 = 19;      units.aj2 = 'd';    label.aj2 = 'time since fertilization at END of metamorphosis'; bibkey.aj2 = 'YufeParr1999'; 
-  temp.aj2 = C2K(19.5);  units.temp.aj2 = 'K'; label.temp.aj2 = 'temperature';
- 
+% data.aj = 16;      units.aj = 'd';    label.aj = 'time since fertilization at START of metamorphosis'; bibkey.aj = 'YufeParr1999'; 
+%    temp.aj = C2K(19.5);  units.temp.aj = 'K'; label.temp.aj = 'temperature'; 
+data.aj = 19;      units.aj = 'd';    label.aj = 'time since fertilization at END of metamorphosis'; bibkey.aj = 'YufeParr1999'; 
+  temp.aj = C2K(19.5);  units.temp.aj = 'K'; label.temp.aj = 'temperature';
+  comment.aj = 'metamorphosis starts at day 16 post fertilization and ends at day 19 pf at temp of 19.5C'; 
 data.ap = 4 * 365;    units.ap = 'd';    label.ap = 'age at puberty'; bibkey.ap = 'Vina2007';
   temp.ap = C2K(17.5);  units.temp.ap = 'K'; label.temp.ap = 'temperature';
   comment.ap = 'temp is the average between 15 and 20 which is the temperature range for the spawning period i.e. the birthday temperature'; 
-
 %  data.ap= 900;   units.ap_f = 'd';    label.ap_f = 'age at puberty'; bibkey.ap_f = 'Manchado_pers_communication';
   %temp.ap = C2K(17.5);  units.temp.ap_f = 'K'; label.temp.ap_f = 'temperature';
   %comment.ap = 'age at puberty in laboratory reared animals'; 
-  
 data.am = 11 * 365;    units.am = 'd';    label.am = 'life span'; bibkey.am = 'TeixCabr2010';   %-->they cite a thesis by Andrade 1990 
   temp.am = C2K(17.5);  units.temp.am = 'K'; label.temp.am = 'temperature'; 
   comment.am ='temp bibkey.temp.am=Vina2007 page 21 = average yearly temperature of tagus estuary';
-
-data.tj = 12;    units.tj = 'd';    label.tj = 'time since birth at START of metamorphosis'; bibkey.tj = 'YufeParr1999';   
-   temp.tj = C2K(19.5);  units.temp.tj = 'K'; label.temp.tj = 'temperature';
-   comment.tj = 'computed as aj - ab; lab data';   
-  
-data.tj2 = 15;   units.tj2 = 'd';    label.tj2 = 'time since birth at END of metamorphosis'; bibkey.tj = 'YufeParr1999';   
-   temp.tj2 = C2K(19.5);  units.temp.tj2 = 'K'; label.temp.tj2 = 'temperature';
-   comment.tj2 = 'computed as aj - ab; lab data'; 
-
 %___________   
 % LENGTHS
 data.L0 = 0.1; units.L0 = 'cm'; label.L0  = 'egg diameter'; bibkey.L0  = 'YufeParr1999';  
 data.Lh = 0.1382;   units.Lh  = 'cm';  label.Lh  = 'total length at hatching';          bibkey.Lh  = 'YufeParr1999';  
 data.Lb  = 0.2484;   units.Lb  = 'cm';  label.Lb  = 'total length at birth';          bibkey.Lb  = 'YufeParr1999';
     comment.Lb = 'length at day 2 post hatching when mouth opening occurs';
-
-data.Lj  = 0.6857;   units.Lj  = 'cm';  label.Lj  = 'total length at start of metamorphosis';  bibkey.Lj  = 'YufeParr1999';  
-    comment.Lj = 'length at day 14 post hatching when metamorphosis starts'; 
-
-data.Lj2 = 0.9176 ; units.Lj2 = 'cm'; label.Lj2 = 'total length at end of metamorphosis'; bibkey.Lj2  = 'YufeParr1999';  
-    comment.Lj2 = 'length at day 20 post hatching when metamorphosis ends'; 
-
+% data.Lj  = 0.6857;   units.Lj  = 'cm';  label.Lj  = 'total length at start of metamorphosis';  bibkey.Lj  = 'YufeParr1999';  
+%     comment.Lj = 'length at day 14 post hatching when metamorphosis starts'; 
+data.Lj = 0.9176 ; units.Lj = 'cm'; label.Lj = 'total length at end of metamorphosis'; bibkey.Lj  = 'YufeParr1999';  
+    comment.Lj = 'length at day 20 post hatching when metamorphosis ends; length is 0.6857cm at day 14 post hatching when metamorphosis starts'; 
+comment.aj = 'metamorphosis starts at day 16 post fertilization and ends at day 19 pf at temp of 19.5C';
 data.Lp_f  = 38;   units.Lp_f  = 'cm';  label.Lp_f  = 'total length at puberty in females';        bibkey.Lp_f  = 'MancPC'; 
 data.Lp_m  = 33;   units.Lp_m  = 'cm';  label.Lp_m  = 'total length at puberty in males';        bibkey.Lp_m  = 'MancPC'; 
-
 data.Li  = 52;   units.Li  = 'cm';  label.Li  = 'ultimate total length';          bibkey.Li  = 'TeixCabr2010';   %-->they cite a thesis by Andrade 1990 
     comment.Li = 'average size between 40 cm';
     %maximal lenght ever recorded is 70 cm, ref FAO
-    %maximal lenght ever recorded is 60 (male) cm, ref Fishbase
-       
+    %maximal lenght ever recorded is 60 (male) cm, ref Fishbase       
 %___________   
 %DRY WEIGTHS
 data.Wd0 = 46.15*1e-6; units.Wd0 = 'g'; label.Wd0 = 'egg dry weigth' ; bibkey.Wd0 = 'YufeParr1999';  
 data.Wdh = 33.19;   units.Wdh = 'ug';   label.Wdh = 'dry weight at hatching';   bibkey.Wdh = 'YufeParr1999';
 data.Wdb = 35.4;   units.Wdb = 'ug';   label.Wdb = 'dry weight at birth';   bibkey.Wdb = 'YufeParr1999';
     comment.Wdb = 'mean dry weigth at day 3 ph, in micrograms'; 
-    
-data.Wdj = 553.4; units.Wdj = 'ug'; label.Wdj = 'dry weight at START of metamorphosis'; bibkey.Wdj = 'YufeParr1999'; 
-    comment.Wdj = 'mean dry weigth at day 14 ph, in micrograms'; 
-
-data.Wdj2 = 1281 ; units.Wdj2 = 'ug'; label.Wdj2 = 'dry weight at END of metamorphosis'; bibkey.Wdj = 'YufeParr1999'; 
-    comment.Wdj2 = 'mean dry weigth at day 17 ph, in micrograms'; 
-%     
-    
+% data.Wdj = 553.4; units.Wdj = 'ug'; label.Wdj = 'dry weight at START of metamorphosis'; bibkey.Wdj = 'YufeParr1999'; 
+%     comment.Wdj = 'mean dry weigth at day 14 ph, in micrograms'; 
+data.Wdj = 1281 ; units.Wdj = 'ug'; label.Wdj = 'dry weight at END of metamorphosis'; bibkey.Wdj = 'YufeParr1999'; 
+    comment.Wdj = 'mean dry weigth at day 17 ph, in micrograms, mean dry weigth at day 14 ph (START of metam) is 553.4 micrograms'; 
 %___________   
 %WET WEIGTHS
-
 data.Wwp_f = 850;   units.Wwp_f = 'g';   label.Wwp_f = 'wet weight at puberty';          bibkey.Wwp_f = 'MancPC';
 data.Wwp_m = 650;   units.Wwp_m = 'g';   label.Wwp_m = 'wet weight at puberty';          bibkey.Wwp_m = 'MancPC';
-
-    
 data.Wwi = 1830;   units.Wwi = 'g';   label.Wwi = 'ultimate wet weight';            bibkey.Wwi = 'MancPC';
     comment.WWi = 'average weight of females and males at reproductive stage';
-      
-
-data.Ri  = 4160;   units.Ri  = '#/d'; label.Ri  = 'maximum reprod rate per day';     bibkey.Ri_35  = 'DiniRibe1999';   
+     
+data.Ri  = 4160;   units.Ri  = '#/d'; label.Ri  = 'maximum reprod rate per day';     bibkey.Ri  = 'DiniRibe1999';   
 temp.Ri = C2K(18.5);    units.temp.Ri = 'K'; label.temp.Ri = 'temperature';
     comment.Ri = 'Total weight of eggs daily collection of S. senegalensis during the spawning seasons of 1996 and 1997 divided by Wd of egg and 365';
 %     
@@ -118,6 +102,39 @@ data.E0 = 1;    units.E0 = 'J';   label.E0 = 'reserve energy in egg'; bibkey.E0 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % uni-variate data
+% T-ah data from Carballo et al 2018 
+% laboratory experiment - reliable data -- they are also NOT on the same curve as zero-var data
+data.Tah = [... temperature (C), age at hatching (d) 
+    16      2
+    18      1.5
+    20      1    ];     
+units.Tah = {'deg C', 'd'}; label.Tah = {'temperature', 'age at hatching'};  
+bibkey.Tah = 'CarbFirm2018';
+comment.Tah = 'incubation time: from beginning of gastrula to hatching)';
+
+
+% T-ab data for 20 degrees from Manchado, 18 from RibeSara1999 and
+% 19.5 from YufeParr1999; laboratory experiments - reliable data
+data.Tab = [... temperature (C), age at birth (d)
+    18      6
+    19.5    5.5  %% How can this point be 5.5 here and 4 in zero-var data??
+    20      4.5    ]; 
+units.Tab = {'deg C', 'd'}; label.Tab = {'temperature', 'age at birth, fertilization to birth'};  
+bibkey.Tab = {'RibeSara1999', 'YufeParr1999','MancPC'};
+comment.Tab = 'incubation time: from fertilisation to first feeding)';
+
+%T-aj data for 16 and 20 degrees from Manchado, 18 from RibeSara1999 and
+% 19.5 from YufeParr1999
+% laboratory experiment - reliable data
+data.Taj = [... % temperature (C), time since birth until END of metamorphosis (d)
+    16      20
+    18      17
+    19      15
+    20      14];
+units.Taj = {'deg C', 'd'}; label.Taj = {'temperature', 'time since birth at endmetamorphosis'};
+bibkey.Taj = 'Manchado, RibeSara1999 and YufeParr1999';
+comment.Taj = 'development time: from first feeding to metamorphosis)';
+
 
 % t-L age length data for early juveniles from RibeSara1999
 data.tL = [ ... %birth occurs at age 4 from fetilization, and at day 2 after hatching
@@ -325,7 +342,7 @@ data.tWd2 = [ ... % time (days from hatching),  dry weigth of larvae in ug
 
 data.tWd2(:,1) = data.tWd2(:,1) - 3; %correct to time since birth  
 units.tWd2 = {'d','ug'}; label.tWd2 = {'time since birth','Dry weigth of larvae along development'};
-bibkey.tWd2 = 'ParrYufe2001'; 
+bibkey.tWd2 = 'ParrYufe2001'; %YufeParr1999?
 comment.tWd2 = {'mouth openning at day 3, metamorphosis at day 14 ph reared at 19.5 degrees C'}; % <-- reared at 19.5 after metam?
 temp.tWd2 = C2K(19.5);
 units.temp.tWd2 = 'K'; label.temp.tWd2 = 'temperature'; 
@@ -346,7 +363,7 @@ data.tWd_f1 = [... % days, mg/ind, 100% live prey L100
 70	34.058]; 
 data.tWd_f1(:,2) = data.tWd_f1(:,2)*1e3; % to ug
 units.tWd_f1 = {'d','ug'}; label.tWd_f1 = {'time since hatching','Dry weigth of larvae along development'};
-bibkey.tWd_f1 = 'CañaFern1999'; 
+bibkey.tWd_f1 = 'CanaFern1999'; 
 comment.tWd_f1 = {'fed algae, rotifers and artemia'}; % 
 temp.tWd_f1 = C2K(19);
 units.temp.tWd_f1 = 'K'; label.temp.tWd_f1 = 'temperature'; 
@@ -359,7 +376,7 @@ data.tWd_f2 =[ ... %days post hatching, mg/ind, 50% live prey L50
 43	5.453];
 data.tWd_f2(:,2) = data.tWd_f2(:,2)*1e3; % to ug
 units.tWd_f2 = {'d','ug'}; label.tWd_f2 = {'time since hatching','Dry weigth of larvae along development'};
-bibkey.tWd_f2 = 'CañaFern1999'; 
+bibkey.tWd_f2 = 'CanaFern1999'; 
 comment.tWd_f2 = {'individuals fed half the quantity of treatment L100'}; % 
 temp.tWd_f2 = C2K(19);
 units.temp.tWd_f2 = 'K'; label.temp.tWd_f2 = 'temperature'; 
@@ -372,7 +389,7 @@ data.tWd_f3 = [ ... % days, mg/ind, 100% live prey and 50% inert food L100I50
 43	8.691];
 data.tWd_f3(:,2) = data.tWd_f3(:,2)*1e3; % to ug
 units.tWd_f3 = {'d','ug'}; label.tWd_f3 = {'time since hatching','Dry weigth of larvae along development'};
-bibkey.tWd_f3 = 'CañaFern1999'; 
+bibkey.tWd_f3 = 'CanaFern1999'; 
 comment.tWd_f3 = {'individuals fed 100% live prey and 50% inert food same time'}; % 
 temp.tWd_f3 = C2K(19);
 units.temp.tWd_f3 = 'K'; label.temp.tWd_f3 = 'temperature'; 
@@ -385,7 +402,7 @@ data.tWd_f4 = [ ... %days,mg/ind,50% live prey and 50% inert food L50I50
 43	6.878];
 data.tWd_f4(:,2) = data.tWd_f4(:,2)*1e3; % to ug
 units.tWd_f4 = {'d','ug'}; label.tWd_f4 = {'time since hatching','Dry weigth of larvae along development'};
-bibkey.tWd_f4 = 'CañaFern1999'; 
+bibkey.tWd_f4 = 'CanaFern1999'; 
 comment.tWd_f4 = {'individuals fed 100% live prey and 50% inert food same time'}; % 
 temp.tWd_f4 = C2K(19);
 units.temp.tWd_f4 = 'K'; label.temp.tWd_f4 = 'temperature'; 
@@ -450,9 +467,9 @@ data.tLA = [ ... % time since start of experiment (d), total length (cm)
 data.tLA(:,1) = data.tLA(:,1) + 242; %time since start of experiment to time since birth
 units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};  
 temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature during experiment';
-temp2.tLA   = C2K(20);  units.temp.tLA = 'K'; label.temp.tLA = 'average temperature since birth until start of experiment';
+temp2.tLA   = C2K(20);  units.temp2.tLA = 'K'; label.temp2.tLA = 'average temperature since birth until start of experiment';
 bibkey.tLA = 'MARE2019';
-comment.tLA = 'T 19ºC pH 8.0 and 7.7';
+comment.tLA = 'T 19�C pH 8.0 and 7.7';
 
 data.tLB = [ ... % time since start of experiment (d), total length (cm)
 %pH 8.0:
@@ -513,9 +530,9 @@ data.tLB = [ ... % time since start of experiment (d), total length (cm)
 data.tLB(:,1) = data.tLB(:,1) + 242; %time since start of experiment to time since birth
 units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};  
 temp.tLB    = C2K(23);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
-temp2.tLB   = C2K(20);  units.temp.tLB = 'K'; label.temp.tLB = 'average temperature since birth until start of experiment';
+temp2.tLB   = C2K(20);  units.temp2.tLB = 'K'; label.temp2.tLB = 'average temperature since birth until start of experiment';
 bibkey.tLB = 'MARE2019';
-comment.tLB = 'T 23ºC pH 8.0';
+comment.tLB = 'T 23�C pH 8.0';
 
 %% time wet weight Jose
 % 
@@ -609,9 +626,9 @@ data.tWwA = [ ... % time since start of experiment (d), wet weight (g)
 data.tWwA(:,1) = data.tWwA(:,1) + 242; %time since start of experiment to time since birth
 units.tWwA   = {'d', 'g'};  label.tWwA = {'time', 'wet weight'};   
 temp.tWwA    = C2K(19);  units.temp.tWwA = 'K'; label.temp.tWwA = 'temperature';
-temp2.tWwA   = C2K(20);  units.temp.tWwA = 'K'; label.temp.tWwA = 'average temperature since birth until start of experiment';
+temp2.tWwA   = C2K(20);  units.temp2.tWwA = 'K'; label.temp2.tWwA = 'average temperature since birth until start of experiment';
 bibkey.tWwA = 'MARE2019';
-comment.tWwA = 'T 19ºC pH 8.0 and 7.7';
+comment.tWwA = 'T 19�C pH 8.0 and 7.7';
 
 data.tWwB = [ ... % time since start of experiment (d), wet weight (g)
 %pH 8.0:
@@ -703,9 +720,9 @@ data.tWwB = [ ... % time since start of experiment (d), wet weight (g)
 data.tWwB(:,1) = data.tWwB(:,1) + 242; %time since start of experiment to time since birth
 units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};   
 temp.tWwB    = C2K(23);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
-temp2.tWwB   = C2K(20);  units.temp.tWwB = 'K'; label.temp.tWwB = 'average temperature since birth until start of experiment';
+temp2.tWwB   = C2K(20);  units.temp2.tWwB = 'K'; label.temp2.tWwB = 'average temperature since birth until start of experiment';
 bibkey.tWwB = 'MARE2019';
-comment.tWwB = 'T 23ºC pH 8.0 and 7.7';
+comment.tWwB = 'T 23�C pH 8.0 and 7.7';
 
 
 
@@ -726,6 +743,7 @@ weights.Lp_m = 5 * weights.Lp_m;
 
 %% set pseudodata and respective weights
 [data, units, label, weights] = addpseudodata(data, units, label, weights);
+weights.aj = 1* weights.aj; 
 
 %% pack auxData and txtData for output
 auxData.temp = temp;
@@ -739,10 +757,10 @@ txtData.comment = comment;
 set1 = {'tL','tL2'}; comment1 = {'RibeSara1999 and RibeEngr2017'};
 set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, YufeParr1999 and RibeEngr2017'};
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
-set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CañaFern1999'};
+set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CanaFern1999'};
 set5 = {'tL_f','tL_m'}; comment5 = { 'females (red), males (blue)'};
-set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ºC) and B (blue, 19ºC)'}; 
-set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ºC) and A (blue, 19ºC)'};
+set6 = {'tLB','tLA'}; comment6 = {'D (red, 23�C) and B (blue, 19�C)'}; 
+set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23�C) and A (blue, 19�C)'};
 set8 = {'LWw','LWw_f', 'LWw_m'}; comment8 = {'Manchado -persComm: all (red), females (magenta), males (blue)'}; 
 metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7, set8};
 metaData.grp.comment = {comment1, comment2,comment3,comment4,comment5,comment6,comment7,comment8};
@@ -754,13 +772,24 @@ metaData.facts = struct('F1',F1);
 
 %% Discussion points
 D1 = 'Males are assumed to differ from females in z only, due to different size at puberty, but no data on different age at puberty or different ultimate size';
-D2 = 'Zero-variate data are from the lab and from the field, so different f was used (f=1, and f_field)';     
-D3 = 'Parameter T_A was calculated from T_ah data outside of AmP routines';     
-metaData.discussion = struct('D1', D1, 'D2', D2, 'D3', D3);
+D2 = 'Zero-variate data are from the lab and from the field; uni-variate data sets have their respective f values';     
+D3 = 'Parameter T_A was calculated from T_ah data outside of AmP routines'; 
+D4 = ['Metamorphosis lasts few days, and data is available for START and END of metamorphosis. ', ...
+    'We use END of (physical) metamorphosis to mark the discrete event of (metabolic) metamorphosis.'];
+metaData.discussion = struct('D1', D1, 'D2', D2, 'D3', D3, 'D4', D4);
 
 %% Acknowledgments
 metaData.acknowledgment = {'The authors wish to acknowledge Dr. Manuel Manchado, researcher at la Junta de Andalucia in Spain, who provided us with valuable data for the model calibration. The creation of this entry was supported by the IdEx postdoctoral fellowship from University of Bordeaux attributed to A. Sardi'; ...
                            'The authors wish to acknowledge the researchers at MARE, who provided valuable data for the model calibration, and whose work was supported by the Portuguese Foundation for Science and Technology (FCT) through the project FISHBUDGET - Effects of climate change on marine fish energy budgets (PTDC/BIA-BMA/28630/2017)'};
+%% Links
+metaData.links.id_CoL = '6Z55C'; % Cat of Life
+% https://www.catalogueoflife.org/data/taxon/6Z55C 
+metaData.links.id_EoL = '46570284'; % Ency of Life
+metaData.links.id_Wiki = 'Solea_senegalensis'; % Wikipedia
+metaData.links.id_ADW = 'Solea_senegalensis'; % ADW
+metaData.links.id_Taxo = '187842'; % Taxonomicon
+metaData.links.id_WoRMS = '127159'; % WoRMS
+metaData.links.id_fishbase = 'Solea-senegalensis.html'; % fishbase
 
 %% References
 bibkey = 'Wiki'; type = 'Misc'; bib = [...
@@ -776,44 +805,45 @@ bibkey = 'Kooy2010'; type = 'Book'; bib = [ ...  % used in setting of chemical p
 'pages = {Table 4.2 (page 150), 8.1 (page 300)}, ' ...
 'howpublished = {\url{http://www.bio.vu.nl/thb/research/bib/Kooy2010.html}}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
-%'
+%
+%% !! to include: MoraArag2016 
 bibkey = 'CanaFern1999'; type = 'Article'; bib = [ ... 
-'author = {﻿Cañavate, J. Pedro; Fernández-Díaz, C.}, ' ... 
+'author = {Canavate, J. Pedro and Fernandez-Diaz, C.}, ' ... 
 'year   = {1999}, ' ...
-'title  = {﻿Influence of co-feeding larvae with live and inert diets on weaning the sole \textit{Solea senegalensis} onto commercial dry feeds}, ' ...
+'title  = {Influence of co-feeding larvae with live and inert diets on weaning the sole \textit{Solea senegalensis} onto commercial dry feeds}, ' ...
 'journal= {Aquaculture}, ' ...
 'volume = {174}, ' ...
 'number = {3-4}, '...
-'doi    = {﻿10.1016/S0044-8486(99)00021-6}, '...
+'doi    = {10.1016/S0044-8486(99)00021-6}, '...
 'pages  = {255-263}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];  
 % 
 bibkey = 'DiniRibe1999'; type = 'Article'; bib = [ ... 
-'author = {Dinis, Maria Teresa; Ribeiro, Laura; Soares, Florbela; Sarasquete, Carmen}, ' ... 
-'year   = {1999}, ' ...
+'author = {Dinis, Maria Teresa ans Ribeiro, Laura and Soares, Florbela and Sarasquete, Carmen}, ' ... 
+'year   = {1999},' ...
 'title  = {A review on the cultivation potential of \textit{Solea senegalensis} in {S}pain and in {P}ortugal}, ' ...
-'journal= {Aquaculture}, ' ...
-'volume = {176}, ' ...
-'number = {1-2}, '...
-'doi    = {10.1016/S0044-8486(99)00047-2}, '...
+'journal= {Aquaculture},' ...
+'volume = {176},' ...
+'number = {1-2},'...
+'doi    = {10.1016/S0044-8486(99)00047-2},'...
 'pages  = {27-38}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'MARE2019'; type = 'Misc'; bib = [ ... 
-'author = {Maulvault, Ana Luísa; Marques, António; Rosa, Rui; Mendes, Ana; Pousão-Ferreira, Pedro; Anacleto, Patrícia}, ' ... 
-'year  = {2019}, ' ...
-'note = {Experimental data from MARE, University of Lisbon. SOON TO BE PUBLISHED. For using this data outside of the script before publication please contact José Moreira (j.miguel.moreira@tecnico.ulisboa.pt) or Patrícia Anacleto (panacleto@ipma.pt)}, '];
+'author = {Maulvault, Ana Luisa and Marques, Antonio and Rosa, Rui and Mendes, Ana and Pouso-Ferreira, Pedro and Anacleto, Patricia},' ... 
+'year  = {2019},' ...
+'note = {Experimental data from MARE, University of Lisbon. SOON TO BE PUBLISHED. For using this data outside of the script before publication please contact Jose Moreira (j.miguel.moreira@tecnico.ulisboa.pt) or Patricia Anacleto (panacleto@ipma.pt)}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'MancPC'; type = 'Misc'; bib = [ ... 
-'author = {Manchado, Manuel}, ' ... 
-'note = {Personal Communication}, '];
+'author = {Manchado, Manuel},' ... 
+'note = {Personal Communication}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'OrtiFune2019'; type = 'Article'; bib = [ ...
-'author = {Ortiz-Delgado, Juan B; Funes, Victoria; Sarasquete, Carmen}, '...
+'author = {Ortiz-Delgado, Juan B and Funes, Victoria and Sarasquete, Carmen}, '...
 'year = {2019}, '...
-'title = {The organophosphate pesticide -OP- malathion inducing thyroidal disruptions and failures in the metamorphosis of the Senegalese sole, Solea senegalensis},'...
+'title = {The organophosphate pesticide -OP- malathion inducing thyroidal disruptions and failures in the metamorphosis of the {S}enegalese sole, \textit{Solea senegalensis}},'...
 'journal = {BMC Veterinary Research},'...
 'volume = {15},'...
 'number = {1},'...
@@ -822,7 +852,7 @@ bibkey = 'OrtiFune2019'; type = 'Article'; bib = [ ...
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'RibeSara1999'; type = 'Article'; bib = [ ... 
-'author = {Ribeiro, L.; Sarasquete, C.; Dinis, M. T.}, ' ... 
+'author = {Ribeiro, L. and Sarasquete, C. and Dinis, M. T.}, ' ... 
 'year   = {1999}, ' ...
 'title  = {Histological and histochemical development of the digestive system of \textit{Solea senegalensis} ({K}aup, 1858) larvae}, ' ...
 'journal= {Aquaculture}, ' ...
@@ -833,7 +863,7 @@ bibkey = 'RibeSara1999'; type = 'Article'; bib = [ ...
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'RibeEngr2017'; type = 'Article'; bib = [ ... 
-'author = {Ribeiro, L; Engrola, Sofia; Dinis, Maria Teresa}, ' ... 
+'author = {Ribeiro, L and Engrola, Sofia and Dinis, Maria Teresa}, ' ... 
 'year   = {2017}, ' ...
 'title  = {Weaning of {S}enegalese sole (\textit{Solea senegalensis}) postlarvae to an inert diet with a co-feeding regime}, ' ...
 'journal= {Ciencias Marinas}, ' ...
@@ -844,34 +874,31 @@ bibkey = 'RibeEngr2017'; type = 'Article'; bib = [ ...
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'TeixCabr2010'; type = 'Article'; bib = [ ... 
-'author = {﻿Teixeira, Célia M.; Cabral, Henrique N.}, ' ... 
+'author = {Teixeira, C. M. and Cabral, H. N.}, ' ... 
 'year   = {2010}, ' ...
-'title  = {Comparative analysis of the diet, growth and reproduction of the soles, \textit{Solea solea} and \textit{Solea senegalensis}, occurring in sympatry along the Portuguese coast}, ' ...
+'title  = {Comparative analysis of the diet, growth and reproduction of the soles, \textit{Solea solea} and \textit{Solea senegalensis}, occurring in sympatry along the {P}ortuguese coast}, ' ...
 'journal= {Journal of the Marine Biological Association of the United Kingdom}, ' ...
 'volume = {90}, ' ...
 'number = {5}, '...
-'doi    = {﻿10.1017/S0025315410000238}, '...
+'doi    = {10.1017/S0025315410000238}, '...
 'pages  = {995-1003}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
-bibkey = 'Vina2007'; type = 'Thesis'; bib = [ ... 
-'author = {Catarina Vinagre}, ' ... 
-'year   = {2007}, ' ...
-'title  = {Ecology of the juveniles of the soles \textit{Solea solea} ({L}innaeus, 1758) and \textit{Solea senegalensis} ({K}aup, 1858), in the {T}agus estuary}, ' ...
-'journal= {University of Lisbon}, ' ...
-'volume = {}, ' ...
-'number = {}, '...
-'doi    = {}, '...
-'pages  = {1-200}'];
+bibkey = 'Vina2007'; type = 'phdthesis'; bib = [ ... 
+'author = {Catarina Vinagre},' ... 
+'year   = {2007},' ...
+'title  = {Ecology of the juveniles of the soles \textit{Solea solea} ({L}innaeus, 1758) and \textit{Solea senegalensis} ({K}aup, 1858), in the {T}agus estuary},' ...
+'school = {University of Lisbon},' ...
+'pages  = {200}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'YufeParr1999'; type = 'Article'; bib = [ ... 
-'author = {Yufera, M. Parra, G. Santiago, R. Carrascosa, M.}, ' ... 
-'year   = {1999}, ' ...
-'title  = {Growth, carbon, nitrogen and caloric content of \textit{Solea senegalensis} (Pisces: Soleidae) from egg fertilization to metamorphosis}, ' ...
-'journal= {Marine Biology}, ' ...
-'volume = {134}, ' ...
-'number = {1}, '...
-'doi    = {10.1007/s002270050523}, '...
-'pages  = {43-49}'];
+'author = {Yufera, M. and Parra, G. and Santiago, R. and Carrascosa, M.},' ... 
+'year   = {1999},' ...
+'title  = {Growth, carbon, nitrogen and caloric content of \textit{Solea senegalensis} ({P}isces: {S}oleidae) from egg fertilization to metamorphosis},' ...
+'journal= {Marine Biology},' ...
+'volume = {134},' ...
+'number = {1},'...
+'doi    = {10.1007/s002270050523},'...
+'pages  = {43--49}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];

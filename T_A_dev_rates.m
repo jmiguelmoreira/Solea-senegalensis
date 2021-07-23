@@ -20,10 +20,10 @@ Tah = [... temperature (C), age at hatching (d)
 % % T-ab data for 20 degrees from Manchado, 18 from RibeSara1999 and
 % % 19.5 from YufeParr1999
 % % laboratory experiment - reliable data
-% Tab = [... temperature (C), age at birth (d)
-%     18      6
-%     19.5    5.5
-%     20      4.5    ]; 
+Tab = [... temperature (C), age at birth (d)
+    18      6
+    19.5    5.5
+    20      4.5    ]; 
     
 %units.Tab = {'deg C', 'd'}; label.Tab = {'temperature', 'age at birth, fertilization to birth'};  
 %bibkey.Tab = 'Fond1979';
@@ -47,12 +47,12 @@ Taj = [... % temperature (C), time since birth until END of metamorphosis (d)
 % p(T) = exp (T_A/T1 - T_A/T) * p(Ti) 
 % T is avg body temp, T1 a chosen reference temp, T_A the Arrh temp, p a
 % physiological rate
-noDsets = length( {'Tah','Taj'});
-dset{1}.name = 'T-ah';dset{2}.name = 'T-aj';%dset{3}.name = 'T-ab'; 
-Ta(1).data = Tah;Ta(2).data = Taj;% Ta(3).data = Tab; 
+noDsets = length( {'Tah','Taj','Tab'});
+dset{1}.name = 'T-ah';dset{2}.name = 'T-aj';dset{3}.name = 'T-ab'; 
+Ta(1).data = Tah;Ta(2).data = Taj; Ta(3).data = Tab; 
 
-fig(1).sty = 'b*'; fig(2).sty = 'r*';%fig(3).sty = 'g*';
-sim(1).sty = 'b-'; sim(2).sty = 'r-';%sim(3).sty = 'g-'; 
+fig(1).sty = 'b*'; fig(2).sty = 'r*';fig(3).sty = 'g*';
+sim(1).sty = 'b-'; sim(2).sty = 'r-';sim(3).sty = 'g-'; 
 
 D(noDsets).data = 0; T(noDsets).data = 0; % initialize
 for d = 1: noDsets
@@ -69,8 +69,8 @@ end
 figure
 
 %choose datasets
-dArray = [1 2]; %data array
-sArray = [1 2]; % simulation array (for polyval)
+dArray = [1 2 3]; %data array
+sArray = [1 2 3]; % simulation array (for polyval)
 for d = 1: length(dArray) % plot data
   hold on
     plot(1./T(dArray(d)).data, log(1./D(dArray(d)).data), fig(d).sty)
@@ -89,7 +89,7 @@ xlabel('1/T, K')
 ylabel(' ln (incub time), days')
 title('Relationship between the incubation temperature and incubation duration')
 
-fprintf('T_A for %s is %6.0f K,and for %s it is %6.0f K. \n', txtd{1}, Arrh_T(1), txtd{2}, Arrh_T(2))%,txtd{3}, Arrh_T(3) )
+fprintf('T_A for %s is %6.0f K, for %s is %6.0f K, and for %s it is %6.0f K. \n', txtd{1}, Arrh_T(1), txtd{2}, Arrh_T(2),txtd{3}, Arrh_T(3) )
 fprintf('Mean value for T_A is %6.0f K. \n', mean(Arrh_T) )
 
 
@@ -97,7 +97,7 @@ fprintf('Mean value for T_A is %6.0f K. \n', mean(Arrh_T) )
 figure
 hold on
 plot(Tah(:,1), Tah(:,2), 'b*')
-%plot(Tab(:,1), Tab(:,2), 'g*')
+plot(Tab(:,1), Tab(:,2), 'g*')
 plot(Taj(:,1), Taj(:,2), 'r*')
 
 legend({'ah','aj'});%, 'ab'})
