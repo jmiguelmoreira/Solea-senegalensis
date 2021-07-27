@@ -10,9 +10,9 @@ metaData.family     = 'Soleidae';
 metaData.species    = 'Solea_senegalensis'; 
 metaData.species_en = 'Senegalese sole'; 
 %% check the ecocodes!! --> for labels see : http://www.bio.vu.nl/thb/deb/deblab/add_my_pet/AmPeco.html
-metaData.ecoCode.climate = {'MC'};
-metaData.ecoCode.ecozone = {'MAE'};
-metaData.ecoCode.habitat = {'0jMp', 'jiMcd'};
+metaData.ecoCode.climate = {'MC';'MB'};
+metaData.ecoCode.ecozone = {'MAE';'MAm'};
+metaData.ecoCode.habitat = {'0jMp', 'jiMcb'};
 metaData.ecoCode.embryo  = {'Mp'};
 metaData.ecoCode.migrate = {'Mo'};
 metaData.ecoCode.food    = {'bjPz', 'jiCi'};
@@ -102,27 +102,6 @@ data.E0 = 1;    units.E0 = 'J';   label.E0 = 'reserve energy in egg'; bibkey.E0 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % uni-variate data
-% T-ah data from Carballo et al 2018 
-% laboratory experiment - reliable data -- they are also NOT on the same curve as zero-var data
-data.Tah = [... temperature (C), age at hatching (d) 
-    16      2
-    18      1.5
-    20      1    ];     
-units.Tah = {'deg C', 'd'}; label.Tah = {'temperature', 'age at hatching'};  
-bibkey.Tah = 'CarbFirm2018';
-comment.Tah = 'incubation time: from beginning of gastrula to hatching)';
-
-
-% T-ab data for 20 degrees from Manchado, 18 from RibeSara1999 and
-% 19.5 from YufeParr1999; laboratory experiments - reliable data
-data.Tab = [... temperature (C), age at birth (d)
-    18      6
-    19.5    5.5  %% How can this point be 5.5 here and 4 in zero-var data??
-    20      4.5    ]; 
-units.Tab = {'deg C', 'd'}; label.Tab = {'temperature', 'age at birth, fertilization to birth'};  
-bibkey.Tab = {'RibeSara1999', 'YufeParr1999','MancPC'};
-comment.Tab = 'incubation time: from fertilisation to first feeding)';
-
 %T-aj data for 16 and 20 degrees from Manchado, 18 from RibeSara1999 and
 % 19.5 from YufeParr1999
 % laboratory experiment - reliable data
@@ -132,7 +111,7 @@ data.Taj = [... % temperature (C), time since birth until END of metamorphosis (
     19      15
     20      14];
 units.Taj = {'deg C', 'd'}; label.Taj = {'temperature', 'time since birth at endmetamorphosis'};
-bibkey.Taj = 'Manchado, RibeSara1999 and YufeParr1999';
+bibkey.Taj = 'ManchPC, RibeSara1999 and YufeParr1999';
 comment.Taj = 'development time: from first feeding to metamorphosis)';
 
 
@@ -469,7 +448,7 @@ units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};
 temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature during experiment';
 temp2.tLA   = C2K(20);  units.temp2.tLA = 'K'; label.temp2.tLA = 'average temperature since birth until start of experiment';
 bibkey.tLA = 'MARE2019';
-comment.tLA = 'T 19ºC pH 8.0 and 7.7';
+comment.tLA = 'T 19ï¿½C pH 8.0 and 7.7';
 
 data.tLB = [ ... % time since start of experiment (d), total length (cm)
 %pH 8.0:
@@ -532,7 +511,7 @@ units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};
 temp.tLB    = C2K(23);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
 temp2.tLB   = C2K(20);  units.temp2.tLB = 'K'; label.temp2.tLB = 'average temperature since birth until start of experiment';
 bibkey.tLB = 'MARE2019';
-comment.tLB = 'T 23ºC pH 8.0';
+comment.tLB = 'T 23ï¿½C pH 8.0';
 
 %% time wet weight Jose
 % 
@@ -628,7 +607,7 @@ units.tWwA   = {'d', 'g'};  label.tWwA = {'time', 'wet weight'};
 temp.tWwA    = C2K(19);  units.temp.tWwA = 'K'; label.temp.tWwA = 'temperature';
 temp2.tWwA   = C2K(20);  units.temp2.tWwA = 'K'; label.temp2.tWwA = 'average temperature since birth until start of experiment';
 bibkey.tWwA = 'MARE2019';
-comment.tWwA = 'T 19ºC pH 8.0 and 7.7';
+comment.tWwA = 'T 19ï¿½C pH 8.0 and 7.7';
 
 data.tWwB = [ ... % time since start of experiment (d), wet weight (g)
 %pH 8.0:
@@ -722,7 +701,7 @@ units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};
 temp.tWwB    = C2K(23);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
 temp2.tWwB   = C2K(20);  units.temp2.tWwB = 'K'; label.temp2.tWwB = 'average temperature since birth until start of experiment';
 bibkey.tWwB = 'MARE2019';
-comment.tWwB = 'T 23ºC pH 8.0 and 7.7';
+comment.tWwB = 'T 23ï¿½C pH 8.0 and 7.7';
 
 
 
@@ -759,8 +738,8 @@ set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, YufeParr1999 and RibeEngr
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
 set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CanaFern1999'};
 set5 = {'tL_f','tL_m'}; comment5 = { 'females (red), males (blue)'};
-set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ºC) and B (blue, 19ºC)'}; 
-set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ºC) and A (blue, 19ºC)'};
+set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ï¿½C) and B (blue, 19ï¿½C)'}; 
+set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ï¿½C) and A (blue, 19ï¿½C)'};
 set8 = {'LWw','LWw_f', 'LWw_m'}; comment8 = {'Manchado -persComm: all (red), females (magenta), males (blue)'}; 
 metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7, set8};
 metaData.grp.comment = {comment1, comment2,comment3,comment4,comment5,comment6,comment7,comment8};
@@ -849,6 +828,17 @@ bibkey = 'OrtiFune2019'; type = 'Article'; bib = [ ...
 'number = {1},'...
 'doi = {10.1186/s12917-019-1786-}, '...
 'pages = {1-21}'];
+metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
+%
+bibkey = 'ParrYufe2001'; type = 'Article'; bib = [ ... 
+'author = {Parra, G and YÃºfera, M}, ' ... 
+'year   = {2001}, ' ...
+'title  = {Comparative energetics during early development of two marine fish species, Solea senegalensis (Kaup) and Sparus aurata (L.)}, ' ...
+'journal= {The Journal of experimental biology}, ' ...
+'volume = {204}, ' ...
+'number = {Part 12}, '...
+'doi    = {10.1016/S0044-8486(98)00496-7}, '...
+'pages  = {2175-2183}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'RibeSara1999'; type = 'Article'; bib = [ ... 
