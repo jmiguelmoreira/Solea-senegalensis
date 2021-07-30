@@ -132,7 +132,7 @@ data.Taj = [... % temperature (C), time since birth until END of metamorphosis (
     19      15
     20      14];
 units.Taj = {'deg C', 'd'}; label.Taj = {'temperature', 'time since birth at endmetamorphosis'};
-bibkey.Taj = 'Manchado, RibeSara1999 and YufeParr1999';
+bibkey.Taj = {'MancPC', 'RibeSara1999', 'YufeParr1999'};
 comment.Taj = 'development time: from first feeding to metamorphosis)';
 
 
@@ -409,7 +409,7 @@ units.temp.tWd_f4 = 'K'; label.temp.tWd_f4 = 'temperature';
 
 
 %%
-%Data time lenght from JosÃ© 
+%Data time lenght from JosÃƒÂ© 
 data.tLA = [ ... % time since start of experiment (d), total length (cm)
 %pH 8.0:
 0	13.3
@@ -469,7 +469,7 @@ units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};
 temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature during experiment';
 temp2.tLA   = C2K(20);  units.temp2.tLA = 'K'; label.temp2.tLA = 'average temperature since birth until start of experiment';
 bibkey.tLA = 'MARE2019';
-comment.tLA = 'T 19ºC pH 8.0 and 7.7';
+comment.tLA = 'T 19ÂºC pH 8.0 and 7.7';
 
 data.tLB = [ ... % time since start of experiment (d), total length (cm)
 %pH 8.0:
@@ -532,7 +532,7 @@ units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};
 temp.tLB    = C2K(23);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
 temp2.tLB   = C2K(20);  units.temp2.tLB = 'K'; label.temp2.tLB = 'average temperature since birth until start of experiment';
 bibkey.tLB = 'MARE2019';
-comment.tLB = 'T 23ºC pH 8.0';
+comment.tLB = 'T 23ÂºC pH 8.0';
 
 %% time wet weight Jose
 % 
@@ -628,7 +628,7 @@ units.tWwA   = {'d', 'g'};  label.tWwA = {'time', 'wet weight'};
 temp.tWwA    = C2K(19);  units.temp.tWwA = 'K'; label.temp.tWwA = 'temperature';
 temp2.tWwA   = C2K(20);  units.temp2.tWwA = 'K'; label.temp2.tWwA = 'average temperature since birth until start of experiment';
 bibkey.tWwA = 'MARE2019';
-comment.tWwA = 'T 19ºC pH 8.0 and 7.7';
+comment.tWwA = 'T 19ÂºC pH 8.0 and 7.7';
 
 data.tWwB = [ ... % time since start of experiment (d), wet weight (g)
 %pH 8.0:
@@ -722,7 +722,7 @@ units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};
 temp.tWwB    = C2K(23);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
 temp2.tWwB   = C2K(20);  units.temp2.tWwB = 'K'; label.temp2.tWwB = 'average temperature since birth until start of experiment';
 bibkey.tWwB = 'MARE2019';
-comment.tWwB = 'T 23ºC pH 8.0 and 7.7';
+comment.tWwB = 'T 23ÂºC pH 8.0 and 7.7';
 
 
 
@@ -759,8 +759,8 @@ set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, YufeParr1999 and RibeEngr
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
 set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CanaFern1999'};
 set5 = {'tL_f','tL_m'}; comment5 = { 'females (red), males (blue)'};
-set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ºC) and B (blue, 19ºC)'}; 
-set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ºC) and A (blue, 19ºC)'};
+set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ÂºC) and B (blue, 19ÂºC)'}; 
+set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ÂºC) and A (blue, 19ÂºC)'};
 set8 = {'LWw','LWw_f', 'LWw_m'}; comment8 = {'Manchado -persComm: all (red), females (magenta), males (blue)'}; 
 metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7, set8};
 metaData.grp.comment = {comment1, comment2,comment3,comment4,comment5,comment6,comment7,comment8};
@@ -830,7 +830,7 @@ bibkey = 'DiniRibe1999'; type = 'Article'; bib = [ ...
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'MARE2019'; type = 'Misc'; bib = [ ... 
-'author = {Maulvault, Ana Luisa and Marques, Antonio and Rosa, Rui and Mendes, Ana and Pouso-Ferreira, Pedro and Anacleto, Patricia},' ... 
+'author = {Maulvault, Ana Luisa and Marques, Antonio and Rosa, Rui and Mendes, Ana and Pousao-Ferreira, Pedro and Anacleto, Patricia},' ... 
 'year  = {2019},' ...
 'note = {Experimental data from MARE, University of Lisbon. SOON TO BE PUBLISHED. For using this data outside of the script before publication please contact Jose Moreira (j.miguel.moreira@tecnico.ulisboa.pt) or Patricia Anacleto (panacleto@ipma.pt)}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
