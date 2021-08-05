@@ -10,9 +10,9 @@ metaData.family     = 'Soleidae';
 metaData.species    = 'Solea_senegalensis'; 
 metaData.species_en = 'Senegalese sole'; 
 %% check the ecocodes!! --> for labels see : http://www.bio.vu.nl/thb/deb/deblab/add_my_pet/AmPeco.html
-metaData.ecoCode.climate = {'MC'};
-metaData.ecoCode.ecozone = {'MAE'};
-metaData.ecoCode.habitat = {'0jMp', 'jiMcd'};
+metaData.ecoCode.climate = {'MC';'MB'};
+metaData.ecoCode.ecozone = {'MAE';'MAm'};
+metaData.ecoCode.habitat = {'0jMp', 'jiMcb'};
 metaData.ecoCode.embryo  = {'Mp'};
 metaData.ecoCode.migrate = {'Mo'};
 metaData.ecoCode.food    = {'bjPz', 'jiCi'};
@@ -102,27 +102,6 @@ data.E0 = 1;    units.E0 = 'J';   label.E0 = 'reserve energy in egg'; bibkey.E0 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % uni-variate data
-% T-ah data from Carballo et al 2018 
-% laboratory experiment - reliable data -- they are also NOT on the same curve as zero-var data
-data.Tah = [... temperature (C), age at hatching (d) 
-    16      2
-    18      1.5
-    20      1    ];     
-units.Tah = {'deg C', 'd'}; label.Tah = {'temperature', 'age at hatching'};  
-bibkey.Tah = 'CarbFirm2018';
-comment.Tah = 'incubation time: from beginning of gastrula to hatching)';
-
-
-% T-ab data for 20 degrees from Manchado, 18 from RibeSara1999 and
-% 19.5 from YufeParr1999; laboratory experiments - reliable data
-data.Tab = [... temperature (C), age at birth (d)
-    18      6
-    19.5    5.5  %% How can this point be 5.5 here and 4 in zero-var data??
-    20      4.5    ]; 
-units.Tab = {'deg C', 'd'}; label.Tab = {'temperature', 'age at birth, fertilization to birth'};  
-bibkey.Tab = {'RibeSara1999', 'YufeParr1999','MancPC'};
-comment.Tab = 'incubation time: from fertilisation to first feeding)';
-
 %T-aj data for 16 and 20 degrees from Manchado, 18 from RibeSara1999 and
 % 19.5 from YufeParr1999
 % laboratory experiment - reliable data
@@ -725,7 +704,6 @@ bibkey.tWwB = 'MARE2019';
 comment.tWwB = 'T 23ºC pH 8.0 and 7.7';
 
 
-
 %% set weights for all real data
 weights = setweights(data, []);
 %weights.ah = 5 * weights.ah; 
@@ -849,6 +827,17 @@ bibkey = 'OrtiFune2019'; type = 'Article'; bib = [ ...
 'number = {1},'...
 'doi = {10.1186/s12917-019-1786-}, '...
 'pages = {1-21}'];
+metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
+%
+bibkey = 'ParrYufe2001'; type = 'Article'; bib = [ ... 
+'author = {Parra, G and Yúfera, M}, ' ... 
+'year   = {2001}, ' ...
+'title  = {Comparative energetics during early development of two marine fish species, Solea senegalensis (Kaup) and Sparus aurata (L.)}, ' ...
+'journal= {The Journal of experimental biology}, ' ...
+'volume = {204}, ' ...
+'number = {Part 12}, '...
+'doi    = {10.1016/S0044-8486(98)00496-7}, '...
+'pages  = {2175-2183}'];
 metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 %
 bibkey = 'RibeSara1999'; type = 'Article'; bib = [ ... 
