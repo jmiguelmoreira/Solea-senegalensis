@@ -304,8 +304,7 @@ data.tWd_f1(:,2) = data.tWd_f1(:,2)*1e3; % to ug
 units.tWd_f1 = {'d','ug'}; label.tWd_f1 = {'time since hatching','Dry weigth of larvae along development'};
 bibkey.tWd_f1 = 'CanaFern1999'; 
 comment.tWd_f1 = {'fed algae, rotifers and artemia'}; % 
-temp.tWd_f1 = C2K(19);
-units.temp.tWd_f1 = 'K'; label.temp.tWd_f1 = 'temperature'; 
+temp.tWd_f1 = C2K(19); units.temp.tWd_f1 = 'K'; label.temp.tWd_f1 = 'temperature'; 
 
 data.tWd_f2 =[ ... %days post hatching, mg/ind, 50% live prey L50
 3	0.034
@@ -407,8 +406,9 @@ data.tLA(:,1) = data.tLA(:,1) + 242; %time since start of experiment to time sin
 units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};  
 temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature during experiment';
 temp2.tLA   = C2K(20);  units.temp2.tLA = 'K'; label.temp2.tLA = 'average temperature since birth until start of experiment';
-bibkey.tLA = 'MARE2019';
-comment.tLA = 'T 19ºC pH 8.0 and 7.7';
+bibkey.tLA = 'MARE2019'; comment.tLA = 'T 19ºC pH 8.0 and 7.7';
+Linit.tLA = 12.9542; units.Linit.tLA = 'cm'; label.Linit.tLA = 'mean length at start of experiment';
+
 
 data.tLB = [ ... % time since start of experiment (d), total length (cm)
 %pH 8.0:
@@ -470,8 +470,9 @@ data.tLB(:,1) = data.tLB(:,1) + 242; %time since start of experiment to time sin
 units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};  
 temp.tLB    = C2K(23);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
 temp2.tLB   = C2K(20);  units.temp2.tLB = 'K'; label.temp2.tLB = 'average temperature since birth until start of experiment';
-bibkey.tLB = 'MARE2019';
-comment.tLB = 'T 23ºC pH 8.0';
+bibkey.tLB = 'MARE2019'; comment.tLB = 'T 23ºC pH 8.0';
+Linit.tLB = 12.5926; units.Linit.tLB = 'cm'; label.Linit.tLB = 'mean length at start of experiment';
+
 
 %% time wet weight Jose
 % 
@@ -566,8 +567,10 @@ data.tWwA(:,1) = data.tWwA(:,1) + 242; %time since start of experiment to time s
 units.tWwA   = {'d', 'g'};  label.tWwA = {'time', 'wet weight'};   
 temp.tWwA    = C2K(19);  units.temp.tWwA = 'K'; label.temp.tWwA = 'temperature';
 temp2.tWwA   = C2K(20);  units.temp2.tWwA = 'K'; label.temp2.tWwA = 'average temperature since birth until start of experiment';
-bibkey.tWwA = 'MARE2019';
-comment.tWwA = 'T 19ÂºC pH 8.0 and 7.7';
+bibkey.tWwA = 'MARE2019'; comment.tWwA = 'T 19ºC pH 8.0 and 7.7';
+Wwinit.tWwA = 26.1979; units.Wwinit.tWwA = 'g'; label.Wwinit.tWwA = 'mean wet weight at start of experiment';
+
+
 
 data.tWwB = [ ... % time since start of experiment (d), wet weight (g)
 %pH 8.0:
@@ -660,8 +663,9 @@ data.tWwB(:,1) = data.tWwB(:,1) + 242; %time since start of experiment to time s
 units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};   
 temp.tWwB    = C2K(23);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
 temp2.tWwB   = C2K(20);  units.temp2.tWwB = 'K'; label.temp2.tWwB = 'average temperature since birth until start of experiment';
-bibkey.tWwB = 'MARE2019';
-comment.tWwB = 'T 23ÂºC pH 8.0 and 7.7';
+bibkey.tWwB = 'MARE2019'; comment.tWwB = 'T 23ºC pH 8.0 and 7.7';
+Wwinit.tWwB = 24.5403; units.Wwinit.tWwB = 'g'; label.Wwinit.tWwB = 'mean wet weight at start of experiment';
+
 
 % ------------ length - wet weight ----------------
 % %L-Ww (manchado data)
@@ -747,7 +751,7 @@ bibkey.LWd3 = 'RibeEngr2017';
 
 %% set weights for all real data
 weights = setweights(data, []);
-%weights.ah = 5 * weights.ah; 
+weights.Tah = 5 * weights.Tah; 
 %weights.ab = 5 * weights.ab; 
 %weights.Wwj0 = 0 * weights.Wwj0; 
 weights.tWd = 10 * weights.tWd;
@@ -758,15 +762,21 @@ weights.Lh = 5 * weights.Lh;
 weights.Li = 10 * weights.Li;
 weights.Lp_f = 5 * weights.Lp_f;
 weights.Lp_m = 5 * weights.Lp_m;
+weights.tLA = 5 * weights.tLA;
+weights.tLB = 5 * weights.tLB;
+weights.tWwA = 5 * weights.tWwA;
+weights.tWwB = 5 * weights.tWwB;
+weights.LWw_f = 5 * weights.LWw_f;
 %
 
 %% set pseudodata and respective weights
 [data, units, label, weights] = addpseudodata(data, units, label, weights);
-weights.aj = 1* weights.aj; 
+weights.tL_f = 5* weights.tL_f; 
+weights.tL_m = 5* weights.tL_m; 
 
 %% pack auxData and txtData for output
-auxData.temp = temp;
-auxData.temp2 = temp2;
+auxData.temp = temp; auxData.temp2 = temp2;
+auxData.Linit = Linit; auxData.Wwinit = Wwinit; 
 txtData.units = units;
 txtData.label = label;
 txtData.bibkey = bibkey;
@@ -777,7 +787,7 @@ set1 = {'tL','tL2'}; comment1 = {'RibeSara1999 and RibeEngr2017'};
 set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, YufeParr1999 and RibeEngr2017'};
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
 set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CanaFern1999'};
-set5 = {'tL_f','tL_m'}; comment5 = { 'females (red), males (blue)'};
+set5 = {'tL_f','tL_m'}; comment5 = { 'TeixCabr2010 - females (red), males (blue)'};
 set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ºC) and B (blue, 19ºC)'}; 
 set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ºC) and A (blue, 19ºC)'};
 set8 = {'LWw','LWw_f', 'LWw_m'}; comment8 = {'Manchado -persComm: all (red), females (magenta), males (blue)'}; 

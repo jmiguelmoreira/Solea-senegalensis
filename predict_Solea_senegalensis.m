@@ -14,7 +14,7 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   filterChecks = k * v_Hp >= f^3 * s_M^3 || ...         % constraint required for reaching puberty with f_tL1
                  ~reach_birth(g, k, v_Hb, f) || ...  % constraint required for reaching birth with f_tL1
           E_Hh > E_Hb || E_Hh <= 0 || f > 1 || f_tL > 1 || f_RibeEngr > 1 || ... % maturity at hatching has to be between 0 and Ehb
-     f_tL < 0.1 || f_RibeEngr < 0.1 || f_exp > 1 || f_Man < 0.3 ||...
+     f_tL < 0.1 || f_RibeEngr < 0.1 || f_exp > 1.5 || f_Man < 0.3 ||...
      ~reach_birth(g, k, v_Hb, f_tL) || ... % constraint required for reaching birth with that f
      ~reach_birth(g, k, v_Hb, f_RibeEngr) ; %filter for constraining shape coeficients under 1       
   
@@ -135,9 +135,7 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   omem     = m_Emm * w_E * d_V/ d_E/ w_V; % -, \omega, contribution of ash free dry mass of reserve to total ash free dry biomass
   gm       = E_G/ kap/ E_mm ;      % -, energy investment ratio
   L_mm     = v/ k_M/ gm;           % cm, maximum length
-% L_mm = L_m; % assume males and females have same L_m (and L_i)because no data on ultimate length or weight for males vs females
-%   pars_tjm = [g k l_T v_Hb v_Hj v_Hpm];
-pars_tjm = pars_tj; % assume maturity threshold for puberty is the same
+pars_tjm = [gm; k; l_T; v_Hb; v_Hj; v_Hp]; % assume maturity threshold for puberty is the same
   [tau_jm, tau_pm, tau_bm, l_jm, l_pm, l_bm, l_im, rho_jm, rho_Bm] = get_tj(pars_tjm, f);
 %   tT_p_m = (tau_pm - tau_bm)/ k_M/ TC_ap; % d, time since birth at puberty
   Lw_p_m = (L_mm * l_pm)/ del_M;                % cm, total length at puberty at f
@@ -249,7 +247,6 @@ pars_lj =  [g, k, l_T, v_Hb, v_Hj ];
   rT_B =  rho_B * kT_M2;  % 1/d, von Bert growth rate   
   rT_j =  rho_j * kT_M2;  % 1/d, exponential growth rate
   tT_j = (tau_j - tau_b)/ kT_M2; % time since birth at metamorphosis
-
   L_j = l_j * L_m; 
   L_i = l_i * L_m;
   EL_bj_f = Lw_b * exp(tL_f((tL_f(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
@@ -262,7 +259,6 @@ pars_lj =  [g, k, l_T, v_Hb, v_Hj ];
   rT_B =  rho_B * kT_M2;  % 1/d, von Bert growth rate   
   rT_j =  rho_j * kT_M2;  % 1/d, exponential growth rate
   tT_j = (tau_j - tau_b)/ kT_M2; % time since birth at metamorphosis
-
   L_j = l_j * L_mm; 
   L_i = l_i * L_mm;
   EL_bj_m = Lw_b * exp(tL_m((tL_m(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
@@ -270,34 +266,37 @@ pars_lj =  [g, k, l_T, v_Hb, v_Hj ];
   ELw_m = [EL_bj_m; EL_ji_m]/del_M; %
   
  % %t-L MARE2019 A
-  [t_j, ~, t_b, l_j, ~, l_b, l_i, ~, rho_B] = get_tj(pars_tj, f_exp);  
+%   [t_j, ~, t_b, l_j, ~, l_b, l_i, ~, rho_B] = get_tj(pars_tj, f_exp);  
   % finding initial length 
-  EL_b = [f_exp * E_m , l_b*L_m]; % initial conditions (at hatching), using reserve density via maternal effect
-  tTC = TC_bLA; %temp from birth to start of exp
-  options = odeset('AbsTol',1e-8, 'RelTol',1e-6, 'Events',@event_bj); % increase integration sensitivity; capture events - birth and metamorphosis
-  [t, EL, te, ye, ie] = ode45(@get_EL_j, linspace(0,tLA(1,1),100) , EL_b, options, f_exp, v, g, E_m, L_m, p_Am, kap, k_J, lb*L_m, lj*L_m, tTC); % ELH: {J/cm^3, cm}, with {[E], L, H}
-  L_start = EL(end,2); Ww_start = L_start.^3 * d_V .* (1 + EL(end,1) * w_E/ mu_E) *1e6; 
-  EL_start = EL(end,:);
+%   EL_b = [f_exp * E_m , l_b*L_m]; % initial conditions (at hatching), using reserve density via maternal effect
+%   tTC = TC_bLA; %temp from birth to start of exp
+%   options = odeset('AbsTol',1e-8, 'RelTol',1e-6, 'Events',@event_bj); % increase integration sensitivity; capture events - birth and metamorphosis
+%   [t, EL, te, ye, ie] = ode45(@get_EL_j, linspace(0,tLA(1,1),100) , EL_b, options, f_exp, v, g, E_m, L_m, p_Am, kap, k_J, lb*L_m, lj*L_m, tTC); % ELH: {J/cm^3, cm}, with {[E], L, H}
+%   L_start = EL(end,2); Ww_start = L_start.^3 * d_V .* (1 + EL(end,1) * w_E/ mu_E) *1e6; 
+%   EL_start = EL(end,:);
   
 % MARE2019 A  
+L_start = Linit.tLA * del_M; 
     ir_B = 3/ k_M + 3 * f_exp * L_m/ v; rT_B =TC_LA/ ir_B;    % d, 1/von Bert growth rate
     L_exp = L_i - (L_i - L_start) * exp( - rT_B * (tLA(:,1) - tLA(1,1))); % cm, struc length larval stages
    ELwA = L_exp/ del_M;  % cm, total length
      
 %t-L MARE2019 B
+L_start = Linit.tLB * del_M; 
  rT_B =TC_LB/ ir_B;    % d, 1/von Bert growth rate  
  L_exp = L_i - (L_i - L_start) * exp( - rT_B * (tLB(:,1) - tLB(1,1))); % cm, expected length at time
   ELwB = L_exp/ del_M;  % cm, total length
   
   
   %% % time-wet weight t-Ww
-  % (same L_start as above)
   %t-Ww MARE2019 A
+  L_start = (Wwinit.tWwA / (1+f_exp *ome))^(1/3); 
   rT_B =TC_WA/ ir_B;    % d, 1/von Bert growth rate  
   L_exp = L_i - (L_i - L_start) * exp( - rT_B * (tWwA(:,1) - tWwA(1,1))); % cm, expected length at time
   EWwA = L_exp.^3 * (1 + f_exp * ome); % g, wet weight
   
   %t-Ww MARE2019 B
+   L_start = (Wwinit.tWwB / (1+f_exp *ome))^(1/3); 
   rT_B =TC_WB/ ir_B;    % d, 1/von Bert growth rate  
   L_exp = L_i - (L_i - L_start) * exp( - rT_B * (tWwB(:,1) - tWwB(1,1))); % cm, expected length at time
   EWwB = L_exp.^3 * (1 + f_exp * ome); % g, wet weight   
