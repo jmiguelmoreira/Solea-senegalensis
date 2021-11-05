@@ -14,7 +14,7 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
   filterChecks = k * v_Hp >= f^3 * s_M^3 || ...         % constraint required for reaching puberty with f_tL1
                  ~reach_birth(g, k, v_Hb, f) || ...  % constraint required for reaching birth with f_tL1
           E_Hh > E_Hb || E_Hh <= 0 || f > 1 || f_tL > 1 || f_RibeEngr > 1 || ... % maturity at hatching has to be between 0 and Ehb
-     f_tL < 0.1 || f_RibeEngr < 0.1 || f_exp > 1.5 || f_Man < 0.3 ||...
+     f_tL < 0.1 || f_RibeEngr < 0.1 || f_exp < 0.5 ||f_exp > 1.5 || f_Man < 0.3 ||...
      ~reach_birth(g, k, v_Hb, f_tL) || ... % constraint required for reaching birth with that f
      ~reach_birth(g, k, v_Hb, f_RibeEngr) ; %filter for constraining shape coeficients under 1       
   
@@ -26,15 +26,15 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
  
 % 0-var data 'ah';'ab';'tj';'aj';'tp';'am';'Lh';'Lb';'Lp';'Li';'Wwh';'Wwb';'Wdh';'Wdb';'Ri'
   % compute temperature correction factors
-  TC_ah = tempcorr(temp.ah, T_ref, T_A);
-  TC_ab = tempcorr(temp.ab, T_ref, T_A);
+  TC_ah = tempcorr(temp.ah, T_ref, T_Ae); % temp correction for embryo
+  TC_ab = tempcorr(temp.ab, T_ref, T_Ae); % temp correction for embryo
   TC_aj = tempcorr(temp.aj, T_ref, T_A);
   TC_ap = tempcorr(temp.ap, T_ref, T_A);
   TC_am = tempcorr(temp.am, T_ref, T_A);
   TC_Ri = tempcorr(temp.Ri, T_ref, T_A);
   
   % univariate data temp corrections
-  TC_Tah = tempcorr(C2K(data.Tah(:,1)), T_ref, T_A);
+  TC_Tah = tempcorr(C2K(data.Tah(:,1)), T_ref, T_Ae);
   %TC_Tab = tempcorr(C2K(data.Tab(:,1)), T_ref, T_A);
   TC_Taj = tempcorr(C2K(data.Taj(:,1)), T_ref, T_A);
   TC_Taj_Man = tempcorr(C2K(temp.Taj(:,2)), T_ref, T_A); % temp correction vector for Manchado metamorphosis data!
@@ -57,12 +57,8 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
    TC_WA = tempcorr(temp.tWwA, T_ref, T_A);
    TC_LB = tempcorr(temp.tLB, T_ref, T_A);
    TC_WB = tempcorr(temp.tWwB, T_ref, T_A);
-   % average temperatures between birth and start of the experiments:
-   TC_bLA = tempcorr(temp2.tLA, T_ref, T_A);
-   TC_bLB = tempcorr(temp2.tLB, T_ref, T_A);
-   TC_bWA = tempcorr(temp2.tWwA, T_ref, T_A);
-   TC_bWB = tempcorr(temp2.tWwB, T_ref, T_A);
-   
+
+
 %    keyboard
 %   
   %% % zero-variate data
@@ -266,7 +262,8 @@ pars_lj =  [g, k, l_T, v_Hb, v_Hj ];
   ELw_m = [EL_bj_m; EL_ji_m]/del_M; %
   
  % %t-L MARE2019 A
-%   [t_j, ~, t_b, l_j, ~, l_b, l_i, ~, rho_B] = get_tj(pars_tj, f_exp);  
+   [t_j, ~, t_b, l_j, ~, l_b, l_i, ~, rho_B] = get_tj(pars_tj, f_exp);  
+   L_i = l_i * L_m;
   % finding initial length 
 %   EL_b = [f_exp * E_m , l_b*L_m]; % initial conditions (at hatching), using reserve density via maternal effect
 %   tTC = TC_bLA; %temp from birth to start of exp
