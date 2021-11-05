@@ -27,13 +27,13 @@ metaData.data_1     = {'t-L_T';'L-Ww';'L-Wd';'t-Wd_f';'t-Ww'}; % uni-variate dat
 metaData.COMPLETE = 3.5; % using criteria of LikaKear2011 http://www.debtheory.org/wiki/index.php?title=Completeness
 
 metaData.author   = {'Adriana Sardi'; 'Jose Moreira'};    
-metaData.date_subm = [2021 10 01];              
+metaData.date_subm = [2021 07 19];              
 metaData.email    = {'adrianasardi@gmail.com'; 'j.miguel.moreira@tecnico.ulisboa.pt'};            
 metaData.address  = {'University of Bordeaux'; 'University of Lisbon'};   
 
 metaData.curator     = {'Nina Marn'};
 metaData.email_cur   = {'nmarn@irb.hr'}; 
-metaData.date_acc    = [2021 10 05];
+metaData.date_acc    = [2021 07 29];
 %% set data
 % zero-variate data
 
@@ -227,36 +227,39 @@ bibkey.tWd_Man20 = 'MancPC';
 
 %t-Wd data
 data.tWd = [ ... % time (days from hatching),  dry weigth of larvae in ug
-0.	34.8
-0.001	30.2
-1	33.2
-2.	32.9
-2.001	31.1
-2.002	25.6
+% 0	34.8
+% 0	30.2
+% 1	33.2
+% 2	32.9
+% 2	31.1
+% 2	25.6
 3	33.3
-3.001	37.6
+3	37.6
 4	40.1
 5	55.0
-5.001	52.2
+5	52.2
 7	92.7
-7.001	101.8
-7.002	139.3
+7	101.8
+7	139.3
 8	127.2
 9	146.1
-9.001	182.7
-9.002	216.6
+9	182.7
+9	216.6
 12	261.7
-12.001	511.9
-12.002	620.6
+12	511.9
+12	620.6
 14	718.4
-14.001	509.3
-14.002	432.6
+14	509.3
+14	432.6
 17	1195.3
-17.001	964.4
-17.002	1683.8
+17	964.4
+17	1683.8
 ];
 
-units.tWd = {'d','ug'}; label.tWd = {'time since hatching','Dry weigth of larvae along development'};
+data.tWd(:,1) = data.tWd(:,1) - 3;
+%data.tWd(1:6,:) = []; data.tWd(:,1) = data.tWd(:,1) - data.tWd(1,1) ;   % remove everything before birth
+
+units.tWd = {'d','ug'}; label.tWd = {'time since birth','Dry weigth of larvae along development'};
 bibkey.tWd = 'YufeParr1999'; 
 comment.tWd = {'mouth openning at day 3, metamorphosis at day 14 ph reared at 19.5 degrees C'}; %
 temp.tWd = C2K(19.5);
@@ -265,29 +268,31 @@ units.temp.tWd = 'K'; label.temp.tWd = 'temperature';
 %t-Wd2 data
 data.tWd2 = [ ... % time (days from hatching),  dry weigth of larvae in ug
 15	820.0
-15.001	644.0
-15.002	613.5
+15	644.0
+15	613.5
 16	627.5
 17	986.9
 20	772.0
-20.001	883.0
-20.002	1114.8
+20	883.0
+20	1114.8
 23	1265.7
-23.001	1980.6
+23	1980.6
 26	3652.0
-26.001	3148.2
-26.002	2713.1
-26.003	2537.0
-26.004	2003.2
-26.005	1379.2 ];
+26	3148.2
+26	2713.1
+26	2537.0
+26	2003.2
+26	1379.2 ];
 
-units.tWd2 = {'d','ug'}; label.tWd2 = {'time since hatching','Dry weigth of larvae along development'};
+data.tWd2(:,1) = data.tWd2(:,1) - 3; %correct to time since birth  
+units.tWd2 = {'d','ug'}; label.tWd2 = {'time since birth','Dry weigth of larvae along development'};
 bibkey.tWd2 = 'ParrYufe2001'; %YufeParr1999?
 comment.tWd2 = {'mouth openning at day 3, metamorphosis at day 14 ph reared at 19.5 degrees C'}; % <-- reared at 19.5 after metam?
 temp.tWd2 = C2K(19.5);
 units.temp.tWd2 = 'K'; label.temp.tWd2 = 'temperature'; 
 
 %time-weight --> different diets. Larvae were fed the different diets from the beginning of feeding! (=birth)
+
 data.tWd_f1 = [... % days, mg/ind, 100% live prey L100
 3	0.034
 12	0.575
@@ -300,11 +305,13 @@ data.tWd_f1 = [... % days, mg/ind, 100% live prey L100
 57	22.279
 63	28.501
 70	34.058]; 
+data.tWd_f1(:,1) = data.tWd_f1(:,1) - data.tWd_f1(1,1) ; % correct to time since birth
 data.tWd_f1(:,2) = data.tWd_f1(:,2)*1e3; % to ug
-units.tWd_f1 = {'d','ug'}; label.tWd_f1 = {'time since hatching','Dry weigth of larvae along development'};
+units.tWd_f1 = {'d','ug'}; label.tWd_f1 = {'time since birth','Dry weigth of larvae along development'};
 bibkey.tWd_f1 = 'CanaFern1999'; 
 comment.tWd_f1 = {'fed algae, rotifers and artemia'}; % 
-temp.tWd_f1 = C2K(19); units.temp.tWd_f1 = 'K'; label.temp.tWd_f1 = 'temperature'; 
+temp.tWd_f1 = C2K(19);
+units.temp.tWd_f1 = 'K'; label.temp.tWd_f1 = 'temperature'; 
 
 data.tWd_f2 =[ ... %days post hatching, mg/ind, 50% live prey L50
 3	0.034
@@ -312,8 +319,9 @@ data.tWd_f2 =[ ... %days post hatching, mg/ind, 50% live prey L50
 23	1.075
 33	4.184
 43	5.453];
+data.tWd_f2(:,1) = data.tWd_f2(:,1) - data.tWd_f2(1,1) ; % correct to time since birth
 data.tWd_f2(:,2) = data.tWd_f2(:,2)*1e3; % to ug
-units.tWd_f2 = {'d','ug'}; label.tWd_f2 = {'time since hatching','Dry weigth of larvae along development'};
+units.tWd_f2 = {'d','ug'}; label.tWd_f2 = {'time since birth','Dry weigth of larvae along development'};
 bibkey.tWd_f2 = 'CanaFern1999'; 
 comment.tWd_f2 = {'individuals fed half the quantity of treatment L100'}; % 
 temp.tWd_f2 = C2K(19);
@@ -325,8 +333,9 @@ data.tWd_f3 = [ ... % days, mg/ind, 100% live prey and 50% inert food L100I50
 23	1.748
 33	6.748
 43	8.691];
+data.tWd_f3(:,1) = data.tWd_f3(:,1) - data.tWd_f3(1,1) ; % correct to time since birth
 data.tWd_f3(:,2) = data.tWd_f3(:,2)*1e3; % to ug
-units.tWd_f3 = {'d','ug'}; label.tWd_f3 = {'time since hatching','Dry weigth of larvae along development'};
+units.tWd_f3 = {'d','ug'}; label.tWd_f3 = {'time since birth','Dry weigth of larvae along development'};
 bibkey.tWd_f3 = 'CanaFern1999'; 
 comment.tWd_f3 = {'individuals fed 100% live prey and 50% inert food same time'}; % 
 temp.tWd_f3 = C2K(19);
@@ -338,8 +347,9 @@ data.tWd_f4 = [ ... %days,mg/ind,50% live prey and 50% inert food L50I50
 23	1.313
 33	4.626
 43	6.878];
+data.tWd_f4(:,1) = data.tWd_f4(:,1) - data.tWd_f4(1,1) ; % correct to time since birth
 data.tWd_f4(:,2) = data.tWd_f4(:,2)*1e3; % to ug
-units.tWd_f4 = {'d','ug'}; label.tWd_f4 = {'time since hatching','Dry weigth of larvae along development'};
+units.tWd_f4 = {'d','ug'}; label.tWd_f4 = {'time since birth','Dry weigth of larvae along development'};
 bibkey.tWd_f4 = 'CanaFern1999'; 
 comment.tWd_f4 = {'individuals fed 100% live prey and 50% inert food same time'}; % 
 temp.tWd_f4 = C2K(19);
@@ -406,9 +416,8 @@ data.tLA(:,1) = data.tLA(:,1) + 242; %time since start of experiment to time sin
 units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};  
 temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature during experiment';
 temp2.tLA   = C2K(20);  units.temp2.tLA = 'K'; label.temp2.tLA = 'average temperature since birth until start of experiment';
-bibkey.tLA = 'MARE2019'; comment.tLA = 'T 19ºC pH 8.0 and 7.7';
-Linit.tLA = 12.9542; units.Linit.tLA = 'cm'; label.Linit.tLA = 'mean length at start of experiment';
-
+bibkey.tLA = 'MARE2019';
+comment.tLA = 'T 19ºC pH 8.0 and 7.7';
 
 data.tLB = [ ... % time since start of experiment (d), total length (cm)
 %pH 8.0:
@@ -470,9 +479,8 @@ data.tLB(:,1) = data.tLB(:,1) + 242; %time since start of experiment to time sin
 units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};  
 temp.tLB    = C2K(23);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
 temp2.tLB   = C2K(20);  units.temp2.tLB = 'K'; label.temp2.tLB = 'average temperature since birth until start of experiment';
-bibkey.tLB = 'MARE2019'; comment.tLB = 'T 23ºC pH 8.0';
-Linit.tLB = 12.5926; units.Linit.tLB = 'cm'; label.Linit.tLB = 'mean length at start of experiment';
-
+bibkey.tLB = 'MARE2019';
+comment.tLB = 'T 23ºC pH 8.0';
 
 %% time wet weight Jose
 % 
@@ -567,10 +575,8 @@ data.tWwA(:,1) = data.tWwA(:,1) + 242; %time since start of experiment to time s
 units.tWwA   = {'d', 'g'};  label.tWwA = {'time', 'wet weight'};   
 temp.tWwA    = C2K(19);  units.temp.tWwA = 'K'; label.temp.tWwA = 'temperature';
 temp2.tWwA   = C2K(20);  units.temp2.tWwA = 'K'; label.temp2.tWwA = 'average temperature since birth until start of experiment';
-bibkey.tWwA = 'MARE2019'; comment.tWwA = 'T 19ºC pH 8.0 and 7.7';
-Wwinit.tWwA = 26.1979; units.Wwinit.tWwA = 'g'; label.Wwinit.tWwA = 'mean wet weight at start of experiment';
-
-
+bibkey.tWwA = 'MARE2019';
+comment.tWwA = 'T 19ÂºC pH 8.0 and 7.7';
 
 data.tWwB = [ ... % time since start of experiment (d), wet weight (g)
 %pH 8.0:
@@ -663,9 +669,8 @@ data.tWwB(:,1) = data.tWwB(:,1) + 242; %time since start of experiment to time s
 units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};   
 temp.tWwB    = C2K(23);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
 temp2.tWwB   = C2K(20);  units.temp2.tWwB = 'K'; label.temp2.tWwB = 'average temperature since birth until start of experiment';
-bibkey.tWwB = 'MARE2019'; comment.tWwB = 'T 23ºC pH 8.0 and 7.7';
-Wwinit.tWwB = 24.5403; units.Wwinit.tWwB = 'g'; label.Wwinit.tWwB = 'mean wet weight at start of experiment';
-
+bibkey.tWwB = 'MARE2019';
+comment.tWwB = 'T 23ÂºC pH 8.0 and 7.7';
 
 % ------------ length - wet weight ----------------
 % %L-Ww (manchado data)
@@ -751,7 +756,7 @@ bibkey.LWd3 = 'RibeEngr2017';
 
 %% set weights for all real data
 weights = setweights(data, []);
-weights.Tah = 5 * weights.Tah; 
+%weights.ah = 5 * weights.ah; 
 %weights.ab = 5 * weights.ab; 
 %weights.Wwj0 = 0 * weights.Wwj0; 
 weights.tWd = 10 * weights.tWd;
@@ -762,21 +767,15 @@ weights.Lh = 5 * weights.Lh;
 weights.Li = 10 * weights.Li;
 weights.Lp_f = 5 * weights.Lp_f;
 weights.Lp_m = 5 * weights.Lp_m;
-weights.tLA = 5 * weights.tLA;
-weights.tLB = 5 * weights.tLB;
-weights.tWwA = 5 * weights.tWwA;
-weights.tWwB = 5 * weights.tWwB;
-weights.LWw_f = 5 * weights.LWw_f;
 %
 
 %% set pseudodata and respective weights
 [data, units, label, weights] = addpseudodata(data, units, label, weights);
-weights.tL_f = 5* weights.tL_f; 
-weights.tL_m = 5* weights.tL_m; 
+weights.aj = 1* weights.aj; 
 
 %% pack auxData and txtData for output
-auxData.temp = temp; auxData.temp2 = temp2;
-auxData.Linit = Linit; auxData.Wwinit = Wwinit; 
+auxData.temp = temp;
+auxData.temp2 = temp2;
 txtData.units = units;
 txtData.label = label;
 txtData.bibkey = bibkey;
@@ -787,7 +786,7 @@ set1 = {'tL','tL2'}; comment1 = {'RibeSara1999 and RibeEngr2017'};
 set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, YufeParr1999 and RibeEngr2017'};
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
 set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CanaFern1999'};
-set5 = {'tL_f','tL_m'}; comment5 = { 'TeixCabr2010 - females (red), males (blue)'};
+set5 = {'tL_f','tL_m'}; comment5 = { 'females (red), males (blue)'};
 set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ºC) and B (blue, 19ºC)'}; 
 set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ºC) and A (blue, 19ºC)'};
 set8 = {'LWw','LWw_f', 'LWw_m'}; comment8 = {'Manchado -persComm: all (red), females (magenta), males (blue)'}; 
@@ -803,9 +802,9 @@ metaData.facts = struct('F1',F1);
 %% Discussion points
 D1 = 'Males are assumed to differ from females in z only, due to different size at puberty, but no data on different age at puberty or different ultimate size';
 D2 = 'Zero-variate data are from the lab and from the field; uni-variate data sets have their respective f values';     
-D3 = ['Metamorphosis lasts few days, and data is available for START and END of metamorphosis. ', ...
+D3 = 'Parameter T_A was calculated from T_ah data outside of AmP routines'; 
+D4 = ['Metamorphosis lasts few days, and data is available for START and END of metamorphosis. ', ...
     'We use END of (physical) metamorphosis to mark the discrete event of (metabolic) metamorphosis.'];
-D4 = 'Growth from hatching (sometimes also from birth) onwards is calculated with ODEs'; 
 metaData.discussion = struct('D1', D1, 'D2', D2, 'D3', D3, 'D4', D4);
 
 %% Acknowledgments
