@@ -26,15 +26,15 @@ function [prdData, info] = predict_Solea_senegalensis(par, data, auxData)
  
 % 0-var data 'ah';'ab';'tj';'aj';'tp';'am';'Lh';'Lb';'Lp';'Li';'Wwh';'Wwb';'Wdh';'Wdb';'Ri'
   % compute temperature correction factors
-  TC_ah = tempcorr(temp.ah, T_ref, T_Ae); % temp correction for embryo
-  TC_ab = tempcorr(temp.ab, T_ref, T_Ae); % temp correction for embryo
+  TC_ah = tempcorr(temp.ah, T_ref, T_A); 
+  TC_ab = tempcorr(temp.ab, T_ref, T_A); 
   TC_aj = tempcorr(temp.aj, T_ref, T_A);
   TC_ap = tempcorr(temp.ap, T_ref, T_A);
   TC_am = tempcorr(temp.am, T_ref, T_A);
   TC_Ri = tempcorr(temp.Ri, T_ref, T_A);
   
   % univariate data temp corrections
-  TC_Tah = tempcorr(C2K(data.Tah(:,1)), T_ref, T_Ae);
+  TC_Tah = tempcorr(C2K(data.Tah(:,1)), T_ref, T_A);
   %TC_Tab = tempcorr(C2K(data.Tab(:,1)), T_ref, T_A);
   TC_Taj = tempcorr(C2K(data.Taj(:,1)), T_ref, T_A);
   TC_Taj_Man = tempcorr(C2K(temp.Taj(:,2)), T_ref, T_A); % temp correction vector for Manchado metamorphosis data!

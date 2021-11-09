@@ -751,7 +751,7 @@ bibkey.LWd3 = 'RibeEngr2017';
 
 %% set weights for all real data
 weights = setweights(data, []);
-weights.Tah = 5 * weights.Tah; 
+weights.Tah = 10 * weights.Tah; 
 %weights.ab = 5 * weights.ab; 
 %weights.Wwj0 = 0 * weights.Wwj0; 
 weights.tWd = 10 * weights.tWd;
