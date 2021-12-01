@@ -34,7 +34,7 @@ metaData.address  = {'University of Bordeaux'; 'University of Lisbon'};
 
 metaData.curator     = {'Nina Marn'};
 metaData.email_cur   = {'nmarn@irb.hr'}; 
-metaData.date_acc    = [2021 12 01];
+metaData.date_acc    = [2021 11 30];
 %% set data
 % zero-variate data
 
@@ -200,10 +200,10 @@ bibkey.tL_m = 'TeixCabr2010';
 
 % --- time-weight ------
 % t-Wd Manchado 
-%Dry weight (µg/larvae) data from 7 dph (when the temperature is deceased to 16) until complete metamorphosis; 
+%Dry weight (Âµg/larvae) data from 7 dph (when the temperature is deceased to 16) until complete metamorphosis; 
 % mouth opening (birth) for both datasets on day 2 and 20C
 % 	Mean 	
-% dph 	16ºC 	20ºC
+% dph 	16ÂºC 	20ÂºC
 tWd = [ 7 	118.9 	119.5
 9 	225.4 	245.3
 11 	370.7 	457.0
@@ -407,7 +407,7 @@ data.tLA(:,1) = data.tLA(:,1) + 242; %time since start of experiment to time sin
 units.tLA   = {'d', 'cm'};  label.tLA = {'time', 'total length'};  
 temp.tLA    = C2K(19);  units.temp.tLA = 'K'; label.temp.tLA = 'temperature during experiment';
 temp2.tLA   = C2K(20);  units.temp2.tLA = 'K'; label.temp2.tLA = 'average temperature since birth until start of experiment';
-bibkey.tLA = 'MARE2019'; comment.tLA = 'T 19ºC pH 8.0 and 7.7';
+bibkey.tLA = 'MARE2019'; comment.tLA = 'T 19ÂºC pH 8.0 and 7.7';
 Linit.tLA = 12.9542; units.Linit.tLA = 'cm'; label.Linit.tLA = 'mean length at start of experiment';
 
 
@@ -471,7 +471,7 @@ data.tLB(:,1) = data.tLB(:,1) + 242; %time since start of experiment to time sin
 units.tLB   = {'d', 'cm'};  label.tLB = {'time', 'total length'};  
 temp.tLB    = C2K(23);  units.temp.tLB = 'K'; label.temp.tLB = 'temperature';
 temp2.tLB   = C2K(20);  units.temp2.tLB = 'K'; label.temp2.tLB = 'average temperature since birth until start of experiment';
-bibkey.tLB = 'MARE2019'; comment.tLB = 'T 23ºC pH 8.0';
+bibkey.tLB = 'MARE2019'; comment.tLB = 'T 23ÂºC pH 8.0';
 Linit.tLB = 12.5926; units.Linit.tLB = 'cm'; label.Linit.tLB = 'mean length at start of experiment';
 
 
@@ -568,7 +568,7 @@ data.tWwA(:,1) = data.tWwA(:,1) + 242; %time since start of experiment to time s
 units.tWwA   = {'d', 'g'};  label.tWwA = {'time', 'wet weight'};   
 temp.tWwA    = C2K(19);  units.temp.tWwA = 'K'; label.temp.tWwA = 'temperature';
 temp2.tWwA   = C2K(20);  units.temp2.tWwA = 'K'; label.temp2.tWwA = 'average temperature since birth until start of experiment';
-bibkey.tWwA = 'MARE2019'; comment.tWwA = 'T 19ºC pH 8.0 and 7.7';
+bibkey.tWwA = 'MARE2019'; comment.tWwA = 'T 19ÂºC pH 8.0 and 7.7';
 Wwinit.tWwA = 26.1979; units.Wwinit.tWwA = 'g'; label.Wwinit.tWwA = 'mean wet weight at start of experiment';
 
 
@@ -664,7 +664,7 @@ data.tWwB(:,1) = data.tWwB(:,1) + 242; %time since start of experiment to time s
 units.tWwB   = {'d', 'g'};  label.tWwB = {'time', 'wet weight'};   
 temp.tWwB    = C2K(23);  units.temp.tWwB = 'K'; label.temp.tWwB = 'temperature';
 temp2.tWwB   = C2K(20);  units.temp2.tWwB = 'K'; label.temp2.tWwB = 'average temperature since birth until start of experiment';
-bibkey.tWwB = 'MARE2019'; comment.tWwB = 'T 23ºC pH 8.0 and 7.7';
+bibkey.tWwB = 'MARE2019'; comment.tWwB = 'T 23ÂºC pH 8.0 and 7.7';
 Wwinit.tWwB = 24.5403; units.Wwinit.tWwB = 'g'; label.Wwinit.tWwB = 'mean wet weight at start of experiment';
 
 
@@ -789,8 +789,8 @@ set2 ={'LWd','LWd2','LWd3'};comment2 = {'OrtiFune2019, YufeParr1999 and RibeEngr
 set3 = {'tWd','tWd2'}; comment3 = {'YufeParr1999,ParrYufe2001'};
 set4 = {'tWd_f1','tWd_f2','tWd_f3','tWd_f4'} ; comment4 = {'CanaFern1999'};
 set5 = {'tL_f','tL_m'}; comment5 = { 'TeixCabr2010 - females (red), males (blue)'};
-set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ºC) and B (blue, 19ºC)'}; 
-set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ºC) and A (blue, 19ºC)'};
+set6 = {'tLB','tLA'}; comment6 = {'D (red, 23ÂºC) and B (blue, 19ÂºC)'}; 
+set7 = {'tWwB','tWwA'}; comment7 = {'C (red, 23ÂºC) and A (blue, 19ÂºC)'};
 set8 = {'LWw','LWw_f', 'LWw_m'}; comment8 = {'Manchado -persComm: all (red), females (magenta), males (blue)'}; 
 set9 = {'tWd_Man20','tWd_Man16'}; comment9 = {'Manchado -persComm: 20C (red), 16C (blue)'}; 
 metaData.grp.sets = {set1, set2, set3, set4, set5, set6, set7, set8, set9};
