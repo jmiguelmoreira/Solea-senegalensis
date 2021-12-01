@@ -243,11 +243,12 @@ pars_lj =  [g, k, l_T, v_Hb, v_Hj ];
   rT_B =  rho_B * kT_M2;  % 1/d, von Bert growth rate   
   rT_j =  rho_j * kT_M2;  % 1/d, exponential growth rate
   tT_j = (tau_j - tau_b)/ kT_M2; % time since birth at metamorphosis
-  L_j = l_j * L_m; 
-  L_i = l_i * L_m;
-  EL_bj_f = Lw_b * exp(tL_f((tL_f(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
-  EL_ji_f = L_i - (L_i - L_j) * exp( - rT_B * (tL_f((tL_f(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
-  ELw_f = [EL_bj_f; EL_ji_f]/del_M; 
+  Lw_b = L_m * l_b /del_Me;                  % cm, structural length at metamorphosis at f
+  Lw_j = L_m * l_j /del_M;                  % cm, structural length at metamorphosis at f
+  Lw_i = L_m * l_i / del_M;                  % cm, ultimate structural length at f
+  ELw_bj_f = Lw_b * exp(tL_f((tL_f(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
+  ELw_ji_f = Lw_i - (Lw_i - Lw_j) * exp( - rT_B * (tL_f((tL_f(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
+  ELw_f = [ELw_bj_f; ELw_ji_f]; 
   
    %tL_m (t-L4) TeixCabr2010 males
   [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tjm, f_TeixCabr);
@@ -255,11 +256,11 @@ pars_lj =  [g, k, l_T, v_Hb, v_Hj ];
   rT_B =  rho_B * kT_M2;  % 1/d, von Bert growth rate   
   rT_j =  rho_j * kT_M2;  % 1/d, exponential growth rate
   tT_j = (tau_j - tau_b)/ kT_M2; % time since birth at metamorphosis
-  L_j = l_j * L_mm; 
-  L_i = l_i * L_mm;
-  EL_bj_m = Lw_b * exp(tL_m((tL_m(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
-  EL_ji_m = L_i - (L_i - L_j) * exp( - rT_B * (tL_m((tL_m(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
-  ELw_m = [EL_bj_m; EL_ji_m]/del_M; %
+  Lw_j = l_j * L_mm/del_M; 
+  Lw_i = l_i * L_mm/del_M;
+  ELw_bj_m = Lw_b * exp(tL_m((tL_m(:,1)<= tT_j),1)  * rT_j/3); % exponential growth as V1-morph
+  ELw_ji_m = Lw_i - (Lw_i - Lw_j) * exp( - rT_B * (tL_m((tL_m(:,1) > tT_j),1)- tT_j)); % cm, expected length at time
+  ELw_m = [ELw_bj_m; ELw_ji_m]; %
   
  % %t-L MARE2019 A
    [t_j, ~, t_b, l_j, ~, l_b, l_i, ~, rho_B] = get_tj(pars_tj, f_exp);  
